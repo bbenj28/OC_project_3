@@ -35,4 +35,17 @@ class Chest {
         // if refused, the character's weapon doesn't change
         isAccepted = false
     }
+    func askForReplaceWeapon() {
+        print("Do you want to change it with the chest's content ? (Y/N)")
+        let answer = readLine()
+        if let verifiedAnswer = answer {
+            if verifiedAnswer.lowercased() == "y" {
+                accepted()
+            }
+            if verifiedAnswer.lowercased() == "n" {
+                refused()
+            }
+        }
+    }
 }
+ 

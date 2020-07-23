@@ -33,12 +33,21 @@ class Weapon {
     // MARK: Sword
 class Sword: Weapon { // warrior's weapon
     init(firstWeapon: Bool, lifeStep: LifeSteps) {
+        // get minimum strength possibilities in bacproperties
+        guard let minStrengthForChoosenLifeStep = bacproperties.swordMinStrength[lifeStep] else {
+            print("Fatal Error : sword's minimum strength for choosen lifestep returns nil.")
+            exit(0)
+        }
+        guard let minStrengthForFullLifeStep = bacproperties.swordMinStrength[.fulLife] else {
+            print("Fatal Error : sword's minimum strength for full lifestep returns nil.")
+            exit(0)
+        }
         // returns the weapon's minimum strength according to the possibility of modifying it on the basis of the character's life expectancy
         let minStrength: Int
         if bacproperties.areLifeStepsUseFull {
-            minStrength = bacproperties.swordMinStrength[lifeStep]!
+            minStrength = minStrengthForChoosenLifeStep
         } else {
-            minStrength = bacproperties.swordMinStrength[.fulLife]!
+            minStrength = minStrengthForFullLifeStep
         }
         // returns the weapon's maximum strength
         let maxStrength: Int = bacproperties.swordMaxStrength
@@ -51,7 +60,7 @@ class Sword: Weapon { // warrior's weapon
         }
         // returns the name of the weapon. Its name is based on its strength.
         let name: String
-        let thirdDifferenceStrength: Int = (bacproperties.swordMaxStrength - bacproperties.swordMinStrength[.fulLife]!) / 3
+        let thirdDifferenceStrength: Int = (bacproperties.swordMaxStrength - minStrengthForFullLifeStep) / 3
         switch strength {
         case let x where x < minStrength + thirdDifferenceStrength:
             name = "Rookie " + bacproperties.swordName
@@ -68,11 +77,19 @@ class Sword: Weapon { // warrior's weapon
         // MARK: PowerStick
 class PowerStick: Weapon { // wizard's weapon
     init(firstWeapon: Bool, lifeStep: LifeSteps) {
+        guard let minStrengthForChoosenLifeStep = bacproperties.powerstickMinStrength[lifeStep] else {
+            print("Fatal Error : powerstick's minimum strength for choosen lifestep returns nil.")
+            exit(0)
+        }
+        guard let minStrengthForFullLifeStep = bacproperties.powerstickMinStrength[.fulLife] else {
+            print("Fatal Error : powerstick's minimum strength for full lifestep returns nil.")
+            exit(0)
+        }
         let minStrength: Int
         if bacproperties.areLifeStepsUseFull {
-            minStrength = bacproperties.powerstickMinStrength[lifeStep]!
+            minStrength = minStrengthForChoosenLifeStep
         } else {
-            minStrength = bacproperties.powerstickMinStrength[.fulLife]!
+            minStrength = minStrengthForFullLifeStep
         }
         let maxStrength: Int = bacproperties.powerstickMaxStrength
         let strength: Int
@@ -82,7 +99,7 @@ class PowerStick: Weapon { // wizard's weapon
             strength = Int.random(in: minStrength...maxStrength)
         }
         let name: String
-        let thirdDifferenceStrength: Int = (bacproperties.powerstickMaxStrength - bacproperties.powerstickMinStrength[.fulLife]!) / 3
+        let thirdDifferenceStrength: Int = (bacproperties.powerstickMaxStrength - minStrengthForFullLifeStep) / 3
         switch strength {
         case let x where x < minStrength + thirdDifferenceStrength:
             name = "Rookie " + bacproperties.powerstickName
@@ -98,11 +115,19 @@ class PowerStick: Weapon { // wizard's weapon
         // MARK: HealthStick
 class HealthStick: Weapon { // druid's weapon
     init(firstWeapon: Bool, lifeStep: LifeSteps) {
+        guard let minStrengthForChoosenLifeStep = bacproperties.healthstickMinStrength[lifeStep] else {
+            print("Fatal Error : healthstick's minimum strength for choosen lifestep returns nil.")
+            exit(0)
+        }
+        guard let minStrengthForFullLifeStep = bacproperties.healthstickMinStrength[.fulLife] else {
+            print("Fatal Error : healthstick's minimum strength for full lifestep returns nil.")
+            exit(0)
+        }
         let minStrength: Int
         if bacproperties.areLifeStepsUseFull {
-            minStrength = bacproperties.healthstickMinStrength[lifeStep]!
+            minStrength = minStrengthForChoosenLifeStep
         } else {
-            minStrength = bacproperties.healthstickMinStrength[.fulLife]!
+            minStrength = minStrengthForFullLifeStep
         }
         let maxStrength: Int = bacproperties.healthstickMaxStrength
         let strength: Int
@@ -128,11 +153,19 @@ class HealthStick: Weapon { // druid's weapon
         // MARK: Knife
 class Knife: Weapon { // joker's weapon
     init(firstWeapon: Bool, lifeStep: LifeSteps) {
+        guard let minStrengthForChoosenLifeStep = bacproperties.knifeMinStrength[lifeStep] else {
+            print("Fatal Error : knife's minimum strength for choosen lifestep returns nil.")
+            exit(0)
+        }
+        guard let minStrengthForFullLifeStep = bacproperties.knifeMinStrength[.fulLife] else {
+            print("Fatal Error : knife's minimum strength for full lifestep returns nil.")
+            exit(0)
+        }
         let minStrength: Int
         if bacproperties.areLifeStepsUseFull {
-            minStrength = bacproperties.knifeMinStrength[lifeStep]!
+            minStrength = minStrengthForChoosenLifeStep
         } else {
-            minStrength = bacproperties.knifeMinStrength[.fulLife]!
+            minStrength = minStrengthForFullLifeStep
         }
         let maxStrength: Int = bacproperties.knifeMaxStrength
         let strength: Int

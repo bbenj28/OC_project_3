@@ -14,6 +14,7 @@ class Character {
     
         // MARK: Properties
     let name: String // name of the character
+     
     let initials: String // intitals of the character's type, example : Wa for Warrior
     let type: CharacterType // type of the character
     let maxHealthPoints: Int // the maximum healthpoints the character can have
@@ -49,11 +50,7 @@ class Character {
     var diversionRounds: Int? // if the character suffers of diversion, for how many rounds ?
     var isDiverted: Bool{
         //Characters could be diverted by a joker. The diversion can last up to 4 rounds. This computed variable check if the character is still diverted.
-        if let _ = diversionRounds{
-            return true
-        } else {
-            return false
-        }
+        return diversionRounds != nil
     }
     var specialSkillIsAvailable: SpecialSkillAvailability = .available
     
@@ -85,12 +82,11 @@ class Character {
         }
         target.healPoints += healPointsToAdd
     }
-    
-    // à bouger dans les classes filles
     func multiAttack(_ player: Player) {
         // chooses a random number between strength / 2 and strength, and substract a third of this number to the healthpoints of each alive character of the choosenplayer
         let attackCoefficient = Int.random(in: strength/2...strength)
-        for target in player.characters {
+        let characters = [Player.characters[player.index * 3], Player.characters[player.index * 3 + 1], Player.characters[player.index * 3 + 2]]
+        for target in characters {
             if target.isDead == false {
                 var thirdAttackCoefficient = attackCoefficient / 3
                 if thirdAttackCoefficient > target.healthPoints {
@@ -105,7 +101,8 @@ class Character {
     func multiHeal(_ player: Player) {
         // for each alive character of the choosenplayer, checks if a third of healthcare points + target's healthpoints are less than its maximum healthpoints, and add a third of healthcare points to the target healthpoints
         let thirdHealthCare: Int = healthCare / 3
-        for target in player.characters {
+        let characters = [Player.characters[player.index * 3], Player.characters[player.index * 3 + 1], Player.characters[player.index * 3 + 2]]
+        for target in characters {
             var healPointsToAdd: Int = thirdHealthCare
             if target.isDead == false {
                 if healPointsToAdd + target.healthPoints > target.maxHealthPoints {
@@ -124,11 +121,14 @@ class Character {
         // special skill is used, next round this character won't be able to use it again
         specialSkillIsUsed()
     }
+ 
     private func specialSkillIsUsed() {
         //switch special skill availability to used. Next round, the special skill will be unavailable
         specialSkillIsAvailable = .used
     }
+     
 }
+     
 
 
 // MARK: Character's class inheritance
@@ -196,11 +196,11 @@ enum LifeSteps { // is the character dying ?
         // MARK: SkillsType
 
 enum SkillsType: String { // the differents existing skills a character can use. All characters can use attack and heal, specialskill depends on its type.
-    case attack = "Attack"
-    case heal = "Heal"
-    case multiAttack = "MultiAttack"
-    case multiHeal = "MultiHeal"
-    case diversion = "Diversion"
+    case attack = "⚔️ Attack"
+    case heal = "🧪 Heal"
+    case multiAttack = "⚔️ MultiAttack"
+    case multiHeal = "🧪 MultiHeal"
+    case diversion = "🔫 Diversion"
 }
 
         // MARK: CharacterType
