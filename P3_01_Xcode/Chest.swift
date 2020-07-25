@@ -38,15 +38,11 @@ class Chest {
         print("\nChest is refused.")
     }
     func askForReplaceWeapon() {
-        print("Do you want to change it with the chest's content ? (Y/N)")
-        let answer = readLine()
-        if let verifiedAnswer = answer {
-            if verifiedAnswer.lowercased() == "y" {
-                accepted()
-            }
-            if verifiedAnswer.lowercased() == "n" {
-                refused()
-            }
+        let accepted = Game.askForConfirmation("Do you want to replace it with the chest's content ?")
+        if accepted {
+            self.accepted()
+        } else {
+            refused()
         }
     }
 }

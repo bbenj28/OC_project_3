@@ -17,7 +17,7 @@ class Player {
     static var characters: [Character] = [] // list of players characters
     let index: Int
     var isDefeated: Bool {
-        return Player.characters[2 * index + 1].isDead && Player.characters[2 * index + 2].isDead && Player.characters[2 * index + 3].isDead
+        return Player.characters[3 * index].isDead && Player.characters[3 * index + 1].isDead && Player.characters[3 * index + 2].isDead
     }
     var HPSituation: Int {
         var maxHP: Double = 0
@@ -95,7 +95,7 @@ class Player {
         let characterIndex = Player.characters.count - 3 * self.index + 1
         switch characterIndex {
         case 1:
-            print("\n*******\n\(name), choose your first character : ")
+            print("\n*******\nChoose your first character : ")
         case 2:
             print("\n*******\nFine, now choose your second character : ")
         case 3:
@@ -112,15 +112,9 @@ class Player {
     }
     func chooseCharacterType(_ characterIndex: Int) -> CharacterType {
         displayCharactersTypes()
-        var choosenType: CharacterType?
-        while choosenType == nil {
-            choosenType = askType()
-        }
-        guard let verifiedChoosenType = choosenType else {
-            print("Fatal Error : ChoosenType returns nil.")
-            exit(0)
-        }
-        return verifiedChoosenType
+        let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
+        let number = Game.askNumber(range: 1...4, message: "Choose a character type by enter a number between 1 and 4.", cancelProposition: nil)
+        return types[number - 1]
     }
     func displayCharactersTypes() {
         guard let specialSkillDescriptionWa = specialSkillDescription(bacproperties.warriorSpecialSkill) else {
@@ -156,20 +150,6 @@ class Player {
             return nil
         }
     }
-    func askType() -> CharacterType? {
-        let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
-        print ("Choose a number between 1 and 4 :")
-        let choice = readLine()
-        guard let existingChoice = choice else {
-            return nil
-        }
-        if let numberChoice = Int(existingChoice) {
-            if numberChoice > 0 && numberChoice < 5 {
-                return types[numberChoice - 1]
-            }
-        }
-        return nil
-    }
     func chooseCharacterName() -> String {
         var choosenName: String? = nil
         while choosenName == nil {
@@ -182,23 +162,20 @@ class Player {
         return verifiedChoosenName
     }
     func askName() -> String? {
-        print("What's its name ?")
-        let name = readLine()
-        guard let verifiedName = name else {
-            return nil
-        }
-        if verifiedName == "" {
-            return nil
-        }
+        let name = Game.askFreeAnswer("Enter its name :")
         if Player.characters.count > 0 {
             for character in Player.characters {
-                if character.name.lowercased() == verifiedName.lowercased() {
+                if character.name.lowercased() == name.lowercased() {
                     print("This name is already used by another character. Choose another.")
                     return nil
                 }
             }
         }
-        return verifiedName
+        if name.count > 30 {
+            print("Please enter a shorter name.")
+            return nil
+        }
+        return name
     }
     func characterCreation(name: String, type: CharacterType) -> Character {
         switch type {

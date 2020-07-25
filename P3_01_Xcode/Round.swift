@@ -8,7 +8,10 @@
 
 import Foundation
 
+
+
 // MARK: Round
+
 
 class Round {
         // MARK: Properties
@@ -27,41 +30,32 @@ class Round {
         self.watchingPlayer = watchingPlayer
     }
     
+    
+    
         // MARK: Start
+    
     
     
     /// Manage round from character's choice to chest appearance.
     func start() -> Chest? {
         // round's announcements
-        print("\(playingPlayer.name), your turn ! ************")
-        print("******* SITUATION'S VIEW *******")
+        Game.displayMiniTitle("\(playingPlayer.name), your turn !")
+        Game.displayMiniTitle("SITUATION'S VIEW")
         displayCharacters(nil)
-        
+        Game.displayStarLine()
         // call step manager for player to choice characters and skill to use
         while activeStep != .confirmedChoices {
             activeStepManager()
         }
-        
-        // verify first choices
-        guard let fightingCharacter = choosenCharacter else {
-            print("Fatal error : choosen character returns nil.")
-            exit (0)
-        }
-        guard let usedSkill = choosenSkill else {
-            print("Fatal error: choosen skill returns nil.")
-            exit(0)
-        }
-        
         // resolve round and manage chest appearance
-        if let chest = endRoundAndReturnChest(character: fightingCharacter, skill: usedSkill) {
-            print("\n\n\n***************")
-            print("CONGRATS! \(fightingCharacter.name) found a chest !")
+        if let chest = endRoundAndReturnChest() {
+            Game.displayMiniTitle("CHEST")
+            let character = verifyChoosenCharacter()
+            print("CONGRATS! \(character.name) found a chest !")
             print("Chest's content : \(chest.gift.name) [Str. \(chest.gift.strength)]")
-            print("\(fightingCharacter.name)'s weapon : \(fightingCharacter.weapon.name) [Str. \(fightingCharacter.weapon.strength)].")
-            while chest.isAccepted == nil {
-                chest.askForReplaceWeapon()
-            }
-            print("***************")
+            print("\(character.name)'s weapon : \(character.weapon.name) [Str. \(character.weapon.strength)].")
+            chest.askForReplaceWeapon()
+            Game.displayStarLine()
             return chest
         }
         
@@ -69,9 +63,14 @@ class Round {
         return nil
     }
     
+    
+    
         // MARK: ActiveStep manager
+    
+    
+    
     /// Submit questions to player regarding the active round's step.
-    func activeStepManager() {
+    private func activeStepManager() {
         switch activeStep {
         case .beginning: // fighting character choice
             choosenCharacter = characterManager()
@@ -109,8 +108,9 @@ class Round {
             displayChoices()
         }
     }
+    
     /// Cancel last choice made by player by changing active step.
-    func cancelLastChoice() {
+    private func cancelLastChoice() {
         switch activeStep {
         case .beginning, .firstCharacterIsSelected:
             choosenCharacter = nil
@@ -119,10 +119,7 @@ class Round {
             choosenSkill = nil
             activeStep = .firstCharacterIsSelected
         case .targetCharacterIsSelected:
-            guard let skill = choosenSkill else {
-                print("Fatal Error : choosen skill returns nil.")
-                exit(0)
-            }
+            let skill = verifyChoosenSkill()
             if skill == .multiHeal || skill == .multiAttack {
                 choosenTargetCharacter = nil
                 choosenSkill = nil
@@ -135,58 +132,14 @@ class Round {
             break
         }
     }
+    
     /// Ask user to confirm choices by enter Y or N.
     /// - returns: True if Y was entered, False if N was entered.
-    func confirmChoices() -> Bool {
-        var confirmation: Bool? = nil
-        while confirmation == nil {
-            confirmation = askForConfirmation()
-        }
-        guard let verifiedConfirmation = confirmation else {
-            print("Fatal Error : confirmation returns nil.")
-            exit(0)
-        }
-        return verifiedConfirmation
+    private func confirmChoices() -> Bool {
+        Game.displayMiniTitle("CONFIRMATION")
+        return Game.askForConfirmation("Do you confirm your choices ?")
     }
-    /// Ask user to confirm choices by enter Y or N.
-    /// - returns: True if Y was entered, False if N was entered, nil otherwise.
-    func askForConfirmation() -> Bool? {
-        print("\nDo you confirm ? (Y/N)")
-        let answer = readLine()
-        if let verifiedAnswer = answer {
-            if verifiedAnswer.lowercased() == "y" {
-                return true
-            }
-            if verifiedAnswer.lowercased() == "n" {
-                return false
-            }
-        }
-        return nil
-    }
-    /// Ask user to choose a number.
-    /// - parameter min: The minimum number the user can enter (without 0 case).
-    /// - parameter max: The maximum number the user can enter.
-    /// - parameter canCancel : Can the user enter 0 to cancel last choice ? True if he cans, False otherwise.
-    /// - returns: The choosen number. Returns nil if the choice is incorrect.
-    func askNumber(min: Int, max: Int, canCancel: Bool) -> Int? {
-        let number = readLine()
-        guard let existingNumber = number else {
-            print("A number have to be entered.")
-            return nil
-        }
-        guard let verifiedNumber = Int(existingNumber) else {
-            print("A number have to be entered.")
-            return nil
-        }
-        if verifiedNumber == 0 && canCancel {
-            return 0
-        }
-        if verifiedNumber < min || verifiedNumber > max {
-            return nil
-        } else {
-            return verifiedNumber
-        }
-    }
+    
     /// Display choices made by user.
     private func displayChoices() {
         if let character = choosenCharacter {
@@ -203,19 +156,22 @@ class Round {
             print("\nNo choice have been made for now.")
         }
     }
+    
+    
+    
         // MARK: Characters choices
+    
+    
+    
     /// Ask player to choose a character, or cancel last choice.
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
-    func characterManager() -> Character? {
+    private func characterManager() -> Character? {
         // prepare parameters before asking
         let charactersPlayer: Player // among the characters of which player the choice have to be done ?
-        let canCancel: Bool // can user enter 0 to cancel ?
+        let cancelProposition: String? // can user enter 0 to cancel ?
         if activeStep == .skillIsSelected {
-            print("\n\n\n******* Choose a target *******")
-            guard let usedSkill = choosenSkill else {
-                print("Fatal Error : choosen skill returns nil.")
-                exit(0)
-            }
+            Game.displayMiniTitle("Choose a target")
+            let usedSkill = verifyChoosenSkill()
             switch usedSkill {
             case .attack, .diversion:
                 charactersPlayer = watchingPlayer
@@ -225,44 +181,42 @@ class Round {
                 print("Fatal Error : a target should not be asked for using a multiskill.")
                 exit(0)
             }
-            canCancel = true
+            cancelProposition = "Enter 0 to cancel and choose another skill."
         } else {
-            print("\n\n\n******* Choose a character of yours ******")
+            Game.displayMiniTitle("Choose a character of yours")
             charactersPlayer = playingPlayer
-            canCancel = false
+            cancelProposition = nil
         }
-        
         // Ask user to choose a character
         var character: Character? = nil
         while character == nil {
             displayCharacters(charactersPlayer.index)
-            print("Please, choose a character by enter a number between \(charactersPlayer.index * 3 + 1) and \(charactersPlayer.index * 3 + 3)")
-            if activeStep == .skillIsSelected {
-                print("Enter 0 to cancel and choose another skill.")
-            }
-            let number = askNumber(min: charactersPlayer.index * 3 + 1, max: charactersPlayer.index * 3 + 3, canCancel: canCancel)
-            if let verifiedNumber = number {
-                if number == 0 {
-                    return nil
-                } else {
-                    character = choosedCharacter(number: verifiedNumber)
-                }
+            let number = Game.askNumber(
+                range: charactersPlayer.index * 3 + 1...charactersPlayer.index * 3 + 3,
+                message: "Please, choose a character by enter a number between \(charactersPlayer.index * 3 + 1) and \(charactersPlayer.index * 3 + 3)",
+                cancelProposition: cancelProposition)
+            if number == 0 {
+                return nil
+            } else {
+                character = choosedCharacter(number: number)
             }
         }
         return character
     }
+    
     /// Verify if the choosen character can be use by the user.
     /// - parameter number: Choosen number by the user.
     /// - returns: If the choosen character can be used, returns the character. Otherwise, returns nil.
-    func choosedCharacter(number: Int) -> Character? {
+    private func choosedCharacter(number: Int) -> Character? {
         if Player.characters[number - 1].isDead {
             return nil
         }
         return Player.characters[number - 1]
     }
+    
     /// Display a characters list.
     /// - parameter playerIndex: To display the characters list of a specific player, enter his number. Otherwise, to display the entire list, enter nil.
-    func displayCharacters(_ playerIndex: Int?) {
+    private func displayCharacters(_ playerIndex: Int?) {
         // prepare parameters
         let minIndex: Int
         let maxIndex: Int
@@ -276,7 +230,6 @@ class Round {
             maxIndex = 5
             displayAllCharacters = true
         }
-        
         // display characters list
         for index in minIndex...maxIndex {
             // if the entire list is to display, enter the name of players and their HP situation before their characters list.
@@ -303,9 +256,10 @@ class Round {
             }
         }
     }
+    
     /// Display informations about a character.
     /// - parameter index: Index of the character in Player.characters.
-    func displayCharacterInfo(index: Int) {
+    private func displayCharacterInfo(index: Int) {
         let character = Player.characters[index]
         let emoticon: String
         if character.isDiverted {
@@ -318,38 +272,46 @@ class Round {
         print("\(index + 1). \(character.initials) \(emoticon) \(character.name) : [Str. \(character.strength)] [HP \(character.healthPoints)/\(character.maxHealthPoints)]")
     }
     
-        // MARK: Skill choice
-    /// Ask player to choose a character, or cancel last choice.
-    /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
-    func skillManager() -> SkillsType? {
-        // get choosen character to display its skill
-        print("\n\n\n******* Choose a skill *******")
-        guard let fightingCharacter = choosenCharacter else {
+    /// Verify if the choosen character exists.
+    /// - warning: This method needs to be sure choosen character has been choosen. If choosenCharacterl returns nil, the application will returns a Fatal Error.
+    /// - returns: The choosen character.
+    func verifyChoosenCharacter() -> Character {
+        guard let character = choosenCharacter else {
             print("Fatal Error : choosen character returns nil.")
-            exit(0)
+            exit (0)
         }
-        
-        // ask user to choose a skill
-        var skill: SkillsType? = nil
-        while skill == nil {
-            displaySkills(of: fightingCharacter)
-            print("Choose a skill by enter a number between 1 and 3.")
-            print("Enter 0 to cancel and choose another character.")
-            let number = askNumber(min: 1, max: 3, canCancel: true)
-            if let verifiedNumber = number {
-                if verifiedNumber == 0 {
-                    return nil
-                } else {
-                    skill = chooseSkill(of: fightingCharacter, number: verifiedNumber)
-                }
-            }
-        }
-        return skill
+        return character
     }
     
-
     
-    func displaySkills(of character: Character) {
+    
+        // MARK: Skill choice
+    
+    
+    
+    /// Ask player to choose a character, or cancel last choice.
+    /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
+    private func skillManager() -> SkillsType? {
+        // get choosen character to display its skill
+        Game.displayMiniTitle("Choose a skill")
+        let character = verifyChoosenCharacter()
+        
+        // ask user to choose a skill
+        displaySkills(of: character)
+        let number = Game.askNumber(
+            range: 1...3,
+            message: "Choose a skill by enter a number between 1 and 3.",
+            cancelProposition: "Enter 0 to cancel and choose another character.")
+        if number == 0 {
+            return nil
+        } else {
+            return chooseSkill(of: character, number: number)
+        }
+    }
+    
+    /// Display skills of a character.
+    /// - parameter character: Character of which the skills have to be displayed.
+    private func displaySkills(of character: Character) {
         print("1. \(character.skills[0].rawValue)")
         print("2. \(character.skills[1].rawValue)")
         if character.specialSkillIsAvailable == .available {
@@ -358,7 +320,12 @@ class Round {
             print("3. \(character.skills[2].rawValue) [unavailable : used last round]")
         }
     }
-    func chooseSkill(of character: Character, number: Int) -> SkillsType? {
+    
+    /// Check if the choosen skill is available and returns it.
+    /// - parameter character: Character of which the skill belongs.
+    /// - parameter number: Index of the skill in character's skills.
+    /// - returns: The skill if available. Otherwise, returns nil.
+    private func chooseSkill(of character: Character, number: Int) -> SkillsType? {
         if number == 3 {
             if character.specialSkillIsAvailable != .available {
                 print("A character can't use its special skill if it has been used last round.")
@@ -367,18 +334,45 @@ class Round {
         }
         return character.skills[number - 1]
     }
-
-
-    func endRoundAndReturnChest(character: Character, skill: SkillsType) -> Chest? {
-        //launch the player choose skill, check diversion and skills availability of the player characters, and ask for a chest to return
-        print("\n\n\n***************")
-        useSkill(character: character, skill: skill)
-        print("***************")
-        checkDiversion()
-        checkSpecialSkillsAvailability()
-        return randomChest(for: character)
+    
+    /// Verify if the choosen skill exists.
+    /// - warning: This method needs to be sure choosen skill has been choosen. If choosenSkill returns nil, the application will returns a Fatal Error.
+    /// - returns: The choosen skill.
+    func verifyChoosenSkill() -> SkillsType {
+        guard let skill = choosenSkill else {
+            print("Fatal Error : choosen skill returns nil.")
+            exit (0)
+        }
+        return skill
     }
-    private func useSkill(character: Character, skill: SkillsType) {
+
+    
+    
+        // MARK: End round
+
+    
+    /// End the round and check if a chest is generated.
+    /// - returns: Chest if it has been generated. Otherwise, returns nil.
+    func endRoundAndReturnChest() -> Chest? {
+        //launch the player choose skill and display result
+        Game.displayStarLine()
+        Game.displayMiniTitle("RESULT")
+        useSkill()
+        Game.pressEnter()
+        Game.displayStarLine()
+        // check diversion
+        checkDiversion()
+        // check special skills availability of the player characters
+        checkSpecialSkillsAvailability()
+        // return a chest if it has been generated
+        return randomChest()
+    }
+    
+    /// Use the choosen skill.
+    private func useSkill() {
+        // get parameters
+        let character = verifyChoosenCharacter()
+        let skill = verifyChoosenSkill()
         //check the choosen skill to launch the associated method of the choosen character
         if let target = choosenTargetCharacter {
             print("\(character.name) used \(skill.rawValue) on \(target.name).")
@@ -407,14 +401,16 @@ class Round {
         }
         
     }
-
+    
+    /// Check if player's characters are diverted, and reduce their diversion's rounds count.
     private func checkDiversion() {
-        //check if some characters of the playing player are diverted and reduce the diversion rounds
+        // get characters list
         let characters = [Player.characters[playingPlayer.index * 3], Player.characters[playingPlayer.index * 3 + 1], Player.characters[playingPlayer.index * 3 + 2]]
+        // for each character, check if they are diverted and reduce their diversion's rouns count
         for character in characters {
             if character.isDiverted {
                 guard var rounds = character.diversionRounds else {
-                    print("Fatal Error : \(character.name) isDiverted returns true, but diversionRounds returns nil.")
+                    print("Fatal Error : \(character.name)'s isDiverted returns true, but diversionRounds returns nil.")
                     exit(0)
                 }
                 rounds -= 1
@@ -426,9 +422,12 @@ class Round {
             }
         }
     }
+    
+    /// Check the availability of player's characters special skill to make the just used special skill unavailable for the next round, and to make the used special skill in the last round available for the next.
     private func checkSpecialSkillsAvailability() {
-        // check the availability of special skills of the playing player characters to make the just used special skill unavailable for the next round, and to make the used special skill in the last round available for the next.
+        // get characters list
         let characters = [Player.characters[playingPlayer.index * 3], Player.characters[playingPlayer.index * 3 + 1], Player.characters[playingPlayer.index * 3 + 2]]
+        // check for each character
         for character in characters {
             switch character.specialSkillIsAvailable {
             case .used:
@@ -438,21 +437,32 @@ class Round {
             }
         }
     }
-    private func randomChest(for character: Character) -> Chest? {
-        //choose a number between 1 and chances in bacproperties. If 1 : ask a chest generation
+    
+    /// Choose a number between 1 and chances in bacproperties. If 1 : generate a chest and return it.
+    /// - returns: Chest if it has been generated. Otherwise, returns nil.
+    private func randomChest() -> Chest? {
+        // random number
         let random: Int = Int.random(in: 1...bacproperties.chestChances)
         switch random {
         case 1:
-            return chestGenerator(for: character)
+            return chestGenerator()
         default:
             return nil
         }
     }
-    private func chestGenerator(for character: Character) -> Chest {
+    
+    /// Generate a chest.
+    /// - returns: Generated chest.
+    private func chestGenerator() -> Chest {
+        // get character
+        let character = verifyChoosenCharacter()
         //ask a weapon generation and return a chest with this weapon
         let weapon = weaponGenerator(for: character)
-        return Chest(gift: weapon, for: choosenCharacter!, player: playingPlayer)
+        return Chest(gift: weapon, for: character, player: playingPlayer)
     }
+    
+    /// Generate weapon.
+    /// - returns: Generated weapon.
     private func weaponGenerator(for character: Character) -> Weapon {
         //generates a weapon
         switch character.type {
