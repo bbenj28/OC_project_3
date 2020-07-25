@@ -41,7 +41,7 @@ class Round {
         // round's announcements
         Game.displayMiniTitle("\(playingPlayer.name), your turn !")
         Game.displayMiniTitle("SITUATION'S VIEW")
-        displayCharacters(nil)
+        let _ = displayCharacters(nil)
         Game.displayStarLine()
         // call step manager for player to choice characters and skill to use
         while activeStep != .confirmedChoices {
@@ -190,15 +190,23 @@ class Round {
         // Ask user to choose a character
         var character: Character? = nil
         while character == nil {
-            displayCharacters(charactersPlayer.index)
-            let number = Game.askNumber(
-                range: charactersPlayer.index * 3 + 1...charactersPlayer.index * 3 + 3,
-                message: "Please, choose a character by enter a number between \(charactersPlayer.index * 3 + 1) and \(charactersPlayer.index * 3 + 3)",
-                cancelProposition: cancelProposition)
-            if number == 0 {
-                return nil
+            let remainingCharactersCount = displayCharacters(charactersPlayer.index)
+            if remainingCharactersCount == 1 {
+                for remainCharacter in charactersPlayer.characters {
+                    if remainCharacter.isDead == false {
+                        character = remainCharacter
+                    }
+                }
             } else {
-                character = choosedCharacter(number: number)
+                let number = Game.askNumber(
+                    range: charactersPlayer.index * 3 + 1...charactersPlayer.index * 3 + 3,
+                    message: "Please, choose a character by enter a number between \(charactersPlayer.index * 3 + 1) and \(charactersPlayer.index * 3 + 3)",
+                    cancelProposition: cancelProposition)
+                if number == 0 {
+                    return nil
+                } else {
+                    character = choosedCharacter(number: number)
+                }
             }
         }
         return character
@@ -216,8 +224,9 @@ class Round {
     
     /// Display a characters list.
     /// - parameter playerIndex: To display the characters list of a specific player, enter his number. Otherwise, to display the entire list, enter nil.
-    private func displayCharacters(_ playerIndex: Int?) {
+    private func displayCharacters(_ playerIndex: Int?) -> Int {
         // prepare parameters
+        var totalDisplayed: Int = 0
         let minIndex: Int
         let maxIndex: Int
         let displayAllCharacters: Bool
@@ -251,10 +260,13 @@ class Round {
             let character = Player.characters[index]
             if displayAllCharacters {
                 displayCharacterInfo(index: index)
+                totalDisplayed += 1
             } else if character.isDead == false {
                 displayCharacterInfo(index: index)
+                totalDisplayed += 1
             }
         }
+        return totalDisplayed
     }
     
     /// Display informations about a character.
@@ -404,10 +416,8 @@ class Round {
     
     /// Check if player's characters are diverted, and reduce their diversion's rounds count.
     private func checkDiversion() {
-        // get characters list
-        let characters = [Player.characters[playingPlayer.index * 3], Player.characters[playingPlayer.index * 3 + 1], Player.characters[playingPlayer.index * 3 + 2]]
         // for each character, check if they are diverted and reduce their diversion's rouns count
-        for character in characters {
+        for character in playingPlayer.characters {
             if character.isDiverted {
                 guard var rounds = character.diversionRounds else {
                     print("Fatal Error : \(character.name)'s isDiverted returns true, but diversionRounds returns nil.")
@@ -425,10 +435,8 @@ class Round {
     
     /// Check the availability of player's characters special skill to make the just used special skill unavailable for the next round, and to make the used special skill in the last round available for the next.
     private func checkSpecialSkillsAvailability() {
-        // get characters list
-        let characters = [Player.characters[playingPlayer.index * 3], Player.characters[playingPlayer.index * 3 + 1], Player.characters[playingPlayer.index * 3 + 2]]
         // check for each character
-        for character in characters {
+        for character in playingPlayer.characters {
             switch character.specialSkillIsAvailable {
             case .used:
                 character.specialSkillIsAvailable = .unavailable

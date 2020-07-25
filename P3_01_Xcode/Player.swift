@@ -13,11 +13,16 @@ import Foundation
 class Player {
     
         // MARK: Properties
-    let name: String // player's name choosen in the home view
+    // all characters
     static var characters: [Character] = [] // list of players characters
+    // specific player's properties
+    let name: String // player's name choosen in the home view
+    var characters: [Character] {
+        return [Player.characters[3 * index], Player.characters[3 * index + 1], Player.characters[3 * index + 2]]
+    }
     let index: Int
     var isDefeated: Bool {
-        return Player.characters[3 * index].isDead && Player.characters[3 * index + 1].isDead && Player.characters[3 * index + 2].isDead
+        return characters[0].isDead && characters[1].isDead && characters[2].isDead
     }
     var HPSituation: Int {
         var maxHP: Double = 0
