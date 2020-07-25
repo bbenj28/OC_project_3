@@ -13,20 +13,20 @@ import Foundation
 class Game {
     
         // MARK: Properties
-    var players: [Player] = [] // players list
-    var rounds: [Round] = [] // rounds list
-    var activeRound: Round { // the round which is actually in progress
-        return rounds[rounds.count - 1]
+    static var players: [Player] = [] // players list
+    //static var rounds: [Round] = [] // rounds list
+    static var activeRound: Round { // the round which is actually in progress
+        return Statistics.rounds[Statistics.rounds.count - 1]
     }
-    var chests: [Chest] = [] // list of generated chests during the rounds
-    var gameCanContinue: Bool {
+    //static var chests: [Chest] = [] // list of generated chests during the rounds
+    static var gameCanContinue: Bool {
         return players[0].isDefeated || players[1].isDefeated ? false : true
     }
-    var randomCreation: Bool = true // true for creating random players and characters
+    static var randomCreation: Bool = true // true for creating random players and characters
     
         // MARK: Start
     /// Manage game from players creation to statistics display.
-    func start() {
+    static func start() {
         // check randomCreation to know if players and characters have to be created by user.
         if randomCreation {
             // create random players and characters
@@ -42,7 +42,7 @@ class Game {
         
         // first round creation
         let round1 = Round(playingPlayer: players[0], watchingPlayer: players[1])
-        self.rounds = [round1]
+        Statistics.rounds = [round1]
         
         // fight
         Game.displayTitle("LET'S FIGHT")
@@ -56,7 +56,7 @@ class Game {
     }
         // MARK: User's creation
     /// Manage Players creation by user.
-    private func userPlayersCreation() {
+    static private func userPlayersCreation() {
         // player creation [by user]
         // iterate player's creation until two players are created
         while players.count < 2 {
@@ -64,7 +64,7 @@ class Game {
         }
     }
     /// Ask player's name and creates it.
-    private func addPlayer() {
+    static private func addPlayer() {
         // ask name
         var name: String? = nil
         while name == nil {
@@ -79,7 +79,7 @@ class Game {
     }
     /// Ask player's name and returns it.
     /// - returns: If the name is correct, returns it; otherwise returns nil.
-    private func askPlayerName() -> String? {
+    static private func askPlayerName() -> String? {
         // ask name
         let name = Game.askFreeAnswer("\nWhat's the player \(players.count + 1) name ?")
         if players.count == 1 {
@@ -96,7 +96,7 @@ class Game {
         return name
     }
     /// Manage Characters creation by user.
-    private func userCharactersCreation() {
+    static private func userCharactersCreation() {
         // characters creation [by user]
         // iterate characters creation for each player until all characters have been created
         for index in 0...1 {
@@ -108,7 +108,7 @@ class Game {
     }
         // MARK: Random creation
     /// Manage random Players creation.
-    private func randomPlayersCreation() {
+    static private func randomPlayersCreation() {
         // players creation [random]
         for index in 0...1 {
             var name: String? = nil
@@ -123,7 +123,7 @@ class Game {
         }
     }
     /// Choose a name for a player and verifiy if the other player has the same.
-    private func randomPlayerName() -> String? {
+    static private func randomPlayerName() -> String? {
         let names = ["Sheldon", "Leonard", "Penny", "Howard", "Bernadette", "Raj"]
         let index = Int.random(in: 0...names.count - 1)
         if players.count == 1 {
@@ -134,7 +134,7 @@ class Game {
         return names[index]
     }
     /// Manage random Characters creation.
-    private func randomCharactersCreation() {
+    static private func randomCharactersCreation() {
         // characters creation [random]
         Player.randomCharactersCreation()
     }
@@ -143,29 +143,29 @@ class Game {
     
         // MARK: Fight
     /// Manage fight beginning and ending.
-    private func handleFight() {
-        Game.displaySubTitle("ROUND \(rounds.count)")
+    static private func handleFight() {
+        Game.displaySubTitle("ROUND \(Statistics.rounds.count)")
         if let chest = activeRound.start() {
-            chests.append(chest)
+            Statistics.chests.append(chest)
         }
         if gameCanContinue {
             newRound()
         }
     }
     /// Create a new round in rounds by changing playing player.
-    private func newRound() {
+    static private func newRound() {
         // verifying the playing player of the last round, and create a new one with the other player
         switch activeRound.playingPlayer.name {
         case players[0].name:
-            rounds.append(Round(playingPlayer: players[1], watchingPlayer: players[0]))
+            Statistics.rounds.append(Round(playingPlayer: players[1], watchingPlayer: players[0]))
         default:
-            rounds.append(Round(playingPlayer: players[0], watchingPlayer: players[1]))
+            Statistics.rounds.append(Round(playingPlayer: players[0], watchingPlayer: players[1]))
         }
     }
     
         // MARK: End game
     /// Display winner and statistics.
-    private func endGame() {
+    static private func endGame() {
         // display winner
         let index: Int
         if players[0].isDefeated {
@@ -174,179 +174,41 @@ class Game {
             index = 0
         }
         Game.displayTitle("🏆 \(players[index].name.uppercased()) WINS ! 🏆")
-        Game.displayTitle("CONGRATULATIONS !")
+        Game.displayMiniTitle("CONGRATULATIONS !")
         Game.pressEnter()
         // display statistics
         Game.displayTitle("STATISTICS")
-        displayStatistics()
-    }
-    /// Display statistics.
-    private func displayStatistics() {
-        // rounds
-        Game.displayMiniTitle("rounds")
-        print("total : \(rounds.count)")
-        var playedByPlayer: [String:Int] = [players[0].name : 0, players[1].name : 0]
-        var usedCharactersType: [CharacterType:Int] = [.warrior : 0, .wizard : 0, .druid : 0, .joker : 0]
-        var usedSkillsType : [SkillsType:Int] = [.attack : 0, .diversion : 0, .heal : 0, .multiAttack : 0, .multiHeal : 0]
-        for round in rounds {
-            for (key, _) in playedByPlayer {
-                if key == round.playingPlayer.name {
-                    playedByPlayer[key]! += 1
-                }
-            }
-            for (key, _) in usedCharactersType {
-                let character = round.verifyChoosenCharacter()
-                if key == character.type {
-                    usedCharactersType[key]! += 1
-                }
-            }
-            for (key, _) in usedSkillsType {
-                let skill = round.verifyChoosenSkill()
-                if key == skill {
-                    usedSkillsType[key]! += 1
-                }
-            }
-        }
-        for (key, value) in playedByPlayer {
-            print("rounds played by \(key) : \(value)")
-        }
-        print("rounds played with a :")
-        for (key, value) in usedCharactersType {
-            print("- \(key) : \(value)")
-        }
-        print("round's used skill :")
-        for (key, value) in usedSkillsType {
-            print("- \(key) : \(value)")
-        }
-        Game.pressEnter()
-        Game.displayStarLine()
-        
-        // chests
-        Game.displayMiniTitle("chests")
-        // total
-        print("total : \(chests.count)")
-        // total for each player
-        for player in players {
-            print("\n > for \(player.name)")
-            // accepted chests count
-            var accepted: Int = 0
-            var total: Int = 0
-            for chest in chests {
-                if chest.player.name == player.name {
-                    total += 1
-                    guard let isAccepted = chest.isAccepted else {
-                        print("Fatal Error : Chest without acceptation's answer.")
-                        exit(0)
-                    }
-                    if isAccepted {
-                        accepted += 1
-                    }
-                }
-            }
-            print("total : \(total)")
-            print("accepted : \(accepted)")
-        }
-        Game.pressEnter()
-        Game.displayStarLine()
-        
-        // characters
-        Game.displayMiniTitle("characters")
-        
-        Game.displayMiniTitle("HP")
-        for character in Player.characters {
-            print("\(character.name) : \(character.healthPoints)")
-        }
-        Game.pressEnter()
-        
-        Game.displayMiniTitle("Strength")
-        for character in Player.characters {
-            print("\(character.name) : \(character.strength)")
-        }
-        Game.pressEnter()
-        
-        Game.displayMiniTitle("Injuries")
-        for character in Player.characters {
-            print("\(character.name) : \(character.injuriesPoints)")
-        }
-        Game.pressEnter()
-        
-        Game.displayMiniTitle("Healthcares")
-        for character in Player.characters {
-            print("\(character.name) : \(character.healPoints)")
-        }
-        Game.pressEnter()
-        Game.displayStarLine()
+        Statistics.display()
         Game.displayTitle("THE END")
-        
     }
     
     
-
+    
         // MARK: Titles (static)
     
     static func displayTitle(_ title: String) {
         // parameters
-        var text = "\n\n\n"
-        let maxDash = 70
-        let dash = "-"
-        if title.count > maxDash - 10 {
-            print("Fatal Error : title too long.")
-            exit(0)
-        }
-        let dashCount: Int = (maxDash - title.count - 2) / 2
-        // first line
-        for _ in 1...maxDash {
-            text += dash
-        }
-        text += "\n"
-        // second line
-        for _ in 1...dashCount {
-            text += dash
-        }
-        text += " \(title) "
-        for _ in 1...dashCount {
-            text += dash
-        }
-        if title.count + 2 + dashCount * 2 == maxDash - 1 {
-            text += dash
-        }
-        // display
-        print(text)
+        displaySelectedTitle(
+        title: title,
+        maxDash: 70,
+        dash: "=")
     }
     static func displaySubTitle(_ title: String) {
         // parameters
-        var text = "\n\n\n"
-        let maxDash = 60
-        let dash = "*"
-        if title.count > maxDash - 10 {
-            print("Fatal Error : subtitle too long.")
-            exit(0)
-        }
-        let dashCount: Int = (maxDash - title.count - 2) / 2
-        // first line
-        for _ in 1...maxDash {
-            text += dash
-        }
-        text += "\n"
-        // second line
-        for _ in 1...dashCount {
-            text += dash
-        }
-        text += " \(title) "
-        for _ in 1...dashCount {
-            text += dash
-        }
-        if title.count + 2 + dashCount * 2 == maxDash - 1 {
-            text += dash
-        }
-        // display
-        print(text)
+        displaySelectedTitle(
+        title: title,
+        maxDash: 60,
+        dash: "*")
     }
     static func displayMiniTitle(_ title: String) {
         // parameters
+        displaySelectedTitle(
+            title: title,
+            maxDash: 50,
+            dash: "-")
+    }
+    static private func displaySelectedTitle(title: String, maxDash: Int, dash: String) {
         var text = "\n\n\n"
-        let maxDash = 50
-        let dash = "*"
         if title.count > maxDash - 10 {
             print("Fatal Error : subtitle too long.")
             exit(0)
@@ -368,7 +230,7 @@ class Game {
     }
     static func displayStarLine() {
         let maxDash = 50
-        let dash = "*"
+        let dash = "-"
         var text = "\n"
         // line
         for _ in 1...maxDash {

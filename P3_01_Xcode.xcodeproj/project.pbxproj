@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		03B2329024CC4CCF00794442 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B2328F24CC4CCF00794442 /* Statistics.swift */; };
 		03C9B64224C86023004A7B76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64124C86023004A7B76 /* main.swift */; };
 		03C9B65124C86038004A7B76 /* BACProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64A24C86037004A7B76 /* BACProperties.swift */; };
 		03C9B65224C86038004A7B76 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64B24C86037004A7B76 /* Player.swift */; };
@@ -30,6 +31,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		03B2328F24CC4CCF00794442 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		03C9B63E24C86023004A7B76 /* P3_01_Xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = P3_01_Xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C9B64124C86023004A7B76 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
 		03C9B64A24C86037004A7B76 /* BACProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BACProperties.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				03EAEA9B24C87E3C005F26FB /* Round.swift */,
 				03EAEA9D24C87E3D005F26FB /* Chest.swift */,
 				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
+				03B2328F24CC4CCF00794442 /* Statistics.swift */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";
@@ -142,6 +145,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				03C9B64224C86023004A7B76 /* main.swift in Sources */,
+				03B2329024CC4CCF00794442 /* Statistics.swift in Sources */,
 				03C9B65124C86038004A7B76 /* BACProperties.swift in Sources */,
 				03EAEA9F24C87E3D005F26FB /* Character.swift in Sources */,
 				03C9B65424C86038004A7B76 /* Weapon.swift in Sources */,
