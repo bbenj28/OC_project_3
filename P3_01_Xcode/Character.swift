@@ -16,6 +16,7 @@ class Character {
     let name: String // name of the character
      
     let initials: String // intitals of the character's type, example : Wa for Warrior
+    let emoticon: String // emoticon of the character's type, example : 💂 for Warrior
     let type: CharacterType // type of the character
     let maxHealthPoints: Int // the maximum healthpoints the character can have
     var healthPoints: Int { // computes the healthpoints the character actually have
@@ -55,7 +56,7 @@ class Character {
     var specialSkillIsAvailable: SpecialSkillAvailability = .available
     
         // MARK: Init
-    init(name: String, type: CharacterType, weapon: Weapon, specialSkill: SkillsType, healthCareCoefficient: Double, initials: String, maxHealthPoints: Int) {
+    init(name: String, type: CharacterType, weapon: Weapon, specialSkill: SkillsType, healthCareCoefficient: Double, initials: String, maxHealthPoints: Int, emoticon: String) {
         self.name = name
         self.type = type
         self.weapon = weapon
@@ -63,38 +64,49 @@ class Character {
         self.healthCareCoefficient = healthCareCoefficient
         self.initials = initials
         self.maxHealthPoints = maxHealthPoints
+        self.emoticon = emoticon
     }
     
         // MARK: Methods
     func attack(_ target: Character) {
         // chooses a random number between strength / 2 and strength, and substracts this number to the target healthpoints
-        var attackCoefficient = Int.random(in: strength/2...strength)
-        if attackCoefficient > target.healthPoints {
-            attackCoefficient = target.healthPoints
+        var injuriesPoints = Int.random(in: strength/2...strength)
+        if injuriesPoints > target.healthPoints {
+            injuriesPoints = target.healthPoints
         }
-        target.injuriesPoints += attackCoefficient
+        target.injuriesPoints += injuriesPoints
+        print("Sustained injuries points : \(injuriesPoints)")
+        if target.isDead {
+            print("🎖 \(target.name) died ! 💀")
+        }
     }
     func heal(_ target: Character) {
         // checks if healthcare points + target's healthpoints are less than the maximum healthpoints, and add healthcare points to the target healthpoints
-        var healPointsToAdd: Int = healthCare
-        if healPointsToAdd + target.healthPoints > target.maxHealthPoints {
-            healPointsToAdd = target.maxHealthPoints - target.healthPoints
+        var healPoints: Int = healthCare
+        if healPoints + target.healthPoints > target.maxHealthPoints {
+            healPoints = target.maxHealthPoints - target.healthPoints
         }
-        target.healPoints += healPointsToAdd
+        target.healPoints += healPoints
+        print("Received heal points : \(healPoints)")
     }
     func multiAttack(_ player: Player) {
         // chooses a random number between strength / 2 and strength, and substract a third of this number to the healthpoints of each alive character of the choosenplayer
-        let attackCoefficient = Int.random(in: strength/2...strength)
+        let injuriesPoints = Int.random(in: strength/2...strength)
         let characters = [Player.characters[player.index * 3], Player.characters[player.index * 3 + 1], Player.characters[player.index * 3 + 2]]
         for target in characters {
             if target.isDead == false {
-                var thirdAttackCoefficient = attackCoefficient / 3
-                if thirdAttackCoefficient > target.healthPoints {
-                    thirdAttackCoefficient = target.healthPoints
+                var thirdInjuriesPoints = injuriesPoints / 3
+                if thirdInjuriesPoints > target.healthPoints {
+                    thirdInjuriesPoints = target.healthPoints
                 }
-                target.injuriesPoints += thirdAttackCoefficient
+                target.injuriesPoints += thirdInjuriesPoints
+                print("Sustained injuries points : \(thirdInjuriesPoints) for \(target.name)")
+                if target.isDead {
+                    print("🎖 \(target.name) died ! 💀")
+                }
             }
         }
+        
         // special skill is used, next round this character won't be able to use it again
         specialSkillIsUsed()
     }
@@ -103,12 +115,13 @@ class Character {
         let thirdHealthCare: Int = healthCare / 3
         let characters = [Player.characters[player.index * 3], Player.characters[player.index * 3 + 1], Player.characters[player.index * 3 + 2]]
         for target in characters {
-            var healPointsToAdd: Int = thirdHealthCare
+            var healPoints: Int = thirdHealthCare
             if target.isDead == false {
-                if healPointsToAdd + target.healthPoints > target.maxHealthPoints {
-                    healPointsToAdd = target.maxHealthPoints - target.healthPoints
+                if healPoints + target.healthPoints > target.maxHealthPoints {
+                    healPoints = target.maxHealthPoints - target.healthPoints
                 }
-                target.healPoints += healPointsToAdd
+                target.healPoints += healPoints
+                print("Received heal points : \(healPoints) for \(target.name)")
             }
         }
         // special skill is used, next round this character won't be able to use it again
@@ -118,6 +131,7 @@ class Character {
         // chooses a random number of rounds during which the target will be diverted
         let randomRounds: Int = Int.random(in: 2...4)
         target.diversionRounds = randomRounds
+        print("\(target.name) is diverted for \(randomRounds) rounds.")
         // special skill is used, next round this character won't be able to use it again
         specialSkillIsUsed()
     }
@@ -132,50 +146,61 @@ class Character {
 
 
 // MARK: Character's class inheritance
-// creation of classes which inherit from Character : all classes are developed the same way. The first is commented, but the comments can be applied on all of them
 
 
         // MARK: Warrior
 class Warrior: Character {
     init(name: String, weapon: Weapon) {
-        let specialSkill = bacproperties.warriorSpecialSkill // specialskill which can be used by the character type
-        let healthCareCoefficient = bacproperties.warriorHealthCareCoefficient // healthcare coefficient of the character type
-        let initials = bacproperties.warriorInitials // initials of the character type
-        let maxHealthPoints = bacproperties.warriorMaxHealthPoints // maximum healthpoints a character of this type can have
-        super.init(name: name, type: .warrior, weapon: weapon, specialSkill: specialSkill, healthCareCoefficient: healthCareCoefficient, initials: initials, maxHealthPoints: maxHealthPoints)
+        super.init(name: name,
+                   type: .warrior,
+                   weapon: weapon,
+                   specialSkill: bacproperties.warriorSpecialSkill,
+                   healthCareCoefficient: bacproperties.warriorHealthCareCoefficient,
+                   initials: bacproperties.warriorInitials,
+                   maxHealthPoints: bacproperties.warriorMaxHealthPoints,
+                   emoticon: bacproperties.warriorEmoticon)
     }
 }
 
         // MARK: Wizard
 class Wizard: Character {
     init(name: String, weapon: Weapon) {
-        let specialSkill = bacproperties.wizardSpecialSkill
-        let healthCareCoefficient = bacproperties.wizardHealthCareCoefficient
-        let initials = bacproperties.wizardInitials
-        let maxHealthPoints = bacproperties.wizardMaxHealthPoints
-        super.init(name: name, type: .wizard, weapon: weapon, specialSkill: specialSkill, healthCareCoefficient: healthCareCoefficient, initials: initials, maxHealthPoints: maxHealthPoints)
+        super.init(name: name,
+                   type: .wizard,
+                   weapon: weapon,
+                   specialSkill: bacproperties.wizardSpecialSkill,
+                   healthCareCoefficient: bacproperties.wizardHealthCareCoefficient,
+                   initials: bacproperties.wizardInitials,
+                   maxHealthPoints: bacproperties.wizardMaxHealthPoints,
+                   emoticon: bacproperties.wizardEmoticon)
     }
 }
 
         // MARK: Druid
 class Druid: Character {
     init(name: String, weapon: Weapon) {
-        let specialSkill = bacproperties.druidSpecialSkill
-        let healthCareCoefficient = bacproperties.druidHealthCareCoefficient
-        let initials = bacproperties.druidInitials
-        let maxHealthPoints = bacproperties.druidMaxHealthPoints
-        super.init(name: name, type: .druid, weapon: weapon, specialSkill: specialSkill, healthCareCoefficient: healthCareCoefficient, initials: initials, maxHealthPoints: maxHealthPoints)
+        super.init(name: name,
+                   type: .druid,
+                   weapon: weapon,
+                   specialSkill: bacproperties.druidSpecialSkill,
+                   healthCareCoefficient: bacproperties.druidHealthCareCoefficient,
+                   initials: bacproperties.druidInitials,
+                   maxHealthPoints: bacproperties.druidMaxHealthPoints,
+                   emoticon: bacproperties.druidEmoticon)
     }
 }
 
         // MARK: Joker
 class Joker: Character {
     init(name: String, weapon: Weapon) {
-        let specialSkill = bacproperties.jokerSpecialSkill
-        let healthCareCoefficient = bacproperties.jokerHealthCareCoefficient
-        let initials = bacproperties.jokerInitials
-        let maxHealthPoints = bacproperties.jokerMaxHealthPoints
-        super.init(name: name, type: .joker, weapon: weapon, specialSkill: specialSkill, healthCareCoefficient: healthCareCoefficient, initials: initials, maxHealthPoints: maxHealthPoints)
+        super.init(name: name,
+                   type: .joker,
+                   weapon: weapon,
+                   specialSkill: bacproperties.jokerSpecialSkill,
+                   healthCareCoefficient: bacproperties.jokerHealthCareCoefficient,
+                   initials: bacproperties.jokerInitials,
+                   maxHealthPoints: bacproperties.jokerMaxHealthPoints,
+                   emoticon: bacproperties.jokerEmoticon)
     }
 }
 
@@ -200,7 +225,7 @@ enum SkillsType: String { // the differents existing skills a character can use.
     case heal = "🧪 Heal"
     case multiAttack = "⚔️ MultiAttack"
     case multiHeal = "🧪 MultiHeal"
-    case diversion = "🔫 Diversion"
+    case diversion = "🤡 Diversion"
 }
 
         // MARK: CharacterType

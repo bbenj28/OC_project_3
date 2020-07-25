@@ -19,13 +19,78 @@ class Player {
     var isDefeated: Bool {
         return Player.characters[2 * index + 1].isDead && Player.characters[2 * index + 2].isDead && Player.characters[2 * index + 3].isDead
     }
+    var HPSituation: Int {
+        var maxHP: Double = 0
+        var HP: Double = 0
+        for index in self.index * 3...self.index * 3 + 2 {
+            maxHP += Double(Player.characters[index].maxHealthPoints)
+            HP += Double(Player.characters[index].healthPoints)
+        }
+        return Int(HP / maxHP * 100)
+    }
         // MARK: Init
     init(name: String, index: Int) {
         self.name = name
         self.index = index
     }
     
-        // MARK: Method
+        // MARK: Random characters
+    /// Manage random characters creation.
+    static func randomCharactersCreation() {
+        // characters creation [random]
+        while Player.characters.count < 6 {
+            Player.characters.append(randomSingleCharacter())
+        }
+    }
+    /// Choose name and type of a character and returns it.
+    static private func randomSingleCharacter() -> Character {
+        // choose name
+        var name: String? = nil
+        while name == nil {
+            name = randomName()
+        }
+        guard let verifiedName = name else {
+            print("Fatal Error : random character's name returns nil.")
+            exit(0)
+        }
+        // choose type
+        let type = Int.random(in: 1...4)
+        switch type {
+        case 1:
+            return Warrior(name: verifiedName, weapon: Sword(firstWeapon: true, lifeStep: .fulLife))
+        case 2:
+            return Wizard(name: verifiedName, weapon: PowerStick(firstWeapon: true, lifeStep: .fulLife))
+        case 3:
+            return Druid(name: verifiedName, weapon: HealthStick(firstWeapon: true, lifeStep: .fulLife))
+        case 4:
+            return Joker(name: verifiedName, weapon: Knife(firstWeapon: true, lifeStep: .fulLife))
+        default:
+            print("Fatal Error : randomCharacterType have to be a number between 1 and 4.")
+            exit(0)
+        }
+    }
+    /// Choose the character's name in a list by drawing a random number.
+    /// - returns: If the name is already used by another character, returns nil; otherwise returns the name.
+    static private func randomName() -> String? {
+        // names list
+        let names = ["Arthur", "Guenièvre", "Merlin", "Léodagan", "Séli", "Bohort", "Perceval", "Caradoc", "Mevanwi", "Calogrenan", "Lancelot", "Lot", "Dagonnet", "Yvain", "Gauvain", "Galcin", "Angarade", "La Dame du Lac"]
+        // random number
+        let index = Int.random(in: 0...names.count - 1)
+        // check if the name is already used by another character
+        if Player.characters.count > 0 {
+            for character in Player.characters {
+                if character.name == names[index] {
+                    return nil
+                }
+            }
+        }
+        // returns it
+        return names[index]
+    }
+    
+    
+        // MARK: Characters creation by user
+    
     func chooseCharacter() {
         let characterIndex = Player.characters.count - 3 * self.index + 1
         switch characterIndex {
@@ -62,22 +127,22 @@ class Player {
             print("Fatal Error : Unknown special skill description (1).")
             exit(0)
         }
-        print("1. : \(bacproperties.warriorName) : \(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
+        print("1. \(bacproperties.warriorName) : \(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
         guard let specialSkillDescriptionWi = specialSkillDescription(bacproperties.wizardSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (2).")
             exit(0)
         }
-        print("2. : \(bacproperties.wizardName) : \(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
+        print("2. \(bacproperties.wizardName) : \(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
         guard let specialSkillDescriptionDr = specialSkillDescription(bacproperties.druidSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (3).")
             exit(0)
         }
-        print("3. : \(bacproperties.druidName) : \(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
+        print("3. \(bacproperties.druidName) : \(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
         guard let specialSkillDescriptionJo = specialSkillDescription(bacproperties.jokerSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (4).")
             exit(0)
         }
-        print("4. : \(bacproperties.jokerName) : \(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
+        print("4. \(bacproperties.jokerName) : \(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
     }
     func specialSkillDescription(_ specialSkill: SkillsType) -> String? {
         switch specialSkill {

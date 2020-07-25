@@ -33,6 +33,7 @@ class BACProperties {
     
     let warriorName = "Warrior"
     let warriorInitials = "[Wa]"
+    let warriorEmoticon = "💂"
     let warriorDescription = "The strongest recruit you will see. Warriors are naturally born to kill. They are the most resistants soldiers and their strength will cause many damages."
     let warriorMaxHealthPoints: Int = 300
     let warriorHealthCareCoefficient: Double = 0.5
@@ -41,6 +42,7 @@ class BACProperties {
             // MARK: Wizard
     let wizardName = "Wizard"
     let wizardInitials = "[Wi]"
+    let wizardEmoticon = "🧙"
     let wizardDescription = "Beware! Behind their frail appearance, the witchers are no less formidable. They aren't very resistants, but their PowerStick gives them great strength."
     let wizardMaxHealthPoints: Int = 150
     let wizardHealthCareCoefficient: Double = 0.2
@@ -49,6 +51,7 @@ class BACProperties {
             // MARK: Druid
     let druidName = "Druid"
     let druidInitials = "[Dr]"
+    let druidEmoticon = "🧑‍⚕️"
     let druidDescription = "In communion with nature and their environment, druids are pleased to take care of others. Their ability to heal is second to none."
     let druidMaxHealthPoints: Int = 200
     let druidHealthCareCoefficient: Double = 1.5
@@ -57,6 +60,7 @@ class BACProperties {
             // MARK: Joker
     let jokerName = "Joker"
     let jokerInitials = "[Jo]"
+    let jokerEmoticon = "🃏"
     let jokerDescription = "Not really resistant, not strong either and without healing power, jokers can nevertheless, through their humor, distract enemies and give you an advantage."
     let jokerMaxHealthPoints: Int = 200
     let jokerHealthCareCoefficient: Double = 0.7

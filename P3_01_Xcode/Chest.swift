@@ -30,10 +30,12 @@ class Chest {
         // if accepted, the gift becomes the new character's weapon
         character.weapon = gift
         isAccepted = true
+        print("\nChest is accepted.")
     }
     func refused() {
         // if refused, the character's weapon doesn't change
         isAccepted = false
+        print("\nChest is refused.")
     }
     func askForReplaceWeapon() {
         print("Do you want to change it with the chest's content ? (Y/N)")
