@@ -171,7 +171,7 @@ class Ask {
             newText.remove(at: newText.startIndex)
         }
         while newText.last == " " {
-            newText.remove(at: newText.endIndex)
+            newText.remove(at: newText.index(before: newText.endIndex))
         }
         return newText
     }

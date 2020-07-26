@@ -20,7 +20,7 @@ class Game {
     static var gameCanContinue: Bool {
         return players[0].isDefeated || players[1].isDefeated ? false : true
     }
-    static var randomCreation: Bool = true // true for creating random players and characters
+    static var randomCreation: Bool = false // true for creating random players and characters
     
         // MARK: Start
     /// Manage game from players creation to statistics display.

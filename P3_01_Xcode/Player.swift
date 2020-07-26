@@ -129,22 +129,22 @@ class Player {
             print("Fatal Error : Unknown special skill description (1).")
             exit(0)
         }
-        print("1. \(bacproperties.warriorName) : \(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
+        print("1. \(bacproperties.warriorEmoticon) \(bacproperties.warriorName) : \(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
         guard let specialSkillDescriptionWi = specialSkillDescription(bacproperties.wizardSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (2).")
             exit(0)
         }
-        print("2. \(bacproperties.wizardName) : \(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
+        print("2. \(bacproperties.wizardEmoticon) \(bacproperties.wizardName) : \(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
         guard let specialSkillDescriptionDr = specialSkillDescription(bacproperties.druidSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (3).")
             exit(0)
         }
-        print("3. \(bacproperties.druidName) : \(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
+        print("3. \(bacproperties.druidEmoticon) \(bacproperties.druidName) : \(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
         guard let specialSkillDescriptionJo = specialSkillDescription(bacproperties.jokerSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (4).")
             exit(0)
         }
-        print("4. \(bacproperties.jokerName) : \(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
+        print("4. \(bacproperties.jokerEmoticon) \(bacproperties.jokerName) : \(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
     }
     func specialSkillDescription(_ specialSkill: SkillsType) -> String? {
         switch specialSkill {
