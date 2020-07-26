@@ -13,18 +13,20 @@ import Foundation
 class Player {
     
         // MARK: Properties
+    
     // all characters
     static var characters: [Character] = [] // list of players characters
+    
     // specific player's properties
     let name: String // player's name choosen in the home view
-    var characters: [Character] {
+    var characters: [Character] { // characters of the player in Player.characters
         return [Player.characters[3 * index], Player.characters[3 * index + 1], Player.characters[3 * index + 2]]
     }
-    let index: Int
-    var isDefeated: Bool {
+    let index: Int // index of the player in Game.players
+    var isDefeated: Bool { // returns true if all characters are dead
         return characters[0].isDead && characters[1].isDead && characters[2].isDead
     }
-    var HPSituation: Int {
+    var HPSituation: Int { // returns HP / HPmax of characters
         var maxHP: Double = 0
         var HP: Double = 0
         for index in self.index * 3...self.index * 3 + 2 {
@@ -33,6 +35,7 @@ class Player {
         }
         return Int(HP / maxHP * 100)
     }
+    
         // MARK: Init
     init(name: String, index: Int) {
         self.name = name
@@ -95,8 +98,39 @@ class Player {
     
     
         // MARK: Characters creation by user
-    
-    func chooseCharacter() {
+    func userCharactersCreation() {
+        // characters creation [by user]
+        // iterate characters creation until all characters have been created
+        StyleSheet.displaySubTitle("\(name)")
+        var confirmation: Bool = false
+        while confirmation == false {
+            while Player.characters.count < 3 * index + 3 {
+                chooseCharacter()
+            }
+            if teamConfirmation() {
+                print("Your team has been created.")
+                StyleSheet.displayStarLine()
+                confirmation = true
+            } else {
+                print("Your choices have been canceled. Please, choose others characters.")
+                StyleSheet.displayStarLine()
+                removeCharacters()
+            }
+        }
+    }
+    private func teamConfirmation() -> Bool {
+        StyleSheet.displayMiniTitle("Here's your team")
+        for index in 0...2 {
+            let info = characters[index].informations(full: false, evenDead: false)
+            guard let verifiedInfo = info else {
+                print("Fatal Error : character's informations returns nil.")
+                exit(0)
+            }
+            print(verifiedInfo)
+        }
+        return Ask.confirmation("Do you confirm ?")
+    }
+    private func chooseCharacter() {
         let characterIndex = Player.characters.count - 3 * self.index + 1
         switch characterIndex {
         case 1:
@@ -110,10 +144,23 @@ class Player {
             exit(0)
         }
         let type = chooseCharacterType(characterIndex)
-        print(type)
         let name = chooseCharacterName()
         let character = characterCreation(name: name, type: type)
-        Player.characters.append(character)
+        StyleSheet.displayMiniTitle("Character created")
+        let info = character.informations(full: false, evenDead: false)
+        guard let verifiedInfo = info else {
+            print("Fatal Erro : character's informations return nil.")
+            exit(0)
+        }
+        print(verifiedInfo)
+        if Ask.confirmation("Do you confirm ?") {
+            Player.characters.append(character)
+            print("\(character.name) has been added to your team !")
+            StyleSheet.displayStarLine()
+        } else {
+            print("\(character.name) has been deleted.")
+            StyleSheet.displayStarLine()
+        }
     }
     func chooseCharacterType(_ characterIndex: Int) -> CharacterType {
         displayCharactersTypes()
@@ -199,6 +246,20 @@ class Player {
         case .joker:
             let weapon = Knife(firstWeapon: true, lifeStep: .fulLife)
             return Joker(name: name, weapon: weapon)
+        }
+    }
+    func removeCharacters() {
+        for _ in 0...2 {
+            Player.characters.remove(at: index * 3)
+        }
+    }
+    
+        // MARK: Situation
+    /// Display team's situation.
+    /// - parameter playerIndex : Index of the needed player in Game.players.
+    func displayTeamSituation(_ playerIndex: Int) {
+        if playerIndex == index {
+            print("\n\(name)'s team [HP : \(HPSituation) %]")
         }
     }
 }

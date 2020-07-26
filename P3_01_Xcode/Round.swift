@@ -145,18 +145,25 @@ class Round {
         if let character = choosenCharacter {
             if let skill = choosenSkill {
                 if let target = choosenTargetCharacter {
-                    print("\n Your choices : \(character.initials) \(character.emoticon) \(character.name) → \(skill.rawValue) → \(target.initials) \(target.emoticon) \(target.name)")
+                    print("\n Your choices : \(askCharacterInformation(character)) → \(skill.rawValue) → \(askCharacterInformation(target))")
                 } else {
-                    print("\n Your choices : \(character.initials) \(character.emoticon) \(character.name) → \(skill.rawValue)")
+                    print("\n Your choices : \(askCharacterInformation(character)) → \(skill.rawValue)")
                 }
             } else {
-                print("\n Your choice : \(character.initials) \(character.emoticon) \(character.name)")
+                print("\n Your choice : \(askCharacterInformation(character))")
             }
         } else {
             print("\nNo choice have been made for now.")
         }
     }
-    
+    func askCharacterInformation(_ character: Character) -> String {
+        let info = character.informations(full: false, evenDead: false)
+        guard let infoToReturn = info else {
+            print("Fatal Error : character's informations returns nil.")
+            exit(0)
+        }
+        return infoToReturn
+    }
     
     
         // MARK: Characters choices
@@ -224,6 +231,7 @@ class Round {
     
     /// Display a characters list.
     /// - parameter playerIndex: To display the characters list of a specific player, enter his number. Otherwise, to display the entire list, enter nil.
+    /// - returns: Displayed characters count.
     private func displayCharacters(_ playerIndex: Int?) -> Int {
         // prepare parameters
         var totalDisplayed: Int = 0
@@ -243,45 +251,20 @@ class Round {
         for index in minIndex...maxIndex {
             // if the entire list is to display, enter the name of players and their HP situation before their characters list.
             if displayAllCharacters && index == 0 {
-                if playingPlayer.index == 0 {
-                    print("\n\(playingPlayer.name)'s team [\(playingPlayer.HPSituation) %]")
-                } else {
-                    print("\n\(watchingPlayer.name)'s team [\(watchingPlayer.HPSituation) %]")
-                }
+                playingPlayer.displayTeamSituation(0)
+                watchingPlayer.displayTeamSituation(0)
             }
             if displayAllCharacters && index == 3 {
-                if playingPlayer.index == 1 {
-                    print("\n\(playingPlayer.name)'s team [\(playingPlayer.HPSituation) %]")
-                } else {
-                    print("\n\(watchingPlayer.name)'s team [\(watchingPlayer.HPSituation) %]")
-                }
+                playingPlayer.displayTeamSituation(1)
+                watchingPlayer.displayTeamSituation(1)
             }
             // display character
-            let character = Player.characters[index]
-            if displayAllCharacters {
-                displayCharacterInfo(index: index)
-                totalDisplayed += 1
-            } else if character.isDead == false {
-                displayCharacterInfo(index: index)
+            if let info = Player.characters[index].informations(full: true, evenDead: displayAllCharacters) {
+                print(info)
                 totalDisplayed += 1
             }
         }
         return totalDisplayed
-    }
-    
-    /// Display informations about a character.
-    /// - parameter index: Index of the character in Player.characters.
-    private func displayCharacterInfo(index: Int) {
-        let character = Player.characters[index]
-        let emoticon: String
-        if character.isDiverted {
-            emoticon = "🤪 "
-        } else if character.isDead {
-            emoticon = "💀 "
-        } else {
-            emoticon = character.emoticon
-        }
-        print("\(index + 1). \(character.initials) \(emoticon) \(character.name) : [Str. \(character.strength)] [HP \(character.healthPoints)/\(character.maxHealthPoints)]")
     }
     
     /// Verify if the choosen character exists.

@@ -140,7 +140,44 @@ class Character {
         //switch special skill availability to used. Next round, the special skill will be unavailable
         specialSkillIsAvailable = .used
     }
-     
+    
+    /// Display informations about the character.
+    /// - parameter full : Return full informations of the character.
+    /// - parameter evenDead : Return character's informations, even if the character is dead.
+    /// - returns: Character's informations or nil if the character is dead.
+    func informations(full: Bool, evenDead: Bool) -> String? {
+        var preIndex: Int? = nil
+        if Player.characters.count > 0 {
+            for searchIndex in 0...Player.characters.count - 1 {
+                if Player.characters[searchIndex].name == name {
+                    preIndex = searchIndex
+                    break
+                }
+            }
+        }
+        let emoticon: String
+        if isDiverted {
+            emoticon = "🤪 "
+        } else if isDead {
+            emoticon = "💀 "
+        } else {
+            emoticon = self.emoticon
+        }
+        if full {
+            if evenDead || !isDead {
+                guard let index = preIndex else {
+                    print("Fatal Error : character not found in Player.characters.")
+                    exit(0)
+                }
+                return "\(index + 1). \(initials) \(emoticon) \(name) : [Str. \(strength)] [HP \(healthPoints)/\(maxHealthPoints)]"
+            }
+        } else {
+            if evenDead || !isDead {
+                return "\(initials) \(emoticon) \(name)"
+            }
+        }
+        return nil
+    }
 }
      
 
@@ -221,10 +258,10 @@ enum LifeSteps { // is the character dying ?
         // MARK: SkillsType
 
 enum SkillsType: String { // the differents existing skills a character can use. All characters can use attack and heal, specialskill depends on its type.
-    case attack = "⚔️ Attack"
+    case attack = "🗡 Attack"
     case heal = "🧪 Heal"
     case multiAttack = "⚔️ MultiAttack"
-    case multiHeal = "🧪 MultiHeal"
+    case multiHeal = "💊 MultiHeal"
     case diversion = "🤡 Diversion"
 }
 
