@@ -32,9 +32,9 @@ class Game {
             randomCharactersCreation()
         } else {
             // let user choose players names and characters
-            Game.displayTitle("PLAYERS NAME")
+            StyleSheet.displayTitle("PLAYERS NAME")
             userPlayersCreation()
-            Game.displayTitle("CHARACTERS CHOICE")
+            StyleSheet.displayTitle("CHARACTERS CHOICE")
             userCharactersCreation()
         }
         
@@ -43,7 +43,7 @@ class Game {
         Statistics.rounds = [round1]
         
         // fight
-        Game.displayTitle("LET'S FIGHT")
+        StyleSheet.displayTitle("LET'S FIGHT")
         // iterate rounds until all characters of a player are dead
         while gameCanContinue {
             handleFight()
@@ -98,7 +98,7 @@ class Game {
         // characters creation [by user]
         // iterate characters creation for each player until all characters have been created
         for index in 0...1 {
-            Game.displaySubTitle("\(players[index].name)")
+            StyleSheet.displaySubTitle("\(players[index].name)")
             while Player.characters.count < 3 * index + 3 {
                 players[index].chooseCharacter()
             }
@@ -142,7 +142,7 @@ class Game {
         // MARK: Fight
     /// Manage fight beginning and ending.
     static private func handleFight() {
-        Game.displaySubTitle("ROUND \(Statistics.rounds.count)")
+        StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count)")
         if let chest = activeRound.start() {
             Statistics.chests.append(chest)
         }
@@ -171,70 +171,12 @@ class Game {
         } else {
             index = 0
         }
-        Game.displayTitle("🏆 \(players[index].name.uppercased()) WINS ! 🏆")
-        Game.displayMiniTitle("CONGRATULATIONS !")
+        StyleSheet.displayTitle("🏆 \(players[index].name.uppercased()) WINS ! 🏆")
+        StyleSheet.displayMiniTitle("CONGRATULATIONS !")
         Ask.pressEnter()
         // display statistics
-        Game.displayTitle("STATISTICS")
+        StyleSheet.displayTitle("STATISTICS")
         Statistics.display()
-        Game.displayTitle("THE END")
-    }
-    
-    
-    
-        // MARK: Titles stylesheet
-    
-    static func displayTitle(_ title: String) {
-        // parameters
-        displaySelectedTitle(
-        title: title,
-        maxDash: 70,
-        dash: "=")
-    }
-    static func displaySubTitle(_ title: String) {
-        // parameters
-        displaySelectedTitle(
-        title: title,
-        maxDash: 60,
-        dash: "*")
-    }
-    static func displayMiniTitle(_ title: String) {
-        // parameters
-        displaySelectedTitle(
-            title: title,
-            maxDash: 50,
-            dash: "-")
-    }
-    static private func displaySelectedTitle(title: String, maxDash: Int, dash: String) {
-        var text = "\n\n\n"
-        if title.count > maxDash - 10 {
-            print("Fatal Error : subtitle too long.")
-            exit(0)
-        }
-        let dashCount: Int = (maxDash - title.count - 2) / 2
-        // line
-        for _ in 1...dashCount {
-            text += dash
-        }
-        text += " \(title) "
-        for _ in 1...dashCount {
-            text += dash
-        }
-        if title.count + 2 + dashCount * 2 == maxDash - 1 {
-            text += dash
-        }
-        // display
-        print(text)
-    }
-    static func displayStarLine() {
-        let maxDash = 50
-        let dash = "-"
-        var text = "\n"
-        // line
-        for _ in 1...maxDash {
-            text += dash
-        }
-        // display
-        print(text)
+        StyleSheet.displayTitle("THE END")
     }
 }

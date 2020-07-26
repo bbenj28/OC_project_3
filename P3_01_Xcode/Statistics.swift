@@ -26,7 +26,7 @@ class Statistics {
     /// Display rounds statistics.
     static private func roundStatistics() {
         // rounds
-        Game.displayMiniTitle("rounds")
+        StyleSheet.displayMiniTitle("rounds")
         print("total : \(rounds.count)")
         // count rounds played by each player, types of characters and types of skill used during the rounds
         var playedByPlayer: [String:Int] = [Game.players[0].name : 0, Game.players[1].name : 0]
@@ -57,13 +57,13 @@ class Statistics {
         }
         // end
         Ask.pressEnter()
-        Game.displayStarLine()
+        StyleSheet.displayStarLine()
     }
     
     /// Display chests statistics.
     static func chestsStatistics() {
         // chests
-        Game.displayMiniTitle("chests")
+        StyleSheet.displayMiniTitle("chests")
         // total
         print("total : \(chests.count)")
         // total for each player
@@ -89,38 +89,38 @@ class Statistics {
         }
         // end
         Ask.pressEnter()
-        Game.displayStarLine()
+        StyleSheet.displayStarLine()
     }
     
     /// Display characters statistics.
     static private func charactersStatistics() {
         // characters title
-        Game.displayMiniTitle("characters")
+        StyleSheet.displayMiniTitle("characters")
         // HP of each characters
-        Game.displayMiniTitle("HP")
+        StyleSheet.displayMiniTitle("HP")
         for character in Player.characters {
             print("\(character.name) : \(character.healthPoints)")
         }
         Ask.pressEnter()
         // strength of each characters
-        Game.displayMiniTitle("Strength")
+        StyleSheet.displayMiniTitle("Strength")
         for character in Player.characters {
             print("\(character.name) : \(character.strength)")
         }
         Ask.pressEnter()
         // sustaines injuries by each characters
-        Game.displayMiniTitle("Injuries")
+        StyleSheet.displayMiniTitle("Injuries")
         for character in Player.characters {
             print("\(character.name) : \(character.injuriesPoints)")
         }
         Ask.pressEnter()
         // received healthcares by each characters
-        Game.displayMiniTitle("Healthcares")
+        StyleSheet.displayMiniTitle("Healthcares")
         for character in Player.characters {
             print("\(character.name) : \(character.healPoints)")
         }
         // End
         Ask.pressEnter()
-        Game.displayStarLine()
+        StyleSheet.displayStarLine()
     }
 }

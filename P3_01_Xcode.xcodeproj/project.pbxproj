@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		030F72A524CD41A200AC3593 /* Ask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F72A424CD41A200AC3593 /* Ask.swift */; };
+		030F72A724CD490900AC3593 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F72A624CD490900AC3593 /* StyleSheet.swift */; };
 		03B2329024CC4CCF00794442 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B2328F24CC4CCF00794442 /* Statistics.swift */; };
 		03C9B64224C86023004A7B76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64124C86023004A7B76 /* main.swift */; };
 		03C9B65124C86038004A7B76 /* BACProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64A24C86037004A7B76 /* BACProperties.swift */; };
@@ -33,6 +34,7 @@
 
 /* Begin PBXFileReference section */
 		030F72A424CD41A200AC3593 /* Ask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ask.swift; sourceTree = "<group>"; };
+		030F72A624CD490900AC3593 /* StyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
 		03B2328F24CC4CCF00794442 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		03C9B63E24C86023004A7B76 /* P3_01_Xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = P3_01_Xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C9B64124C86023004A7B76 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -85,6 +87,7 @@
 				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
 				03B2328F24CC4CCF00794442 /* Statistics.swift */,
 				030F72A424CD41A200AC3593 /* Ask.swift */,
+				030F72A624CD490900AC3593 /* StyleSheet.swift */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";
@@ -154,6 +157,7 @@
 				03C9B65424C86038004A7B76 /* Weapon.swift in Sources */,
 				03C9B65224C86038004A7B76 /* Player.swift in Sources */,
 				03EAEAA024C87E3D005F26FB /* Chest.swift in Sources */,
+				030F72A724CD490900AC3593 /* StyleSheet.swift in Sources */,
 				030F72A524CD41A200AC3593 /* Ask.swift in Sources */,
 				03EAEA9E24C87E3D005F26FB /* Round.swift in Sources */,
 				03C9B65524C86038004A7B76 /* Game.swift in Sources */,

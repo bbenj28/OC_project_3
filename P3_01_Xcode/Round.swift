@@ -39,23 +39,23 @@ class Round {
     /// Manage round from character's choice to chest appearance.
     func start() -> Chest? {
         // round's announcements
-        Game.displayMiniTitle("\(playingPlayer.name), your turn !")
-        Game.displayMiniTitle("SITUATION'S VIEW")
+        StyleSheet.displayMiniTitle("\(playingPlayer.name), your turn !")
+        StyleSheet.displayMiniTitle("SITUATION'S VIEW")
         let _ = displayCharacters(nil)
-        Game.displayStarLine()
+        StyleSheet.displayStarLine()
         // call step manager for player to choice characters and skill to use
         while activeStep != .confirmedChoices {
             activeStepManager()
         }
         // resolve round and manage chest appearance
         if let chest = endRoundAndReturnChest() {
-            Game.displayMiniTitle("CHEST")
+            StyleSheet.displayMiniTitle("CHEST")
             let character = verifyChoosenCharacter()
             print("CONGRATS! \(character.name) found a chest !")
             print("Chest's content : \(chest.gift.name) [Str. \(chest.gift.strength)]")
             print("\(character.name)'s weapon : \(character.weapon.name) [Str. \(character.weapon.strength)].")
             chest.askForReplaceWeapon()
-            Game.displayStarLine()
+            StyleSheet.displayStarLine()
             return chest
         }
         
@@ -136,7 +136,7 @@ class Round {
     /// Ask user to confirm choices by enter Y or N.
     /// - returns: True if Y was entered, False if N was entered.
     private func confirmChoices() -> Bool {
-        Game.displayMiniTitle("CONFIRMATION")
+        StyleSheet.displayMiniTitle("CONFIRMATION")
         return Ask.confirmation("Do you confirm your choices ?")
     }
     
@@ -170,7 +170,7 @@ class Round {
         let charactersPlayer: Player // among the characters of which player the choice have to be done ?
         let cancelProposition: String? // can user enter 0 to cancel ?
         if activeStep == .skillIsSelected {
-            Game.displayMiniTitle("Choose a target")
+            StyleSheet.displayMiniTitle("Choose a target")
             let usedSkill = verifyChoosenSkill()
             switch usedSkill {
             case .attack, .diversion:
@@ -183,7 +183,7 @@ class Round {
             }
             cancelProposition = "Enter 0 to cancel and choose another skill."
         } else {
-            Game.displayMiniTitle("Choose a character of yours")
+            StyleSheet.displayMiniTitle("Choose a character of yours")
             charactersPlayer = playingPlayer
             cancelProposition = nil
         }
@@ -305,7 +305,7 @@ class Round {
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
     private func skillManager() -> SkillsType? {
         // get choosen character to display its skill
-        Game.displayMiniTitle("Choose a skill")
+        StyleSheet.displayMiniTitle("Choose a skill")
         let character = verifyChoosenCharacter()
         
         // ask user to choose a skill
@@ -367,11 +367,11 @@ class Round {
     /// - returns: Chest if it has been generated. Otherwise, returns nil.
     func endRoundAndReturnChest() -> Chest? {
         //launch the player choose skill and display result
-        Game.displayStarLine()
-        Game.displayMiniTitle("RESULT")
+        StyleSheet.displayStarLine()
+        StyleSheet.displayMiniTitle("RESULT")
         useSkill()
         Ask.pressEnter()
-        Game.displayStarLine()
+        StyleSheet.displayStarLine()
         // check diversion
         checkDiversion()
         // check special skills availability of the player characters
