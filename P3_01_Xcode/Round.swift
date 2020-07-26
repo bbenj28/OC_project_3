@@ -137,7 +137,7 @@ class Round {
     /// - returns: True if Y was entered, False if N was entered.
     private func confirmChoices() -> Bool {
         Game.displayMiniTitle("CONFIRMATION")
-        return Game.askForConfirmation("Do you confirm your choices ?")
+        return Ask.confirmation("Do you confirm your choices ?")
     }
     
     /// Display choices made by user.
@@ -198,7 +198,7 @@ class Round {
                     }
                 }
             } else {
-                let number = Game.askNumber(
+                let number = Ask.number(
                     range: charactersPlayer.index * 3 + 1...charactersPlayer.index * 3 + 3,
                     message: "Please, choose a character by enter a number between \(charactersPlayer.index * 3 + 1) and \(charactersPlayer.index * 3 + 3)",
                     cancelProposition: cancelProposition)
@@ -310,7 +310,7 @@ class Round {
         
         // ask user to choose a skill
         displaySkills(of: character)
-        let number = Game.askNumber(
+        let number = Ask.number(
             range: 1...3,
             message: "Choose a skill by enter a number between 1 and 3.",
             cancelProposition: "Enter 0 to cancel and choose another character.")
@@ -370,7 +370,7 @@ class Round {
         Game.displayStarLine()
         Game.displayMiniTitle("RESULT")
         useSkill()
-        Game.pressEnter()
+        Ask.pressEnter()
         Game.displayStarLine()
         // check diversion
         checkDiversion()

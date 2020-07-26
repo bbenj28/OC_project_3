@@ -56,7 +56,7 @@ class Statistics {
             print("- \(key) : \(value)")
         }
         // end
-        Game.pressEnter()
+        Ask.pressEnter()
         Game.displayStarLine()
     }
     
@@ -88,7 +88,7 @@ class Statistics {
             print("accepted : \(accepted)")
         }
         // end
-        Game.pressEnter()
+        Ask.pressEnter()
         Game.displayStarLine()
     }
     
@@ -101,26 +101,26 @@ class Statistics {
         for character in Player.characters {
             print("\(character.name) : \(character.healthPoints)")
         }
-        Game.pressEnter()
+        Ask.pressEnter()
         // strength of each characters
         Game.displayMiniTitle("Strength")
         for character in Player.characters {
             print("\(character.name) : \(character.strength)")
         }
-        Game.pressEnter()
+        Ask.pressEnter()
         // sustaines injuries by each characters
         Game.displayMiniTitle("Injuries")
         for character in Player.characters {
             print("\(character.name) : \(character.injuriesPoints)")
         }
-        Game.pressEnter()
+        Ask.pressEnter()
         // received healthcares by each characters
         Game.displayMiniTitle("Healthcares")
         for character in Player.characters {
             print("\(character.name) : \(character.healPoints)")
         }
         // End
-        Game.pressEnter()
+        Ask.pressEnter()
         Game.displayStarLine()
     }
 }

@@ -118,7 +118,10 @@ class Player {
     func chooseCharacterType(_ characterIndex: Int) -> CharacterType {
         displayCharactersTypes()
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
-        let number = Game.askNumber(range: 1...4, message: "Choose a character type by enter a number between 1 and 4.", cancelProposition: nil)
+        let number = Ask.number(
+            range: 1...4,
+            message: "Choose a character type by enter a number between 1 and 4.",
+            cancelProposition: nil)
         return types[number - 1]
     }
     func displayCharactersTypes() {
@@ -167,7 +170,7 @@ class Player {
         return verifiedChoosenName
     }
     func askName() -> String? {
-        let name = Game.askFreeAnswer("Enter its name :")
+        let name = Ask.freeAnswer("Enter its name :")
         if Player.characters.count > 0 {
             for character in Player.characters {
                 if character.name.lowercased() == name.lowercased() {
