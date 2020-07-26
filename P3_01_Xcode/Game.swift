@@ -20,7 +20,7 @@ class Game {
     static var gameCanContinue: Bool {
         return players[0].isDefeated || players[1].isDefeated ? false : true
     }
-    static var randomCreation: Bool = true // true for creating random players and characters
+    static var randomCreation: Bool = false // true for creating random players and characters
     
         // MARK: Start
     /// Manage game from players creation to statistics display.
@@ -141,7 +141,7 @@ class Game {
     /// Manage fight beginning and ending.
     static private func handleFight() {
         StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count)")
-        if let chest = activeRound.start() {
+        if let chest = activeRound.startAndReturnChest() {
             Statistics.chests.append(chest)
         }
         if gameCanContinue {
@@ -151,10 +151,9 @@ class Game {
     /// Create a new round in rounds by changing playing player.
     static private func newRound() {
         // verifying the playing player of the last round, and create a new one with the other player
-        switch activeRound.playingPlayer.name {
-        case players[0].name:
+        if activeRound.playingPlayer.name == players[0].name {
             Statistics.rounds.append(Round(playingPlayer: players[1], watchingPlayer: players[0]))
-        default:
+        } else {
             Statistics.rounds.append(Round(playingPlayer: players[0], watchingPlayer: players[1]))
         }
     }

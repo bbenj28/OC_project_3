@@ -37,7 +37,7 @@ class Round {
     
     
     /// Manage round from character's choice to chest appearance.
-    func start() -> Chest? {
+    func startAndReturnChest() -> Chest? {
         // round's announcements
         StyleSheet.displayMiniTitle("\(playingPlayer.name), your turn !")
         StyleSheet.displayMiniTitle("SITUATION'S VIEW")
@@ -75,29 +75,25 @@ class Round {
         case .beginning: // fighting character choice
             choosenCharacter = characterManager()
             if choosenCharacter != nil {
-                activeStep = .firstCharacterIsSelected
+                moveForward()
             }
         case .firstCharacterIsSelected: // skill choice
             choosenSkill = skillManager()
             if choosenSkill != nil {
-                if hasToChooseTarget {
-                    activeStep = .skillIsSelected
-                } else {
-                    activeStep = .targetCharacterIsSelected
-                }
+                moveForward()
             } else {
                 cancelLastChoice()
             }
         case .skillIsSelected: // choose target
             choosenTargetCharacter = characterManager()
-            if choosenTargetCharacter == nil {
-                cancelLastChoice()
+            if choosenTargetCharacter != nil {
+                moveForward()
             } else {
-                activeStep = .targetCharacterIsSelected
+                cancelLastChoice()
             }
         case .targetCharacterIsSelected: // confirm choices
             if confirmChoices() {
-                activeStep = .confirmedChoices
+                moveForward()
             } else {
                 cancelLastChoice()
             }
@@ -106,6 +102,26 @@ class Round {
         }
         if activeStep != .confirmedChoices { // display choices
             displayChoices()
+        }
+    }
+    
+    /// Valid choice made by player by changing active step.
+    private func moveForward() {
+        switch activeStep {
+        case .beginning:
+            activeStep = .firstCharacterIsSelected
+        case .firstCharacterIsSelected:
+            if hasToChooseTarget {
+                activeStep = .skillIsSelected
+            } else {
+                activeStep = .targetCharacterIsSelected
+            }
+        case .skillIsSelected:
+            activeStep = .targetCharacterIsSelected
+        case .targetCharacterIsSelected:
+            activeStep = .confirmedChoices
+        case .confirmedChoices:
+            break
         }
     }
     

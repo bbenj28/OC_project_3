@@ -82,7 +82,7 @@ class Character {
     }
     func heal(_ target: Character) {
         // checks if healthcare points + target's healthpoints are less than the maximum healthpoints, and add healthcare points to the target healthpoints
-        var healPoints: Int = healthCare
+        var healPoints: Int = Int.random(in: healthCare/2...healthCare)
         if healPoints + target.healthPoints > target.maxHealthPoints {
             healPoints = target.maxHealthPoints - target.healthPoints
         }
@@ -90,8 +90,8 @@ class Character {
         print("Received heal points : \(healPoints)")
     }
     func multiAttack(_ player: Player) {
-        // chooses a random number between strength / 2 and strength, and substract a third of this number to the healthpoints of each alive character of the choosenplayer
-        let injuriesPoints = Int.random(in: strength/2...strength)
+        // substract a third of the character's strength to the healthpoints of each alive character of the ennemy
+        let injuriesPoints = strength
         let characters = [Player.characters[player.index * 3], Player.characters[player.index * 3 + 1], Player.characters[player.index * 3 + 2]]
         for target in characters {
             if target.isDead == false {

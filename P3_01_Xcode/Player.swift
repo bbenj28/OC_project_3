@@ -134,17 +134,19 @@ class Player {
         let characterIndex = Player.characters.count - 3 * self.index + 1
         switch characterIndex {
         case 1:
-            print("\n*******\nChoose your first character : ")
+            StyleSheet.displayMiniTitle("Choose your 1st character")
         case 2:
-            print("\n*******\nFine, now choose your second character : ")
+            StyleSheet.displayMiniTitle("Choose your 2nd character")
         case 3:
-            print("\n*******\nOk! Finally, choose your last character : ")
+            StyleSheet.displayMiniTitle("Choose your 3rd character")
         default:
             print("Fatal Error in characters type asking.")
             exit(0)
         }
         let type = chooseCharacterType(characterIndex)
+        print("Your choice : \(type)")
         let name = chooseCharacterName()
+        StyleSheet.displayStarLine()
         let character = characterCreation(name: name, type: type)
         StyleSheet.displayMiniTitle("Character created")
         let info = character.informations(full: false, evenDead: false)
@@ -167,7 +169,7 @@ class Player {
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         let number = Ask.number(
             range: 1...4,
-            message: "Choose a character type by enter a number between 1 and 4.",
+            message: "\nChoose a character type by enter a number between 1 and 4.",
             cancelProposition: nil)
         return types[number - 1]
     }
@@ -176,22 +178,22 @@ class Player {
             print("Fatal Error : Unknown special skill description (1).")
             exit(0)
         }
-        print("1. \(bacproperties.warriorEmoticon) \(bacproperties.warriorName) : \(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
+        print("\n1. \(bacproperties.warriorEmoticon) \(bacproperties.warriorName)\n\(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
         guard let specialSkillDescriptionWi = specialSkillDescription(bacproperties.wizardSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (2).")
             exit(0)
         }
-        print("2. \(bacproperties.wizardEmoticon) \(bacproperties.wizardName) : \(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
+        print("\n2. \(bacproperties.wizardEmoticon) \(bacproperties.wizardName)\n\(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
         guard let specialSkillDescriptionDr = specialSkillDescription(bacproperties.druidSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (3).")
             exit(0)
         }
-        print("3. \(bacproperties.druidEmoticon) \(bacproperties.druidName) : \(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
+        print("\n3. \(bacproperties.druidEmoticon) \(bacproperties.druidName)\n\(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
         guard let specialSkillDescriptionJo = specialSkillDescription(bacproperties.jokerSpecialSkill) else {
             print("Fatal Error : Unknown special skill description (4).")
             exit(0)
         }
-        print("4. \(bacproperties.jokerEmoticon) \(bacproperties.jokerName) : \(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
+        print("\n4. \(bacproperties.jokerEmoticon) \(bacproperties.jokerName)\n\(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
     }
     func specialSkillDescription(_ specialSkill: SkillsType) -> String? {
         switch specialSkill {
@@ -217,7 +219,7 @@ class Player {
         return verifiedChoosenName
     }
     func askName() -> String? {
-        let name = Ask.freeAnswer("Enter its name :")
+        let name = Ask.freeAnswer("\nEnter its name :")
         if Player.characters.count > 0 {
             for character in Player.characters {
                 if character.name.lowercased() == name.lowercased() {
