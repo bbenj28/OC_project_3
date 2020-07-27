@@ -145,7 +145,11 @@ class Character {
     /// Display skills of the character.
     func displaySkills() {
         for index in 0...2 {
-            print("\(index + 1). \(skills[index].name()) \(specialSkillIsAvailable.rawValue)")
+            if index < 2 {
+                print("\(index + 1). \(skills[index].name())")
+            } else {
+                print("\(index + 1). \(skills[index].name()) \(specialSkillIsAvailable.rawValue)")
+            }
         }
     }
 }

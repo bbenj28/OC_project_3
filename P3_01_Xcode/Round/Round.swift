@@ -317,15 +317,19 @@ class Round {
         let character = isChoosenCharacterExisting()
         // ask user to choose a skill
         displaySkills(of: character)
-        let number = Ask.number(
-            range: 1...3,
-            message: "Choose a skill by enter a number between 1 and 3.",
-            cancelProposition: "Enter 0 to cancel and choose another character.")
-        if number == 0 {
-            return nil
-        } else {
-            return chooseSkill(of: character, number: number)
+        var skill: Skill? = nil
+        while skill == nil {
+            let number = Ask.number(
+                range: 1...3,
+                message: "Choose a skill by enter a number between 1 and 3.",
+                cancelProposition: "Enter 0 to cancel and choose another character.")
+            if number == 0 {
+                return nil
+            } else {
+                skill = verifySkillAvailability(of: character, number: number)
+            }
         }
+        return skill
     }
     
     /// Display skills of a character.
@@ -339,7 +343,7 @@ class Round {
     /// - parameter character: Character of which the skill belongs.
     /// - parameter number: Index of the skill in character's skills.
     /// - returns: The skill if available. Otherwise, returns nil.
-    private func chooseSkill(of character: Character, number: Int) -> Skill? {
+    private func verifySkillAvailability(of character: Character, number: Int) -> Skill? {
         if number == 3 {
             if character.specialSkillIsAvailable != .available {
                 print("A character can't use its special skill if it has been used last round.")

@@ -15,6 +15,12 @@ enum CharacterType {
     case druid
     case joker
     
+    
+    
+        // MARK: Informations
+    
+    
+    
     /// Ask for charactertype's name.
     /// - returns: Charactertype's name.
     func name() -> String {
@@ -120,22 +126,32 @@ enum CharacterType {
         }
     }
     
+    /// Ask for charactertype's weapon's type.
+    /// - returns: Charactertype's weapon's type.
+    func weaponType() -> WeaponType {
+        switch self {
+        case .warrior:
+            return BACProperties.warriorWeaponType
+        case .wizard:
+            return BACProperties.wizardWeaponType
+        case .druid:
+            return BACProperties.druidWeaponType
+        case .joker:
+            return BACProperties.jokerWeaponType
+        }
+    }
+    
+    
+    
+        // MARK: Weapon creation
+    
+    
+    
     /// Create a weapon regading type.
     /// - parameter firstWeapon: Will this weapon be the character's first ?
     /// - parameter lifeStep: Active life step of the character.
     /// - returns: The generated weapon.
     func createWeapon(firstWeapon: Bool, lifeStep: LifeStep) -> Weapon {
-        let type: WeaponType
-        switch self {
-        case .warrior:
-            type = BACProperties.warriorWeaponType
-        case .wizard:
-            type = BACProperties.wizardWeaponType
-        case .druid:
-            type = BACProperties.druidWeaponType
-        case .joker:
-            type = BACProperties.jokerWeaponType
-        }
-        return Weapon(type: type, firstWeapon: firstWeapon, lifeStep: lifeStep)
+        return Weapon(type: weaponType(), firstWeapon: firstWeapon, lifeStep: lifeStep)
     }
 }

@@ -177,7 +177,7 @@ class Player {
         }
         // choose type
         let type = chooseCharacterType()
-        print("Your choice : \(type)")
+        print("Your choice : \(type.emoticon()) \(type.name())")
         // choose name
         let name = chooseCharacterName()
         StyleSheet.displayDashLine()
@@ -224,7 +224,9 @@ class Player {
     func displayCharactersTypes() {
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         for index in 0...3 {
-            print("\n\(index + 1). \(types[index].emoticon()) \(types[index].name())\n\(types[index].description()) \(types[index].specialSkill().description())")
+            print("\n\(index + 1). \(types[index].emoticon()) \(types[index].name())")
+            print("\(types[index].description()) \(types[index].specialSkill().description())")
+            print("[maximum HP: \(types[index].maxHealthPoints())] [minimum strength: \(types[index].weaponType().minStrength(.fulLife))] [special skill: \(types[index].specialSkill().name())]")
         }
     }
     
