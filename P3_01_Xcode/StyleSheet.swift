@@ -8,51 +8,70 @@
 
 import Foundation
 class StyleSheet {
+    
+    
+    
         // MARK: Titles stylesheet
     
+    
+    /// Display title.
+    /// - parameter title: Title to display.
     static func displayTitle(_ title: String) {
         // parameters
         displaySelectedTitle(
         title: title,
-        maxDash: 70,
-        dash: "=")
+        maxSigns: 70,
+        sign: "=")
     }
+    
+    /// Display subtitle.
+    /// - parameter title: Subtitle to display.
     static func displaySubTitle(_ title: String) {
         // parameters
         displaySelectedTitle(
         title: title,
-        maxDash: 60,
-        dash: "*")
+        maxSigns: 60,
+        sign: "*")
     }
+    
+    /// Display mini title.
+    /// - parameter title: Mini title to display.
     static func displayMiniTitle(_ title: String) {
         // parameters
         displaySelectedTitle(
             title: title,
-            maxDash: 50,
-            dash: "-")
+            maxSigns: 50,
+            sign: "-")
     }
-    static private func displaySelectedTitle(title: String, maxDash: Int, dash: String) {
+    
+    /// Display title with title's style's signs.
+    /// - parameter title: Title to display.
+    /// - parameter maxSigns : Length of the title with signs.
+    /// - parameter sign : Type of signs.
+    static private func displaySelectedTitle(title: String, maxSigns: Int, sign: String) {
         var text = "\n\n\n"
-        if title.count > maxDash - 10 {
-            print("Fatal Error : subtitle too long.")
+        if title.count > maxSigns - 10 {
+            print("Fatal Error : title too long.")
             exit(0)
         }
-        let dashCount: Int = (maxDash - title.count - 2) / 2
+        let signsCount: Int = (maxSigns - title.count - 2) / 2
         // line
-        for _ in 1...dashCount {
-            text += dash
+        for _ in 1...signsCount {
+            text += sign
         }
         text += " \(title) "
-        for _ in 1...dashCount {
-            text += dash
+        for _ in 1...signsCount {
+            text += sign
         }
-        if title.count + 2 + dashCount * 2 == maxDash - 1 {
-            text += dash
+        if title.count + 2 + signsCount * 2 == maxSigns - 1 {
+            text += sign
         }
         // display
         print(text)
     }
-    static func displayStarLine() {
+    
+    /// Display a lign of dashes.
+    static func displayDashLine() {
         let maxDash = 50
         let dash = "-"
         var text = "\n"

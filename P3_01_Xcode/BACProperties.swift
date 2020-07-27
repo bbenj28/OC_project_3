@@ -15,14 +15,14 @@ class BACProperties {
     
     // MARK: Chest
     // chances to get a chest at the round's end
-    let chestChances = 4
+    static let chestChances = 4
     
     
     // MARK: Specialskills
-    let isSpecialSkillEnabled = true
-    let multiAttackDescription = "Their specialskill allows them to attack several enemies with one action."
-    let multiHealDescription = "Their specialskill allows them to heal several allies with one action."
-    let diversionDescription = "Their specialskill allows them to distract an enemy during several rounds."
+    static let isSpecialSkillEnabled = true
+    static let multiAttackDescription = "Their specialskill allows them to attack several enemies with one action."
+    static let multiHealDescription = "Their specialskill allows them to heal several allies with one action."
+    static let diversionDescription = "Their specialskill allows them to distract an enemy during several rounds."
     
     
     // MARK: Characters Types
@@ -31,68 +31,69 @@ class BACProperties {
     
             // MARK: Warrior
     
-    let warriorName = "Warrior"
-    let warriorInitials = "[Wa]"
-    let warriorEmoticon = "💂"
-    let warriorDescription = "The strongest recruit you will see. Warriors are naturally born to kill. They are the most resistants soldiers and their strength will cause many damages."
-    let warriorMaxHealthPoints: Int = 300
-    let warriorHealthCareCoefficient: Double = 0.5
-    let warriorSpecialSkill: SkillsType = .multiAttack
+    static let warriorName = "Warrior"
+    static let warriorInitials = "[Wa]"
+    static let warriorEmoticon = "💂"
+    static let warriorDescription = "The strongest recruit you will see. Warriors are naturally born to kill. They are the most resistants soldiers and their strength will cause many damages."
+    static let warriorMaxHealthPoints: Int = 300
+    static let warriorHealthCareCoefficient: Double = 0.5
+    static let warriorSpecialSkill: Skill = .multiAttack
+    static let warriorWeaponType: WeaponType = .sword
     
             // MARK: Wizard
-    let wizardName = "Wizard"
-    let wizardInitials = "[Wi]"
-    let wizardEmoticon = "🧙"
-    let wizardDescription = "Beware! Behind their frail appearance, the witchers are no less formidable. They aren't very resistants, but their PowerStick gives them great strength."
-    let wizardMaxHealthPoints: Int = 150
-    let wizardHealthCareCoefficient: Double = 0.2
-    let wizardSpecialSkill: SkillsType = .multiAttack
+    static let wizardName = "Wizard"
+    static let wizardInitials = "[Wi]"
+    static let wizardEmoticon = "🧙"
+    static let wizardDescription = "Beware! Behind their frail appearance, the witchers are no less formidable. They aren't very resistants, but their PowerStick gives them great strength."
+    static let wizardMaxHealthPoints: Int = 150
+    static let wizardHealthCareCoefficient: Double = 0.2
+    static let wizardSpecialSkill: Skill = .multiAttack
+    static let wizardWeaponType: WeaponType = .powerStick
     
             // MARK: Druid
-    let druidName = "Druid"
-    let druidInitials = "[Dr]"
-    let druidEmoticon = "🧑‍⚕️"
-    let druidDescription = "In communion with nature and their environment, druids are pleased to take care of others. Their ability to heal is second to none."
-    let druidMaxHealthPoints: Int = 200
-    let druidHealthCareCoefficient: Double = 1.5
-    let druidSpecialSkill: SkillsType = .multiHeal
+    static let druidName = "Druid"
+    static let druidInitials = "[Dr]"
+    static let druidEmoticon = "🧑‍⚕️"
+    static let druidDescription = "In communion with nature and their environment, druids are pleased to take care of others. Their ability to heal is second to none."
+    static let druidMaxHealthPoints: Int = 200
+    static let druidHealthCareCoefficient: Double = 1.5
+    static let druidSpecialSkill: Skill = .multiHeal
+    static let druidWeaponType: WeaponType = .healthStick
     
             // MARK: Joker
-    let jokerName = "Joker"
-    let jokerInitials = "[Jo]"
-    let jokerEmoticon = "🃏"
-    let jokerDescription = "Not really resistant, not strong either and without healing power, jokers can nevertheless, through their humor, distract enemies and give you an advantage."
-    let jokerMaxHealthPoints: Int = 200
-    let jokerHealthCareCoefficient: Double = 0.7
-    let jokerSpecialSkill: SkillsType = .diversion
+    static let jokerName = "Joker"
+    static let jokerInitials = "[Jo]"
+    static let jokerEmoticon = "🃏"
+    static let jokerDescription = "Not really resistant, not strong either and without healing power, jokers can nevertheless, through their humor, distract enemies and give you an advantage."
+    static let jokerMaxHealthPoints: Int = 200
+    static let jokerHealthCareCoefficient: Double = 0.7
+    static let jokerSpecialSkill: Skill = .diversion
+    static let jokerWeaponType: WeaponType = .knife
     
     
     // MARK: Weapons
-    let areLifeStepsUseFull: Bool = true
+    static let areLifeStepsUseFull: Bool = true
     
     
             // MARK: Sword (warrior's weapon)
-    let swordName = "Sword"
-    let swordMinStrength: [LifeSteps: Int] = [.fulLife: 50, .midLife: 65, .endLife: 85]
-    let swordMaxStrength: Int = 100
+    static let swordName = "Sword"
+    static let swordMinStrength: [LifeStep: Int] = [.fulLife: 50, .midLife: 65, .endLife: 85]
+    static let swordMaxStrength: Int = 100
     
             // MARK: PowerStick (wizard's weapon)
-    let powerstickName = "PowerStick"
-    let powerstickMinStrength: [LifeSteps: Int] = [.fulLife: 70, .midLife: 85, .endLife: 105]
-    let powerstickMaxStrength: Int = 120
+    static let powerstickName = "PowerStick"
+    static let powerstickMinStrength: [LifeStep: Int] = [.fulLife: 70, .midLife: 85, .endLife: 105]
+    static let powerstickMaxStrength: Int = 120
     
             // MARK: HealthStick (druid's weapon)
-    let healthstickName = "HealthStick"
-    let healthstickMinStrength: [LifeSteps: Int] = [.fulLife: 30, .midLife: 45, .endLife: 65]
-    let healthstickMaxStrength: Int = 80
+    static let healthstickName = "HealthStick"
+    static let healthstickMinStrength: [LifeStep: Int] = [.fulLife: 30, .midLife: 45, .endLife: 65]
+    static let healthstickMaxStrength: Int = 80
     
             // MARK: Knife (joker's weapon)
-    let knifeName = "Knife"
-    let knifeMinStrength: [LifeSteps: Int] = [.fulLife: 30, .midLife: 45, .endLife: 65]
-    let knifeMaxStrength: Int = 80
+    static let knifeName = "Knife"
+    static let knifeMinStrength: [LifeStep: Int] = [.fulLife: 30, .midLife: 45, .endLife: 65]
+    static let knifeMaxStrength: Int = 80
     
     
 }
-
-// MARK: Instantiation
-let bacproperties = BACProperties()

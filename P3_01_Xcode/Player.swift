@@ -8,11 +8,13 @@
 
 import Foundation
 
-// MARK: Player
-
 class Player {
     
+    
+    
         // MARK: Properties
+    
+    
     
     // all characters
     static var characters: [Character] = [] // list of players characters
@@ -30,28 +32,62 @@ class Player {
         var maxHP: Double = 0
         var HP: Double = 0
         for index in self.index * 3...self.index * 3 + 2 {
-            maxHP += Double(Player.characters[index].maxHealthPoints)
+            maxHP += Double(Player.characters[index].type.maxHealthPoints())
             HP += Double(Player.characters[index].healthPoints)
         }
         return Int(HP / maxHP * 100)
     }
     
+    
+    
         // MARK: Init
+    
+    
+    
     init(name: String, index: Int) {
         self.name = name
         self.index = index
     }
     
-        // MARK: Random characters
+    
+        // MARK: Team creation
+    
+    
+    
+                // MARK: Name verification
+    
+    
+    
+    /// Verify if the choosen name is already taken by another character.
+    /// - parameter name: Name to verify.
+    /// - returns: *false* if the name is available, *true* otherwise.
+    private func isTakenName(_ name: String) -> Bool {
+        if Player.characters.count > 0 {
+            for character in Player.characters {
+                if character.name.lowercased() == name.lowercased() {
+                    return true
+                }
+            }
+        }
+        return false
+    }
+    
+    
+                // MARK: By Bot
+    
+    
+    
     /// Manage random characters creation.
-    static func randomCharactersCreation() {
+    func charactersCreationByBot() {
         // characters creation [random]
         while Player.characters.count < 6 {
             Player.characters.append(randomSingleCharacter())
         }
     }
+    
     /// Choose name and type of a character and returns it.
-    static private func randomSingleCharacter() -> Character {
+    /// - returns: Created character.
+    private func randomSingleCharacter() -> Character {
         // choose name
         var name: String? = nil
         while name == nil {
@@ -62,66 +98,59 @@ class Player {
             exit(0)
         }
         // choose type
-        let type = Int.random(in: 1...4)
-        switch type {
-        case 1:
-            return Warrior(name: verifiedName, weapon: Sword(firstWeapon: true, lifeStep: .fulLife))
-        case 2:
-            return Wizard(name: verifiedName, weapon: PowerStick(firstWeapon: true, lifeStep: .fulLife))
-        case 3:
-            return Druid(name: verifiedName, weapon: HealthStick(firstWeapon: true, lifeStep: .fulLife))
-        case 4:
-            return Joker(name: verifiedName, weapon: Knife(firstWeapon: true, lifeStep: .fulLife))
-        default:
-            print("Fatal Error : randomCharacterType have to be a number between 1 and 4.")
-            exit(0)
-        }
+        let typeIndex = Int.random(in: 0...3)
+        let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
+        return Character(name: verifiedName, type: types[typeIndex])
     }
+    
     /// Choose the character's name in a list by drawing a random number.
-    /// - returns: If the name is already used by another character, returns nil; otherwise returns the name.
-    static private func randomName() -> String? {
+    /// - returns: If the name is already used by another character, returns *nil*; otherwise returns the name.
+    private func randomName() -> String? {
         // names list
         let names = ["Arthur", "Guenièvre", "Merlin", "Léodagan", "Séli", "Bohort", "Perceval", "Caradoc", "Mevanwi", "Calogrenan", "Lancelot", "Lot", "Dagonnet", "Yvain", "Gauvain", "Galcin", "Angarade", "La Dame du Lac"]
         // random number
         let index = Int.random(in: 0...names.count - 1)
         // check if the name is already used by another character
-        if Player.characters.count > 0 {
-            for character in Player.characters {
-                if character.name == names[index] {
-                    return nil
-                }
-            }
+        if isTakenName(names[index]) {
+            return nil
         }
         // returns it
         return names[index]
     }
     
     
-        // MARK: Characters creation by user
-    func userCharactersCreation() {
-        // characters creation [by user]
-        // iterate characters creation until all characters have been created
+    
+                // MARK: By User
+    
+    
+    /// Let user choose characters.
+    func charactersCreationByUser() {
+        // player's name
         StyleSheet.displaySubTitle("\(name)")
+        // iterate characters creation until all characters have been created
         var confirmation: Bool = false
         while confirmation == false {
             while Player.characters.count < 3 * index + 3 {
                 chooseCharacter()
             }
-            if teamConfirmation() {
+            if isTeamConfirmed() {
                 print("Your team has been created.")
-                StyleSheet.displayStarLine()
+                StyleSheet.displayDashLine()
                 confirmation = true
             } else {
                 print("Your choices have been canceled. Please, choose others characters.")
-                StyleSheet.displayStarLine()
+                StyleSheet.displayDashLine()
                 removeCharacters()
             }
         }
     }
-    private func teamConfirmation() -> Bool {
+    
+    /// Team is created. Ask confirmation.
+    /// - returns: *true* if user has confirmed the team, *false* otherwise.
+    private func isTeamConfirmed() -> Bool {
         StyleSheet.displayMiniTitle("Here's your team")
         for index in 0...2 {
-            let info = characters[index].informations(full: false, evenDead: false)
+            let info = characters[index].displayInformations(full: false, evenDead: false)
             guard let verifiedInfo = info else {
                 print("Fatal Error : character's informations returns nil.")
                 exit(0)
@@ -130,7 +159,10 @@ class Player {
         }
         return Ask.confirmation("Do you confirm ?")
     }
+    
+    /// Let user choose a character and add it to the team.
     private func chooseCharacter() {
+        // announce
         let characterIndex = Player.characters.count - 3 * self.index + 1
         switch characterIndex {
         case 1:
@@ -143,28 +175,42 @@ class Player {
             print("Fatal Error in characters type asking.")
             exit(0)
         }
-        let type = chooseCharacterType(characterIndex)
+        // choose type
+        let type = chooseCharacterType()
         print("Your choice : \(type)")
+        // choose name
         let name = chooseCharacterName()
-        StyleSheet.displayStarLine()
-        let character = characterCreation(name: name, type: type)
+        StyleSheet.displayDashLine()
+        // character's creation
+        let character = Character(name: name, type: type)
         StyleSheet.displayMiniTitle("Character created")
-        let info = character.informations(full: false, evenDead: false)
+        // ask confirmation
+        if isCharacterConfirmed(character) {
+            Player.characters.append(character)
+            print("\(character.name) has been added to your team !")
+            StyleSheet.displayDashLine()
+        } else {
+            print("\(character.name) has been deleted.")
+            StyleSheet.displayDashLine()
+        }
+    }
+    
+    /// Ask confirmation for adding character in the player's team.
+    /// - parameter character: Character to be confirmed.
+    /// - returns: *true* if the character has been confirmed in the team, *false* otherwise.
+    private func isCharacterConfirmed(_ character: Character) -> Bool {
+        let info = character.displayInformations(full: false, evenDead: false)
         guard let verifiedInfo = info else {
             print("Fatal Erro : character's informations return nil.")
             exit(0)
         }
         print(verifiedInfo)
-        if Ask.confirmation("Do you confirm ?") {
-            Player.characters.append(character)
-            print("\(character.name) has been added to your team !")
-            StyleSheet.displayStarLine()
-        } else {
-            print("\(character.name) has been deleted.")
-            StyleSheet.displayStarLine()
-        }
+        return Ask.confirmation("Do you confirm ?")
     }
-    func chooseCharacterType(_ characterIndex: Int) -> CharacterType {
+    
+    /// Let user choose the character's type.
+    /// - returns: The character's type.
+    private func chooseCharacterType() -> CharacterType {
         displayCharactersTypes()
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         let number = Ask.number(
@@ -173,41 +219,19 @@ class Player {
             cancelProposition: nil)
         return types[number - 1]
     }
+    
+    /// Display all character's type possibilities.
     func displayCharactersTypes() {
-        guard let specialSkillDescriptionWa = specialSkillDescription(bacproperties.warriorSpecialSkill) else {
-            print("Fatal Error : Unknown special skill description (1).")
-            exit(0)
-        }
-        print("\n1. \(bacproperties.warriorEmoticon) \(bacproperties.warriorName)\n\(bacproperties.warriorDescription) \(specialSkillDescriptionWa)")
-        guard let specialSkillDescriptionWi = specialSkillDescription(bacproperties.wizardSpecialSkill) else {
-            print("Fatal Error : Unknown special skill description (2).")
-            exit(0)
-        }
-        print("\n2. \(bacproperties.wizardEmoticon) \(bacproperties.wizardName)\n\(bacproperties.wizardDescription) \(specialSkillDescriptionWi)")
-        guard let specialSkillDescriptionDr = specialSkillDescription(bacproperties.druidSpecialSkill) else {
-            print("Fatal Error : Unknown special skill description (3).")
-            exit(0)
-        }
-        print("\n3. \(bacproperties.druidEmoticon) \(bacproperties.druidName)\n\(bacproperties.druidDescription) \(specialSkillDescriptionDr)")
-        guard let specialSkillDescriptionJo = specialSkillDescription(bacproperties.jokerSpecialSkill) else {
-            print("Fatal Error : Unknown special skill description (4).")
-            exit(0)
-        }
-        print("\n4. \(bacproperties.jokerEmoticon) \(bacproperties.jokerName)\n\(bacproperties.jokerDescription) \(specialSkillDescriptionJo)")
-    }
-    func specialSkillDescription(_ specialSkill: SkillsType) -> String? {
-        switch specialSkill {
-        case .multiAttack:
-            return bacproperties.multiAttackDescription
-        case .multiHeal:
-            return bacproperties.multiHealDescription
-        case .diversion:
-            return bacproperties.diversionDescription
-        default:
-            return nil
+        let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
+        for index in 0...3 {
+            print("\n\(index + 1). \(types[index].emoticon()) \(types[index].name())\n\(types[index].description()) \(types[index].specialSkill().description())")
         }
     }
-    func chooseCharacterName() -> String {
+    
+    /// Let user choose a name for the character.
+    /// - returns: The choosen name.
+    private func chooseCharacterName() -> String {
+        // ask name
         var choosenName: String? = nil
         while choosenName == nil {
             choosenName = askName()
@@ -216,17 +240,17 @@ class Player {
             print("Fatal Error : ChoosenName returns nil.")
             exit(0)
         }
+        // returns it
         return verifiedChoosenName
     }
-    func askName() -> String? {
+    
+    /// Ask  a name for the character and returns it.
+    private func askName() -> String? {
+        // ask name
         let name = Ask.freeAnswer("\nEnter its name :")
-        if Player.characters.count > 0 {
-            for character in Player.characters {
-                if character.name.lowercased() == name.lowercased() {
-                    print("This name is already used by another character. Choose another.")
-                    return nil
-                }
-            }
+        if isTakenName(name) {
+            print("This name is already used by another character. Choose another.")
+            return nil
         }
         if name.count > 30 {
             print("Please enter a shorter name.")
@@ -234,29 +258,20 @@ class Player {
         }
         return name
     }
-    func characterCreation(name: String, type: CharacterType) -> Character {
-        switch type {
-        case .warrior:
-            let weapon = Sword(firstWeapon: true, lifeStep: .fulLife)
-            return Warrior(name: name, weapon: weapon)
-        case .wizard:
-            let weapon = PowerStick(firstWeapon: true, lifeStep: .fulLife)
-            return Wizard(name: name, weapon: weapon)
-        case .druid:
-            let weapon = HealthStick(firstWeapon: true, lifeStep: .fulLife)
-            return Druid(name: name, weapon: weapon)
-        case .joker:
-            let weapon = Knife(firstWeapon: true, lifeStep: .fulLife)
-            return Joker(name: name, weapon: weapon)
-        }
-    }
+    
+    /// Remove all characters of the player's team.
     func removeCharacters() {
         for _ in 0...2 {
             Player.characters.remove(at: index * 3)
         }
     }
     
+    
+    
         // MARK: Situation
+    
+    
+    
     /// Display team's situation.
     /// - parameter playerIndex : Index of the needed player in Game.players.
     func displayTeamSituation(_ playerIndex: Int) {

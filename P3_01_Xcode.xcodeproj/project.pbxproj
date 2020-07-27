@@ -9,12 +9,18 @@
 /* Begin PBXBuildFile section */
 		030F72A524CD41A200AC3593 /* Ask.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F72A424CD41A200AC3593 /* Ask.swift */; };
 		030F72A724CD490900AC3593 /* StyleSheet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 030F72A624CD490900AC3593 /* StyleSheet.swift */; };
+		037B3DF424CF024E006841E8 /* RoundStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 037B3DF324CF024E006841E8 /* RoundStep.swift */; };
+		0388AB8724CEC20000E79C66 /* Skill.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388AB8624CEC20000E79C66 /* Skill.swift */; };
+		0388AB8924CEC71D00E79C66 /* LifeStep.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388AB8824CEC71D00E79C66 /* LifeStep.swift */; };
+		0388AB8B24CEC79600E79C66 /* SpecialSkillAvailability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388AB8A24CEC79600E79C66 /* SpecialSkillAvailability.swift */; };
+		0388AB8D24CED54200E79C66 /* WeaponType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0388AB8C24CED54200E79C66 /* WeaponType.swift */; };
 		03B2329024CC4CCF00794442 /* Statistics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03B2328F24CC4CCF00794442 /* Statistics.swift */; };
 		03C9B64224C86023004A7B76 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64124C86023004A7B76 /* main.swift */; };
 		03C9B65124C86038004A7B76 /* BACProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64A24C86037004A7B76 /* BACProperties.swift */; };
 		03C9B65224C86038004A7B76 /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64B24C86037004A7B76 /* Player.swift */; };
 		03C9B65424C86038004A7B76 /* Weapon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64D24C86038004A7B76 /* Weapon.swift */; };
 		03C9B65524C86038004A7B76 /* Game.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03C9B64E24C86038004A7B76 /* Game.swift */; };
+		03E0B91924CEAA4E0001F91C /* CharacterType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03E0B91824CEAA4E0001F91C /* CharacterType.swift */; };
 		03EAEA9E24C87E3D005F26FB /* Round.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EAEA9B24C87E3C005F26FB /* Round.swift */; };
 		03EAEA9F24C87E3D005F26FB /* Character.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EAEA9C24C87E3C005F26FB /* Character.swift */; };
 		03EAEAA024C87E3D005F26FB /* Chest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 03EAEA9D24C87E3D005F26FB /* Chest.swift */; };
@@ -35,6 +41,11 @@
 /* Begin PBXFileReference section */
 		030F72A424CD41A200AC3593 /* Ask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Ask.swift; sourceTree = "<group>"; };
 		030F72A624CD490900AC3593 /* StyleSheet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StyleSheet.swift; sourceTree = "<group>"; };
+		037B3DF324CF024E006841E8 /* RoundStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundStep.swift; sourceTree = "<group>"; };
+		0388AB8624CEC20000E79C66 /* Skill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Skill.swift; sourceTree = "<group>"; };
+		0388AB8824CEC71D00E79C66 /* LifeStep.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifeStep.swift; sourceTree = "<group>"; };
+		0388AB8A24CEC79600E79C66 /* SpecialSkillAvailability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpecialSkillAvailability.swift; sourceTree = "<group>"; };
+		0388AB8C24CED54200E79C66 /* WeaponType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeaponType.swift; sourceTree = "<group>"; };
 		03B2328F24CC4CCF00794442 /* Statistics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Statistics.swift; sourceTree = "<group>"; };
 		03C9B63E24C86023004A7B76 /* P3_01_Xcode */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = P3_01_Xcode; sourceTree = BUILT_PRODUCTS_DIR; };
 		03C9B64124C86023004A7B76 /* main.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
@@ -42,6 +53,7 @@
 		03C9B64B24C86037004A7B76 /* Player.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		03C9B64D24C86038004A7B76 /* Weapon.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Weapon.swift; sourceTree = "<group>"; };
 		03C9B64E24C86038004A7B76 /* Game.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Game.swift; sourceTree = "<group>"; };
+		03E0B91824CEAA4E0001F91C /* CharacterType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterType.swift; sourceTree = "<group>"; };
 		03EAEA9B24C87E3C005F26FB /* Round.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Round.swift; sourceTree = "<group>"; };
 		03EAEA9C24C87E3C005F26FB /* Character.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Character.swift; sourceTree = "<group>"; };
 		03EAEA9D24C87E3D005F26FB /* Chest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Chest.swift; sourceTree = "<group>"; };
@@ -77,17 +89,23 @@
 		03C9B64024C86023004A7B76 /* P3_01_Xcode */ = {
 			isa = PBXGroup;
 			children = (
+				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
 				03C9B64124C86023004A7B76 /* main.swift */,
 				03C9B64E24C86038004A7B76 /* Game.swift */,
+				030F72A424CD41A200AC3593 /* Ask.swift */,
+				03B2328F24CC4CCF00794442 /* Statistics.swift */,
+				030F72A624CD490900AC3593 /* StyleSheet.swift */,
 				03C9B64B24C86037004A7B76 /* Player.swift */,
 				03EAEA9C24C87E3C005F26FB /* Character.swift */,
+				0388AB8A24CEC79600E79C66 /* SpecialSkillAvailability.swift */,
+				0388AB8824CEC71D00E79C66 /* LifeStep.swift */,
+				03E0B91824CEAA4E0001F91C /* CharacterType.swift */,
+				0388AB8624CEC20000E79C66 /* Skill.swift */,
 				03C9B64D24C86038004A7B76 /* Weapon.swift */,
+				0388AB8C24CED54200E79C66 /* WeaponType.swift */,
 				03EAEA9B24C87E3C005F26FB /* Round.swift */,
 				03EAEA9D24C87E3D005F26FB /* Chest.swift */,
-				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
-				03B2328F24CC4CCF00794442 /* Statistics.swift */,
-				030F72A424CD41A200AC3593 /* Ask.swift */,
-				030F72A624CD490900AC3593 /* StyleSheet.swift */,
+				037B3DF324CF024E006841E8 /* RoundStep.swift */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";
@@ -153,12 +171,18 @@
 				03C9B64224C86023004A7B76 /* main.swift in Sources */,
 				03B2329024CC4CCF00794442 /* Statistics.swift in Sources */,
 				03C9B65124C86038004A7B76 /* BACProperties.swift in Sources */,
+				0388AB8924CEC71D00E79C66 /* LifeStep.swift in Sources */,
+				037B3DF424CF024E006841E8 /* RoundStep.swift in Sources */,
 				03EAEA9F24C87E3D005F26FB /* Character.swift in Sources */,
 				03C9B65424C86038004A7B76 /* Weapon.swift in Sources */,
+				0388AB8724CEC20000E79C66 /* Skill.swift in Sources */,
+				0388AB8D24CED54200E79C66 /* WeaponType.swift in Sources */,
+				03E0B91924CEAA4E0001F91C /* CharacterType.swift in Sources */,
 				03C9B65224C86038004A7B76 /* Player.swift in Sources */,
 				03EAEAA024C87E3D005F26FB /* Chest.swift in Sources */,
 				030F72A724CD490900AC3593 /* StyleSheet.swift in Sources */,
 				030F72A524CD41A200AC3593 /* Ask.swift in Sources */,
+				0388AB8B24CEC79600E79C66 /* SpecialSkillAvailability.swift in Sources */,
 				03EAEA9E24C87E3D005F26FB /* Round.swift in Sources */,
 				03C9B65524C86038004A7B76 /* Game.swift in Sources */,
 			);

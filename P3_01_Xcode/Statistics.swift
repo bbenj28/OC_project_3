@@ -7,15 +7,24 @@
 //
 
 import Foundation
-// MARK: Statistics
+
 class Statistics {
     
     
+    
     // MARK: Properties
+    
+    
+    
     static var rounds: [Round] = []
     static var chests: [Chest] = []
     
+    
+    
     // MARK: Display
+    
+    
+    
     /// Display statistics.
     static func display() {
         roundStatistics()
@@ -25,22 +34,22 @@ class Statistics {
     
     /// Display rounds statistics.
     static private func roundStatistics() {
-        // rounds
         StyleSheet.displayMiniTitle("rounds")
+        // total
         print("total : \(rounds.count)")
         // count rounds played by each player, types of characters and types of skill used during the rounds
         var playedByPlayer: [String:Int] = [Game.players[0].name : 0, Game.players[1].name : 0]
         var usedCharactersType: [CharacterType:Int] = [.warrior : 0, .wizard : 0, .druid : 0, .joker : 0]
-        var usedSkillsType : [SkillsType:Int] = [.attack : 0, .diversion : 0, .heal : 0, .multiAttack : 0, .multiHeal : 0]
+        var usedSkillsType : [Skill:Int] = [.attack : 0, .diversion : 0, .heal : 0, .multiAttack : 0, .multiHeal : 0]
         for round in rounds {
             if let value = playedByPlayer[round.playingPlayer.name] {
                 playedByPlayer[round.playingPlayer.name] = value + 1
             }
-            if let value = usedCharactersType[round.verifyChoosenCharacter().type] {
-                usedCharactersType[round.verifyChoosenCharacter().type] = value + 1
+            if let value = usedCharactersType[round.isChoosenCharacterExisting().type] {
+                usedCharactersType[round.isChoosenCharacterExisting().type] = value + 1
             }
-            if let value = usedSkillsType[round.verifyChoosenSkill()] {
-                usedSkillsType[round.verifyChoosenSkill()] = value + 1
+            if let value = usedSkillsType[round.isChooseSkillExisting()] {
+                usedSkillsType[round.isChooseSkillExisting()] = value + 1
             }
         }
         // return counts
@@ -57,12 +66,11 @@ class Statistics {
         }
         // end
         Ask.pressEnter()
-        StyleSheet.displayStarLine()
+        StyleSheet.displayDashLine()
     }
     
     /// Display chests statistics.
     static func chestsStatistics() {
-        // chests
         StyleSheet.displayMiniTitle("chests")
         // total
         print("total : \(chests.count)")
@@ -89,12 +97,11 @@ class Statistics {
         }
         // end
         Ask.pressEnter()
-        StyleSheet.displayStarLine()
+        StyleSheet.displayDashLine()
     }
     
     /// Display characters statistics.
     static private func charactersStatistics() {
-        // characters title
         StyleSheet.displayMiniTitle("characters")
         // HP of each characters
         StyleSheet.displayMiniTitle("HP")
@@ -108,7 +115,7 @@ class Statistics {
             print("\(character.name) : \(character.strength)")
         }
         Ask.pressEnter()
-        // sustaines injuries by each characters
+        // sustained injuries by each characters
         StyleSheet.displayMiniTitle("Injuries")
         for character in Player.characters {
             print("\(character.name) : \(character.injuriesPoints)")
@@ -121,6 +128,6 @@ class Statistics {
         }
         // End
         Ask.pressEnter()
-        StyleSheet.displayStarLine()
+        StyleSheet.displayDashLine()
     }
 }

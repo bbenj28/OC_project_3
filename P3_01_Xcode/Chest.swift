@@ -19,8 +19,8 @@ class Chest {
     let player: Player // the player who decides
     
         // MARK: Init
-    init(gift: Weapon, for character: Character, player: Player) {
-        self.gift = gift
+    init(for character: Character, player: Player) {
+        self.gift = character.type.createWeapon(firstWeapon: false, lifeStep: character.activeStep)
         self.character = character
         self.player = player
     }

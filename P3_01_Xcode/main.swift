@@ -10,4 +10,3 @@ import Foundation
 
 
 Game.start()
-
