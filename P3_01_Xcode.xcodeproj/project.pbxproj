@@ -70,6 +70,72 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		037B3DF524CF0ED6006841E8 /* Player */ = {
+			isa = PBXGroup;
+			children = (
+				03C9B64B24C86037004A7B76 /* Player.swift */,
+			);
+			path = Player;
+			sourceTree = "<group>";
+		};
+		037B3DF624CF0EE9006841E8 /* Character */ = {
+			isa = PBXGroup;
+			children = (
+				03EAEA9C24C87E3C005F26FB /* Character.swift */,
+				03E0B91824CEAA4E0001F91C /* CharacterType.swift */,
+				0388AB8824CEC71D00E79C66 /* LifeStep.swift */,
+			);
+			path = Character;
+			sourceTree = "<group>";
+		};
+		037B3DF724CF0EF0006841E8 /* Skill */ = {
+			isa = PBXGroup;
+			children = (
+				0388AB8624CEC20000E79C66 /* Skill.swift */,
+				0388AB8A24CEC79600E79C66 /* SpecialSkillAvailability.swift */,
+			);
+			path = Skill;
+			sourceTree = "<group>";
+		};
+		037B3DF824CF0EF6006841E8 /* Weapon */ = {
+			isa = PBXGroup;
+			children = (
+				03C9B64D24C86038004A7B76 /* Weapon.swift */,
+				0388AB8C24CED54200E79C66 /* WeaponType.swift */,
+			);
+			path = Weapon;
+			sourceTree = "<group>";
+		};
+		037B3DF924CF0EFA006841E8 /* Round */ = {
+			isa = PBXGroup;
+			children = (
+				03EAEA9B24C87E3C005F26FB /* Round.swift */,
+				037B3DF324CF024E006841E8 /* RoundStep.swift */,
+			);
+			path = Round;
+			sourceTree = "<group>";
+		};
+		037B3DFA24CF0F00006841E8 /* Chest */ = {
+			isa = PBXGroup;
+			children = (
+				03EAEA9D24C87E3D005F26FB /* Chest.swift */,
+			);
+			path = Chest;
+			sourceTree = "<group>";
+		};
+		037B3DFB24CF0F30006841E8 /* General */ = {
+			isa = PBXGroup;
+			children = (
+				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
+				03C9B64124C86023004A7B76 /* main.swift */,
+				03C9B64E24C86038004A7B76 /* Game.swift */,
+				030F72A424CD41A200AC3593 /* Ask.swift */,
+				03B2328F24CC4CCF00794442 /* Statistics.swift */,
+				030F72A624CD490900AC3593 /* StyleSheet.swift */,
+			);
+			path = General;
+			sourceTree = "<group>";
+		};
 		03C9B63524C86023004A7B76 = {
 			isa = PBXGroup;
 			children = (
@@ -89,23 +155,13 @@
 		03C9B64024C86023004A7B76 /* P3_01_Xcode */ = {
 			isa = PBXGroup;
 			children = (
-				03C9B64A24C86037004A7B76 /* BACProperties.swift */,
-				03C9B64124C86023004A7B76 /* main.swift */,
-				03C9B64E24C86038004A7B76 /* Game.swift */,
-				030F72A424CD41A200AC3593 /* Ask.swift */,
-				03B2328F24CC4CCF00794442 /* Statistics.swift */,
-				030F72A624CD490900AC3593 /* StyleSheet.swift */,
-				03C9B64B24C86037004A7B76 /* Player.swift */,
-				03EAEA9C24C87E3C005F26FB /* Character.swift */,
-				0388AB8A24CEC79600E79C66 /* SpecialSkillAvailability.swift */,
-				0388AB8824CEC71D00E79C66 /* LifeStep.swift */,
-				03E0B91824CEAA4E0001F91C /* CharacterType.swift */,
-				0388AB8624CEC20000E79C66 /* Skill.swift */,
-				03C9B64D24C86038004A7B76 /* Weapon.swift */,
-				0388AB8C24CED54200E79C66 /* WeaponType.swift */,
-				03EAEA9B24C87E3C005F26FB /* Round.swift */,
-				03EAEA9D24C87E3D005F26FB /* Chest.swift */,
-				037B3DF324CF024E006841E8 /* RoundStep.swift */,
+				037B3DFB24CF0F30006841E8 /* General */,
+				037B3DFA24CF0F00006841E8 /* Chest */,
+				037B3DF924CF0EFA006841E8 /* Round */,
+				037B3DF824CF0EF6006841E8 /* Weapon */,
+				037B3DF724CF0EF0006841E8 /* Skill */,
+				037B3DF624CF0EE9006841E8 /* Character */,
+				037B3DF524CF0ED6006841E8 /* Player */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";
