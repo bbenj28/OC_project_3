@@ -301,7 +301,6 @@ class Round {
     /// Ask user to confirm choices by enter Y or N.
     /// - returns: *true* if Y was entered, *false* if N was entered.
     private func confirmChoices() -> Bool {
-        StyleSheet.displayMiniTitle("CONFIRMATION")
         return Ask.confirmation("Do you confirm your choices ?")
     }
     
