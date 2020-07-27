@@ -15,6 +15,8 @@ enum RoundStep {
     case targetCharacterIsSelected
     case confirmedChoices
     
+    
+    /// Display title regarding active step.
     func displayTitle() {
         switch self {
         case .beginning:
@@ -27,6 +29,42 @@ enum RoundStep {
             StyleSheet.displayMiniTitle("CONFIRMATION")
         case .confirmedChoices:
             break
+        }
+    }
+    
+    /// Valid choice made by player by changing active step.
+    func moveForward(_ hasToChooseTarget: Bool) -> RoundStep {
+        switch self {
+        case .beginning:
+            return .firstCharacterIsSelected
+        case .firstCharacterIsSelected:
+            if hasToChooseTarget {
+                return .skillIsSelected
+            } else {
+                return .targetCharacterIsSelected
+            }
+        case .skillIsSelected:
+            return .targetCharacterIsSelected
+        case .targetCharacterIsSelected, .confirmedChoices:
+            return .confirmedChoices
+        }
+    }
+    
+    /// Cancel last choice made by player by changing active step.
+    func cancelLastChoice(_ hasToChooseTarget: Bool) -> RoundStep {
+        switch self {
+        case .beginning, .firstCharacterIsSelected:
+            return .beginning
+        case .skillIsSelected:
+            return .firstCharacterIsSelected
+        case .targetCharacterIsSelected:
+            if hasToChooseTarget {
+                return .skillIsSelected
+            } else {
+                return .firstCharacterIsSelected
+            }
+        case .confirmedChoices:
+            return .skillIsSelected
         }
     }
     

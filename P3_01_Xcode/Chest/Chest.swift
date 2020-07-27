@@ -38,6 +38,9 @@ class Chest {
         print("\nChest is refused.")
     }
     func askForReplaceWeapon() {
+        print("CONGRATS! \(character.name) found a chest !")
+        print("Chest's content : \(gift.name) [Str. \(gift.strength)]")
+        print("\(character.name)'s weapon : \(character.weapon.name) [Str. \(character.weapon.strength)].")
         let accepted = Ask.confirmation("Do you want to replace it with the chest's content ?")
         if accepted {
             self.accepted()
@@ -45,5 +48,6 @@ class Chest {
             refused()
         }
     }
+    
 }
  

@@ -73,7 +73,7 @@ class Character {
     
     
     /// Ask character to use its skill.
-    func executeOrder() {
+    func executeOrder66() {
         let round = Game.returnActiveRound()
         let skill = round.isChooseSkillExisting()
         var target: [Character]

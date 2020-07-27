@@ -66,10 +66,6 @@ class Round {
         // resolve round and manage chest appearance
         if let chest = endRoundAndReturnChest() {
             StyleSheet.displayMiniTitle("CHEST")
-            let character = isChoosenCharacterExisting()
-            print("CONGRATS! \(character.name) found a chest !")
-            print("Chest's content : \(chest.gift.name) [Str. \(chest.gift.strength)]")
-            print("\(character.name)'s weapon : \(character.weapon.name) [Str. \(character.weapon.strength)].")
             chest.askForReplaceWeapon()
             StyleSheet.displayDashLine()
             return chest
@@ -91,27 +87,30 @@ class Round {
         case .beginning: // fighting character choice
             choosenCharacter = characterManager()
             if choosenCharacter != nil {
-                moveForward()
+                activeStep = activeStep.moveForward(hasToChooseTarget)
             }
         case .firstCharacterIsSelected: // skill choice
             choosenSkill = skillManager()
             if choosenSkill != nil {
-                moveForward()
+                activeStep = activeStep.moveForward(hasToChooseTarget)
             } else {
-                cancelLastChoice()
+                choosenCharacter = nil
+                activeStep = activeStep.cancelLastChoice(hasToChooseTarget)
             }
         case .skillIsSelected: // choose target
             choosenTargetCharacter = characterManager()
             if choosenTargetCharacter != nil {
-                moveForward()
+                activeStep = activeStep.moveForward(hasToChooseTarget)
             } else {
-                cancelLastChoice()
+                choosenSkill = nil
+                activeStep = activeStep.cancelLastChoice(hasToChooseTarget)
             }
         case .targetCharacterIsSelected: // confirm choices
             if confirmChoices() {
-                moveForward()
+                activeStep = activeStep.moveForward(hasToChooseTarget)
             } else {
-                cancelLastChoice()
+                choosenTargetCharacter = nil
+                activeStep = activeStep.cancelLastChoice(hasToChooseTarget)
             }
         case .confirmedChoices: // choices have been confirmed
             break
@@ -119,57 +118,6 @@ class Round {
         if activeStep != .confirmedChoices { // display choices
             displayChoices()
         }
-    }
-    
-    /// Valid choice made by player by changing active step.
-    private func moveForward() {
-        switch activeStep {
-        case .beginning:
-            activeStep = .firstCharacterIsSelected
-        case .firstCharacterIsSelected:
-            if hasToChooseTarget {
-                activeStep = .skillIsSelected
-            } else {
-                activeStep = .targetCharacterIsSelected
-            }
-        case .skillIsSelected:
-            activeStep = .targetCharacterIsSelected
-        case .targetCharacterIsSelected:
-            activeStep = .confirmedChoices
-        case .confirmedChoices:
-            break
-        }
-    }
-    
-    /// Cancel last choice made by player by changing active step.
-    private func cancelLastChoice() {
-        switch activeStep {
-        case .beginning, .firstCharacterIsSelected:
-            choosenCharacter = nil
-            activeStep = .beginning
-        case .skillIsSelected:
-            choosenSkill = nil
-            activeStep = .firstCharacterIsSelected
-        case .targetCharacterIsSelected:
-            let skill = isChooseSkillExisting()
-            if skill == .multiHeal || skill == .multiAttack {
-                choosenTargetCharacter = nil
-                choosenSkill = nil
-                activeStep = .firstCharacterIsSelected
-            } else {
-                choosenTargetCharacter = nil
-                activeStep = .skillIsSelected
-            }
-        case .confirmedChoices:
-            break
-        }
-    }
-    
-    /// Ask user to confirm choices by enter Y or N.
-    /// - returns: *true* if Y was entered, *false* if N was entered.
-    private func confirmChoices() -> Bool {
-        StyleSheet.displayMiniTitle("CONFIRMATION")
-        return Ask.confirmation("Do you confirm your choices ?")
     }
     
     /// Display choices made by user.
@@ -210,10 +158,41 @@ class Round {
     /// Ask player to choose a character, or to cancel last choice.
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
     private func characterManager() -> Character? {
-        // Ask user to choose a character
-        return chooseCharacter(
-            characters: charactersList(),
-            cancelProposition: cancelProposition())
+        // get parameters
+        let characters = charactersList()
+        let cancel = cancelProposition()
+        // ask user to choose a character
+        var character: Character? = nil
+        while character == nil {
+            // display characters and check remaining characters number
+            let remainingCharactersCount = displayCharacters(characters)
+            if remainingCharactersCount == 1 {
+                // if it remains a single character, then this one is choosen
+                for remainCharacter in characters {
+                    if remainCharacter.isDead == false {
+                        character = remainCharacter
+                    }
+                }
+            } else {
+                // otherwise, let user choose a character
+                let index: Int
+                if characters[0].name == playingPlayer.characters[0].name {
+                    index = playingPlayer.index
+                } else {
+                    index  = watchingPlayer.index
+                }
+                let number = Ask.number(
+                    range: index * 3 + 1...index * 3 + 3,
+                    message: "Please, choose a character by enter a number between \(index * 3 + 1) and \(index * 3 + 3)",
+                    cancelProposition: cancel)
+                if number == 0 {
+                    return nil
+                } else {
+                    character = choosedCharacter(number: number)
+                }
+            }
+        }
+        return character
     }
     
     /// Ask characters list of the player of whom the character has to be choosen.
@@ -238,45 +217,9 @@ class Round {
         return cancelProposition
     }
     
-    
-    private func chooseCharacter(characters: [Character], cancelProposition: String?) -> Character? {
-        var character: Character? = nil
-        while character == nil {
-            // display characters and check remaining characters number
-            let remainingCharactersCount = displayCharacters(characters)
-            if remainingCharactersCount == 1 {
-                // if it remains a single character, then this one is choosen
-                for remainCharacter in characters {
-                    if remainCharacter.isDead == false {
-                        character = remainCharacter
-                    }
-                }
-            } else {
-                // otherwise, let user choose a character
-                let index: Int
-                if characters[0].name == playingPlayer.name {
-                    index = playingPlayer.index
-                } else {
-                    index  = watchingPlayer.index
-                }
-                let number = Ask.number(
-                    range: index * 3 + 1...index * 3 + 3,
-                    message: "Please, choose a character by enter a number between \(index * 3 + 1) and \(index * 3 + 3)",
-                    cancelProposition: cancelProposition)
-                if number == 0 {
-                    return nil
-                } else {
-                    character = choosedCharacter(number: number)
-                }
-            }
-        }
-        return character
-    }
-    
-    
-    /// Verify if the choosen character can be use by the user.
+    /// Verify if the choosen character can be used by the user.
     /// - parameter number: Choosen number by the user.
-    /// - returns: If the choosen character can be used, returns the character. Otherwise, returns nil.
+    /// - returns: If the choosen character can be used, returns the character. Otherwise, returns *nil*.
     private func choosedCharacter(number: Int) -> Character? {
         if Player.characters[number - 1].isDead {
             return nil
@@ -285,7 +228,7 @@ class Round {
     }
     
     /// Display a characters list.
-    /// - parameter playerIndex: To display the characters list of a specific player, enter his number. Otherwise, to display the entire list, enter nil.
+    /// - parameter charactersList: To display the characters list, enter it. To display all characters, enter *nil*.
     /// - returns: Displayed characters count.
     private func displayCharacters(_ charactersList: [Character]?) -> Int {
         // prepare parameters
@@ -355,6 +298,13 @@ class Round {
         return skill
     }
     
+    /// Ask user to confirm choices by enter Y or N.
+    /// - returns: *true* if Y was entered, *false* if N was entered.
+    private func confirmChoices() -> Bool {
+        StyleSheet.displayMiniTitle("CONFIRMATION")
+        return Ask.confirmation("Do you confirm your choices ?")
+    }
+    
     
     
         // MARK: Skill choice
@@ -365,9 +315,7 @@ class Round {
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
     private func skillManager() -> Skill? {
         // get choosen character to display its skill
-        StyleSheet.displayMiniTitle("Choose a skill")
         let character = isChoosenCharacterExisting()
-        
         // ask user to choose a skill
         displaySkills(of: character)
         let number = Ask.number(
@@ -430,12 +378,12 @@ class Round {
     private func useSkill() {
         // order character to use its skill.
         let character = isChoosenCharacterExisting()
-        character.executeOrder()
+        character.executeOrder66()
     }
     
     /// Check if player's characters are diverted, and reduce their diversion's rounds count.
     private func checkDiversion() {
-        // for each character, check if they are diverted and reduce their diversion's rouns count
+        // for each character, check if they are diverted and reduce their diversion's rounds count
         for character in playingPlayer.characters {
             if character.isDiverted {
                 guard var rounds = character.diversionRounds else {
@@ -486,14 +434,3 @@ class Round {
         return Chest(for: character, player: playingPlayer)
     }
 }
-
-
-// MARK: Enumerations based on round's properties
-
-
-
-        // MARK: RoundSteps
-
-
-
- 
