@@ -21,7 +21,7 @@ class Game {
     static var gameCanContinue: Bool {
         return players[0].isDefeated || players[1].isDefeated ? false : true
     }
-    static var randomCreation: Bool = true // true for creating random players and characters
+    static var randomCreation: Bool = false // true for creating random players and characters
     
     
     
@@ -126,6 +126,17 @@ class Game {
         for index in 0...1 {
             players[index].charactersCreationByUser()
         }
+    }
+    
+    /// Display informations about strength and healthcare if the user needs it.
+    static func displayStrengthAndHealthcareInformations() {
+        StyleSheet.displayDashLine()
+        print(BACProperties.strengthExplanations)
+        print(BACProperties.healthcareExplanations)
+        if BACProperties.isSpecialSkillEnabled {
+            print(BACProperties.specialSkillExplanations)
+        }
+        StyleSheet.displayDashLine()
     }
 
     

@@ -63,7 +63,11 @@ class Character {
         self.name = name
         self.type = type
         self.weapon = type.createWeapon(firstWeapon: true, lifeStep: .fulLife)
-        self.skills = [.attack, .heal, type.specialSkill()] // all characters can use attack and heal, specialskill depends on its type
+        if BACProperties.isSpecialSkillEnabled {
+            self.skills = [.attack, .heal, type.specialSkill()] // all characters can use attack and heal, specialskill depends on its type
+        } else {
+            self.skills = [.attack, .heal]
+        }
     }
     
     
@@ -144,7 +148,7 @@ class Character {
     
     /// Display skills of the character.
     func displaySkills() {
-        for index in 0...2 {
+        for index in 0...skills.count - 1 {
             if index < 2 {
                 print("\(index + 1). \(skills[index].name())")
             } else {

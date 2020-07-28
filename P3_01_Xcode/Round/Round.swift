@@ -320,8 +320,8 @@ class Round {
         var skill: Skill? = nil
         while skill == nil {
             let number = Ask.number(
-                range: 1...3,
-                message: "Choose a skill by enter a number between 1 and 3.",
+                range: 1...character.skills.count,
+                message: "Choose a skill by enter a number between 1 and \(character.skills.count).",
                 cancelProposition: "Enter 0 to cancel and choose another character.")
             if number == 0 {
                 return nil

@@ -213,10 +213,26 @@ class Player {
     private func chooseCharacterType() -> CharacterType {
         displayCharactersTypes()
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
-        let number = Ask.number(
+        var numberToReturn: Int? = nil
+        var explanationAbout = "strength and healthcare"
+        if BACProperties.isSpecialSkillEnabled {
+            explanationAbout = "special skill, \(explanationAbout)"
+        }
+        while numberToReturn == nil {
+            let number = Ask.number(
             range: 1...4,
             message: "\nChoose a character type by enter a number between 1 and 4.",
-            cancelProposition: nil)
+            cancelProposition: "✧ Choose 0 to have some explanations about \(explanationAbout).")
+            if number == 0 {
+                Game.displayStrengthAndHealthcareInformations()
+            } else {
+                numberToReturn = number
+            }
+        }
+        guard let number = numberToReturn else {
+            print("Fatal Error : choosen number returns nil.")
+            exit(0)
+        }
         return types[number - 1]
     }
     
@@ -224,9 +240,7 @@ class Player {
     func displayCharactersTypes() {
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         for index in 0...3 {
-            print("\n\(index + 1). \(types[index].emoticon()) \(types[index].name())")
-            print("\(types[index].description()) \(types[index].specialSkill().description())")
-            print("[maximum HP: \(types[index].maxHealthPoints())] [minimum strength: \(types[index].weaponType().minStrength(.fulLife))] [special skill: \(types[index].specialSkill().name())]")
+            types[index].displayInformations()
         }
     }
     

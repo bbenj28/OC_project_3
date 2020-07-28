@@ -156,12 +156,12 @@
 			isa = PBXGroup;
 			children = (
 				037B3DFB24CF0F30006841E8 /* General */,
-				037B3DFA24CF0F00006841E8 /* Chest */,
-				037B3DF924CF0EFA006841E8 /* Round */,
-				037B3DF824CF0EF6006841E8 /* Weapon */,
-				037B3DF724CF0EF0006841E8 /* Skill */,
-				037B3DF624CF0EE9006841E8 /* Character */,
 				037B3DF524CF0ED6006841E8 /* Player */,
+				037B3DF624CF0EE9006841E8 /* Character */,
+				037B3DF724CF0EF0006841E8 /* Skill */,
+				037B3DF824CF0EF6006841E8 /* Weapon */,
+				037B3DF924CF0EFA006841E8 /* Round */,
+				037B3DFA24CF0F00006841E8 /* Chest */,
 			);
 			path = P3_01_Xcode;
 			sourceTree = "<group>";

@@ -141,7 +141,33 @@ enum CharacterType {
         }
     }
     
+    /// Ask for charactertype's index (number to enter to choose its type).
+    /// - returns: Charactertype's index.
+    func index() -> Int {
+        switch self {
+        case .warrior:
+            return 1
+        case .wizard:
+            return 2
+        case .druid:
+            return 3
+        case .joker:
+            return 4
+        }
+    }
     
+    /// Display informations about strength, healthcare, and eventually special skill.
+    func displayInformations() {
+        print("\n\(index()). \(emoticon()) \(name())")
+        if BACProperties.isSpecialSkillEnabled {
+            print("\(description()) \(specialSkill().description())")
+            print("[maximum HP: \(maxHealthPoints())] [min. strength✧ : \(weaponType().minStrength(.fulLife))] [min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))] [special skill✧ : \(specialSkill().name())]")
+        } else {
+            print("\(description())")
+            print("[maximum HP: \(maxHealthPoints())] [min. strength✧ : \(weaponType().minStrength(.fulLife))] [min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))]")
+ 
+        }
+    }
     
         // MARK: Weapon creation
     
