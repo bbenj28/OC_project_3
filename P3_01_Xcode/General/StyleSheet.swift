@@ -9,9 +9,7 @@
 import Foundation
 
 class StyleSheet {
-    
-    
-    
+
     /// Display title.
     /// - parameter title: Title to display.
     static func displayTitle(_ title: String) {
@@ -21,7 +19,7 @@ class StyleSheet {
         maxSigns: 70,
         sign: "=")
     }
-    
+
     /// Display subtitle.
     /// - parameter title: Subtitle to display.
     static func displaySubTitle(_ title: String) {
@@ -31,7 +29,7 @@ class StyleSheet {
         maxSigns: 60,
         sign: "*")
     }
-    
+
     /// Display mini title.
     /// - parameter title: Mini title to display.
     static func displayMiniTitle(_ title: String) {
@@ -41,7 +39,7 @@ class StyleSheet {
             maxSigns: 50,
             sign: "-")
     }
-    
+
     /// Display title with title's style's signs.
     /// - parameter title: Title to display.
     /// - parameter maxSigns : Length of the title with signs.
@@ -67,7 +65,7 @@ class StyleSheet {
         // display
         print(text)
     }
-    
+
     /// Display a lign of dashes.
     static func displayDashLine() {
         let maxDash = 50
