@@ -148,7 +148,8 @@ class Game {
         Ask.pressEnter()
         // display statistics
         StyleSheet.displayTitle("STATISTICS")
-        Statistics.display()
+        let statistics = Statistics()
+        statistics.display()
         StyleSheet.displayTitle("THE END")
     }
     

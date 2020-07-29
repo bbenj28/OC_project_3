@@ -10,10 +10,7 @@ import Foundation
 
 class Statistics {
     
-    
-    
-    // MARK: Properties
-    
+    // MARK: - Properties
     
     /// Played rounds during the game.
     static var rounds: [Round] = []
@@ -21,29 +18,25 @@ class Statistics {
     /// Generated chests during the game.
     static var chests: [Chest] = []
     
-    
-    
-    // MARK: Display
-    
-    
+    // MARK: - Display
     
     /// Display statistics.
-    static func display() {
+    func display() {
         roundStatistics()
         chestsStatistics()
         charactersStatistics()
     }
     
     /// Display rounds statistics.
-    static private func roundStatistics() {
+    private func roundStatistics() {
         StyleSheet.displayMiniTitle("rounds")
         // total
-        print("total : \(rounds.count)")
+        print("total : \(Statistics.rounds.count)")
         // count rounds played by each player, types of characters and types of skill used during the rounds
         var playedByPlayer: [String:Int] = [Game.players[0].name : 0, Game.players[1].name : 0]
         var usedCharactersType: [CharacterType:Int] = [.warrior : 0, .wizard : 0, .druid : 0, .joker : 0]
         var usedSkillsType : [Skill:Int] = [.attack : 0, .diversion : 0, .heal : 0, .multiAttack : 0, .multiHeal : 0]
-        for round in rounds {
+        for round in Statistics.rounds {
             if let value = playedByPlayer[round.playingPlayer.name] {
                 playedByPlayer[round.playingPlayer.name] = value + 1
             }
@@ -72,17 +65,17 @@ class Statistics {
     }
     
     /// Display chests statistics.
-    static func chestsStatistics() {
+    private func chestsStatistics() {
         StyleSheet.displayMiniTitle("chests")
         // total
-        print("total : \(chests.count)")
+        print("total : \(Statistics.chests.count)")
         // total for each player
         for player in Game.players {
             print("\n > for \(player.name)")
             // accepted chests count
             var accepted: Int = 0
             var total: Int = 0
-            for chest in chests {
+            for chest in Statistics.chests {
                 if chest.player.name == player.name {
                     total += 1
                     guard let isAccepted = chest.isAccepted else {
@@ -103,7 +96,7 @@ class Statistics {
     }
     
     /// Display characters statistics.
-    static private func charactersStatistics() {
+    private func charactersStatistics() {
         StyleSheet.displayMiniTitle("characters")
         // HP of each characters
         StyleSheet.displayMiniTitle("HP")
