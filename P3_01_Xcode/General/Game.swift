@@ -10,11 +10,7 @@ import Foundation
 
 class Game {
     
-    
-    
-        // MARK: Properties
-    
-    
+    // MARK: Properties
     
     /// Players list.
     static var players: [Player] = []
@@ -23,18 +19,18 @@ class Game {
     static var activeRound: Round?
     
     /// Check if a player is defeated and if the game can continue.
-    static var gameCanContinue: Bool {
-        return players[0].isDefeated || players[1].isDefeated ? false : true
+    var gameCanContinue: Bool {
+        return Game.players[0].isDefeated || Game.players[1].isDefeated ? false : true
     }
     
     
     
-        // MARK: Start
+    // MARK: Start
     
     
     
     /// Manage game from players creation to statistics display.
-    static func start() {
+    func start() {
         // check randomCreation to know if players and characters have to be created by user.
         if BACProperties.randomCreation {
             // create random players and characters
@@ -49,7 +45,7 @@ class Game {
         }
         
         // first round creation
-        activeRound = Round()
+        Game.activeRound = Round()
         
         // fight
         StyleSheet.displayTitle("LET'S FIGHT")
@@ -64,29 +60,29 @@ class Game {
     
     
     
-        // MARK: Players & Characters
+    // MARK: Players & Characters
     
     
     
-                // MARK: By User
+    // MARK: By User
     
     
     
-                        // MARK: Players
+    // MARK: Players
     
     
     
     /// Manage Players creation by user.
-    static private func playersCreationByUser() {
+    private func playersCreationByUser() {
         // player creation [by user]
         // iterate player's creation until two players are created
-        while players.count < 2 {
+        while Game.players.count < 2 {
             addPlayer()
         }
     }
     
     /// Ask player's name and creates it.
-    static private func addPlayer() {
+    private func addPlayer() {
         // ask name
         var name: String? = nil
         while name == nil {
@@ -97,16 +93,16 @@ class Game {
             exit(0)
         }
         // create player
-        players.append(Player(name: verifiedName, index: players.count))
+        Game.players.append(Player(name: verifiedName, index: Game.players.count))
     }
     
     /// Ask player's name and returns it.
     /// - returns: If the name is correct, *returns it*; otherwise *returns nil*.
-    static private func askPlayerName() -> String? {
+    private func askPlayerName() -> String? {
         // ask name
-        let name = Ask.freeAnswer("\nWhat's the player \(players.count + 1)'s name ?")
-        if players.count == 1 {
-            if players[0].name.lowercased() == name.lowercased() {
+        let name = Ask.freeAnswer("\nWhat's the player \(Game.players.count + 1)'s name ?")
+        if Game.players.count == 1 {
+            if Game.players[0].name.lowercased() == name.lowercased() {
                 print("This name is already used. Please choose another.")
                 return nil
             }
@@ -120,42 +116,33 @@ class Game {
     }
     
     
-                        // MARK: Characters
+    // MARK: Characters
     
     
     
     /// Manage Characters creation by user.
-    static private func charactersCreationByUser() {
+    private func charactersCreationByUser() {
         // characters creation [by user]
         // iterate characters creation for each player until all characters have been created
         for index in 0...1 {
-            players[index].charactersCreationByUser()
+            Game.players[index].charactersCreationByUser()
         }
     }
     
-    /// Display informations about strength and healthcare if the user needs it.
-    static func displayStrengthAndHealthcareInformations() {
-        StyleSheet.displayDashLine()
-        print(BACProperties.strengthExplanations)
-        print(BACProperties.healthcareExplanations)
-        if BACProperties.isSpecialSkillEnabled {
-            print(BACProperties.specialSkillExplanations)
-        }
-        StyleSheet.displayDashLine()
-    }
-
-    
-    
-                // MARK: By Bot
     
     
     
-                        // MARK: Players
+    
+    // MARK: By Bot
+    
+    
+    
+    // MARK: Players
     
     
     
     /// Manage random Players creation.
-    static private func playersCreationByBot() {
+    private func playersCreationByBot() {
         // players creation [random]
         for index in 0...1 {
             var name: String? = nil
@@ -166,16 +153,16 @@ class Game {
                 print("Fatal Error : random player's name returns nil.")
                 exit(0)
             }
-            players.append(Player(name: verifiedName, index: index))
+            Game.players.append(Player(name: verifiedName, index: index))
         }
     }
     
     /// Choose a name for a player and verifiy if the other player has the same.
-    static private func randomPlayerName() -> String? {
+    private func randomPlayerName() -> String? {
         let names = ["Sheldon", "Leonard", "Penny", "Howard", "Bernadette", "Raj"]
         let index = Int.random(in: 0...names.count - 1)
-        if players.count == 1 {
-            if players[0].name == names[index] {
+        if Game.players.count == 1 {
+            if Game.players[0].name == names[index] {
                 return nil
             }
         }
@@ -184,34 +171,34 @@ class Game {
     
     
     
-                        // MARK: Characters
+    // MARK: Characters
     
     
     
     /// Manage random Characters creation.
-    static private func charactersCreationByBot() {
+    private func charactersCreationByBot() {
         // characters creation [random]
-        for player in players {
+        for player in Game.players {
             player.charactersCreationByBot()
         }
     }
     
     
     
-        // MARK: Fight
+    // MARK: Fight
     
     
     
     /// Manage fight beginning and ending.
-    static private func handleFight() {
+    private func handleFight() {
         StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count + 1)")
-        let round = returnActiveRound()
+        let round = Game.returnActiveRound()
         if let chest = round.startAndReturnChest() {
             Statistics.chests.append(chest)
         }
         Statistics.rounds.append(round)
         if gameCanContinue {
-            activeRound = Round()
+            Game.activeRound = Round()
         }
     }
     
@@ -227,20 +214,20 @@ class Game {
     
     
     
-        // MARK: End game
+    // MARK: End game
     
     
     
     /// Display winner and statistics.
-    static private func endGame() {
+    private func endGame() {
         // display winner
         let index: Int
-        if players[0].isDefeated {
+        if Game.players[0].isDefeated {
             index = 1
         } else {
             index = 0
         }
-        StyleSheet.displayTitle("🏆 \(players[index].name.uppercased()) WINS ! 🏆")
+        StyleSheet.displayTitle("🏆 \(Game.players[index].name.uppercased()) WINS ! 🏆")
         StyleSheet.displayMiniTitle("CONGRATULATIONS !")
         Ask.pressEnter()
         // display statistics

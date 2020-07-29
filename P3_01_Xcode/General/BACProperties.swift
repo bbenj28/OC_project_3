@@ -13,10 +13,7 @@ import Foundation
 class BACProperties {
     // for Balance And Customizable Properties
     
-    
-    
-    //MARK: Game
-    
+    //MARK: - Game
     
     /// Random players and characters creations. *true* for creating random players and characters.
     static var randomCreation: Bool = false
@@ -75,7 +72,7 @@ class BACProperties {
     
     
     
-            // MARK: Warrior
+    // MARK: Warrior
     
     
     
@@ -111,7 +108,7 @@ class BACProperties {
     
     
     
-            // MARK: Wizard
+    // MARK: Wizard
     
     
     
@@ -147,7 +144,7 @@ class BACProperties {
     
     
     
-            // MARK: Druid
+    // MARK: Druid
     
     
     
@@ -183,7 +180,7 @@ class BACProperties {
     
     
     
-            // MARK: Joker
+    // MARK: Joker
     
     
     
@@ -228,7 +225,7 @@ class BACProperties {
     
     
     
-            // MARK: Sword (warrior's weapon)
+    // MARK: Sword (warrior's weapon)
     
     
     
@@ -243,7 +240,7 @@ class BACProperties {
     
     
     
-            // MARK: PowerStick (wizard's weapon)
+    // MARK: PowerStick (wizard's weapon)
     
     
     
@@ -258,7 +255,7 @@ class BACProperties {
     
     
     
-            // MARK: HealthStick (druid's weapon)
+    // MARK: HealthStick (druid's weapon)
     
     
     
@@ -273,7 +270,7 @@ class BACProperties {
     
     
     
-            // MARK: Knife (joker's weapon)
+    // MARK: Knife (joker's weapon)
     
     
     

@@ -12,7 +12,7 @@ class Weapon {
     
     
     
-        // MARK: Properties
+    // MARK: Properties
     
     
     
@@ -27,7 +27,7 @@ class Weapon {
     
     
     
-        // MARK: Init
+    // MARK: Init
     
     
     

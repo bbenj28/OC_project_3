@@ -234,7 +234,7 @@ class Player {
             message: "\nChoose a character type by enter a number between 1 and 4.",
             cancelProposition: "✧ Choose 0 to have some explanations about \(explanationAbout).")
             if number == 0 {
-                Game.displayStrengthAndHealthcareInformations()
+                displayStrengthAndHealthcareInformations()
             } else {
                 numberToReturn = number
             }
@@ -244,6 +244,17 @@ class Player {
             exit(0)
         }
         return types[number - 1]
+    }
+    
+    /// Display informations about strength and healthcare if the user needs it.
+    func displayStrengthAndHealthcareInformations() {
+        StyleSheet.displayDashLine()
+        print(BACProperties.strengthExplanations)
+        print(BACProperties.healthcareExplanations)
+        if BACProperties.isSpecialSkillEnabled {
+            print(BACProperties.specialSkillExplanations)
+        }
+        StyleSheet.displayDashLine()
     }
     
     /// Display all character's type possibilities.
