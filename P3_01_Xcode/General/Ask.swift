@@ -10,11 +10,7 @@ import Foundation
 
 class Ask {
     
-    
-    
-        // MARK: Press enter
-    
-    
+    // MARK: - Press enter
     
     /// Ask user to press enter to continue.
     static func pressEnter() {
@@ -22,11 +18,7 @@ class Ask {
         let _ = readLine()
     }
     
-    
-    
-        // MARK: Ask Confirmation
-    
-    
+    // MARK: - Ask Confirmation
     
     /// Ask user to confirm choices by enter Y or N.
     /// ```
@@ -68,11 +60,7 @@ class Ask {
         return nil
     }
     
-    
-    
-        // MARK: Ask Number
-    
-    
+    // MARK: - Ask Number
     
     /// Ask user to choose a number.
     /// ```
@@ -157,11 +145,7 @@ class Ask {
         return nil
     }
     
-    
-    
-        // MARK: Ask free answer
-    
-    
+    // MARK: - Ask free answer
     
     /// Ask user to choose to enter a text.
     /// ```
@@ -203,11 +187,7 @@ class Ask {
         return nil
     }
     
-    
-    
-        // - MARK: Space deletion
-    
-    
+    // MARK: - Space deletion
     
     /// Delete spaces in the beginning and in the ending of a string.
     /// - parameter text : String to analyze.
