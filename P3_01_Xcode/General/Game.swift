@@ -10,7 +10,7 @@ import Foundation
 
 class Game {
     
-    // MARK: Properties
+    // MARK: - Properties
     
     /// Players list.
     static var players: [Player] = []
@@ -23,11 +23,7 @@ class Game {
         return Game.players[0].isDefeated || Game.players[1].isDefeated ? false : true
     }
     
-    
-    
-    // MARK: Start
-    
-    
+    // MARK: - Start
     
     /// Manage game from players creation to statistics display.
     func start() {
@@ -43,34 +39,19 @@ class Game {
             StyleSheet.displayTitle("CHARACTERS CHOICE")
             charactersCreationByUser()
         }
-        
         // first round creation
         Game.activeRound = Round()
-        
         // fight
         StyleSheet.displayTitle("LET'S FIGHT")
         // iterate rounds until all characters of a player are dead
         while gameCanContinue {
             handleFight()
         }
-        
         // end
         endGame()
     }
     
-    
-    
-    // MARK: Players & Characters
-    
-    
-    
-    // MARK: By User
-    
-    
-    
-    // MARK: Players
-    
-    
+    // MARK: - Creation by User - Players
     
     /// Manage Players creation by user.
     private func playersCreationByUser() {
@@ -115,10 +96,7 @@ class Game {
         return name
     }
     
-    
     // MARK: Characters
-    
-    
     
     /// Manage Characters creation by user.
     private func charactersCreationByUser() {
@@ -129,17 +107,54 @@ class Game {
         }
     }
     
+    // MARK: - Fight
     
+    /// Manage fight beginning and ending.
+    private func handleFight() {
+        StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count + 1)")
+        let round = Game.returnActiveRound()
+        if let chest = round.startAndReturnChest() {
+            Statistics.chests.append(chest)
+        }
+        Statistics.rounds.append(round)
+        if gameCanContinue {
+            Game.activeRound = Round()
+        }
+    }
     
+    /// Ask active round in the game.
+    /// - returns: Active round.
+    static func returnActiveRound() -> Round {
+        guard let round = activeRound else {
+            print("Fatal Error : active round returns nil.")
+            exit(0)
+        }
+        return round
+    }
     
+    // MARK: - End game
     
-    // MARK: By Bot
+    /// Display winner and statistics.
+    private func endGame() {
+        // display winner
+        let index: Int
+        if Game.players[0].isDefeated {
+            index = 1
+        } else {
+            index = 0
+        }
+        StyleSheet.displayTitle("🏆 \(Game.players[index].name.uppercased()) WINS ! 🏆")
+        StyleSheet.displayMiniTitle("CONGRATULATIONS !")
+        Ask.pressEnter()
+        // display statistics
+        StyleSheet.displayTitle("STATISTICS")
+        Statistics.display()
+        StyleSheet.displayTitle("THE END")
+    }
     
+    // MARK: Creation by Bot - Players
     
-    
-    // MARK: Players
-    
-    
+    // To avoid players and characters creation during tests, the following methods generate random players and characters.
     
     /// Manage random Players creation.
     private func playersCreationByBot() {
@@ -169,11 +184,7 @@ class Game {
         return names[index]
     }
     
-    
-    
-    // MARK: Characters
-    
-    
+    // MARK: - Characters
     
     /// Manage random Characters creation.
     private func charactersCreationByBot() {
@@ -181,58 +192,5 @@ class Game {
         for player in Game.players {
             player.charactersCreationByBot()
         }
-    }
-    
-    
-    
-    // MARK: Fight
-    
-    
-    
-    /// Manage fight beginning and ending.
-    private func handleFight() {
-        StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count + 1)")
-        let round = Game.returnActiveRound()
-        if let chest = round.startAndReturnChest() {
-            Statistics.chests.append(chest)
-        }
-        Statistics.rounds.append(round)
-        if gameCanContinue {
-            Game.activeRound = Round()
-        }
-    }
-    
-    /// Ask active round in the game.
-    /// - returns: Active round.
-    static func returnActiveRound() -> Round {
-        guard let round = activeRound else {
-            print("Fatal Error : active round returns nil.")
-            exit(0)
-        }
-        return round
-    }
-    
-    
-    
-    // MARK: End game
-    
-    
-    
-    /// Display winner and statistics.
-    private func endGame() {
-        // display winner
-        let index: Int
-        if Game.players[0].isDefeated {
-            index = 1
-        } else {
-            index = 0
-        }
-        StyleSheet.displayTitle("🏆 \(Game.players[index].name.uppercased()) WINS ! 🏆")
-        StyleSheet.displayMiniTitle("CONGRATULATIONS !")
-        Ask.pressEnter()
-        // display statistics
-        StyleSheet.displayTitle("STATISTICS")
-        Statistics.display()
-        StyleSheet.displayTitle("THE END")
     }
 }
