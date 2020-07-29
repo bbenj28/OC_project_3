@@ -16,14 +16,30 @@ class Character {
     
     
     
-    let name: String // name of the character
-    let type: CharacterType // type of the character
-    var weapon: Weapon // weapon of the character
-    var healthPoints: Int { // computes the healthpoints the character actually have
+    /// Character's name.
+    let name: String
+    
+    /// Character's type.
+    let type: CharacterType
+    
+    /// Character's weapon.
+    var weapon: Weapon
+    
+    /// Character's skills.
+    let skills: [Skill]
+    
+    /// Character's health points.
+    var healthPoints: Int {
         return type.maxHealthPoints() - injuriesPoints + healPoints
     }
-    var injuriesPoints: Int = 0 // injuries points suffered by the character
-    var healPoints: Int = 0 // heal points getted by the character
+    
+    /// Sustained injuries points by the character.
+    var injuriesPoints: Int = 0
+    
+    /// Received heal points by the character.
+    var healPoints: Int = 0
+    
+    /// Life step of the character. Allows to know if the character is dying.
     var activeStep: LifeStep { // based on its healthpoints, is the character dying ?
         switch healthPoints {
         case type.maxHealthPoints():
@@ -34,23 +50,31 @@ class Character {
             return .midLife
         }
     }
+    
+    /// Is the character dead ? *true* if the answer is yes, *false* otherwise.
     var isDead: Bool { // based on its healthpoints, is the character dead ?
         return healthPoints == 0 ? true : false
     }
+    
+    /// Character's strength, based on its weapon's strength and its capability to be concentrated.
     var strength: Int{
-        // strength of a character depends on the strength of its weapon. If diverted, it loses parts of its value
         return isDiverted ? weapon.strength - Int.random(in: 0...weapon.strength) / 2 : weapon.strength
     }
+    
+    /// Character's healthcare's capability based on its strength and healthcare's coefficient.
     var healthCare: Int {
-        //healthCare of the character depends on his strength and his healthcare coefficient.
         return Int(Double(strength) * type.healthCareCoefficient())
     }
-    let skills: [Skill] // skills of the character
-    var diversionRounds: Int? // if the character suffers of diversion, for how many rounds ?
+    
+    /// Is the character diverted by a Joker ? *true* if the answer is yes, *false* otherwise.
     var isDiverted: Bool{
-        //Characters could be diverted by a joker. The diversion can last up to 4 rounds. This computed variable check if the character is still diverted.
         return diversionRounds != nil
     }
+    
+    /// If the character is diverted, for how many rounds ? Returns *nil* if the character is not diverted.
+    var diversionRounds: Int? = nil
+    
+    /// Availability of the character's special skill. When a character use its special skill, its availability change into *.used*. At the round's end, it will change into *.unavailable* to impeach user to use it next round. And, at the next round's end, it will change to *.available* again.
     var specialSkillIsAvailable: SpecialSkillAvailability = .available
     
     

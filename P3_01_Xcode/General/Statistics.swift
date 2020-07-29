@@ -15,8 +15,10 @@ class Statistics {
     // MARK: Properties
     
     
-    
+    /// Played rounds during the game.
     static var rounds: [Round] = []
+    
+    /// Generated chests during the game.
     static var chests: [Chest] = []
     
     

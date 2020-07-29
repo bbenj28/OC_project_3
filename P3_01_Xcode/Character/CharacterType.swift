@@ -7,7 +7,10 @@
 //
 
 import Foundation
+
 enum CharacterType {
+    
+    
     
     // the differents types of a character
     case warrior

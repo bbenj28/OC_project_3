@@ -16,12 +16,16 @@ class Game {
     
     
     
-    static var players: [Player] = [] // players list
-    static var activeRound: Round? // the round which is actually in progress
+    /// Players list.
+    static var players: [Player] = []
+    
+    /// The round which is actually in progress.
+    static var activeRound: Round?
+    
+    /// Check if a player is defeated and if the game can continue.
     static var gameCanContinue: Bool {
         return players[0].isDefeated || players[1].isDefeated ? false : true
     }
-    static var randomCreation: Bool = false // true for creating random players and characters
     
     
     
@@ -32,7 +36,7 @@ class Game {
     /// Manage game from players creation to statistics display.
     static func start() {
         // check randomCreation to know if players and characters have to be created by user.
-        if randomCreation {
+        if BACProperties.randomCreation {
             // create random players and characters
             playersCreationByBot()
             charactersCreationByBot()
@@ -57,6 +61,7 @@ class Game {
         // end
         endGame()
     }
+    
     
     
         // MARK: Players & Characters

@@ -7,7 +7,9 @@
 //
 
 import Foundation
-enum SpecialSkillAvailability: String { // is the special skill of a character available ?
+
+enum SpecialSkillAvailability: String {
+    // is the special skill of a character available ?
     case available = ""
     case used = "[used]"
     case unavailable = "[unavailable, used last round]"

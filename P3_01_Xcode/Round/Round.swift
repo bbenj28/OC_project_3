@@ -8,19 +8,33 @@
 
 import Foundation
 
-
-
-// MARK: Round
-
-
 class Round {
+    
+    
+    
         // MARK: Properties
-    let playingPlayer: Player // the player who will choose the action to do in the round
-    let watchingPlayer: Player // the other player
-    var choosenCharacter: Character? // the character choosed by the player to do an action
-    var choosenTargetCharacter: Character? // the character choosed by the player to be the target
-    var choosenSkill: Skill? // the choosen character's skill choosed by the player
-    var activeStep: RoundStep = .beginning // active step (RoundSteps) of the round
+    
+    
+    
+    /// Player who will choose the action to do during the round.
+    let playingPlayer: Player
+    
+    /// Player who doesn't play during the round.
+    let watchingPlayer: Player
+    
+    /// Character choosed by the player to use a skill.
+    var choosenCharacter: Character?
+    
+    /// Character choosed by player to be the target of the skill.
+    var choosenTargetCharacter: Character?
+    
+    /// Skill choosed by player to be used.
+    var choosenSkill: Skill?
+    
+    /// Active step of the round.
+    var activeStep: RoundStep = .beginning
+    
+    /// Returns the necessity of choosing a target regarding the choosed skill by the player.
     var hasToChooseTarget: Bool {
         return choosenSkill == .multiAttack || choosenSkill == .multiHeal ? false : true
     }

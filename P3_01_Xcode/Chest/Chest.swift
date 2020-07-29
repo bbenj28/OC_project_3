@@ -8,15 +8,28 @@
 
 import Foundation
 
-// MARK: Chest
-
 class Chest {
     
+    
+    
         // MARK: Properties
-    let gift: Weapon // the weapon which is offered to the character
-    var isAccepted: Bool? // the answer made by the player
-    let character: Character // the character which will eventually get the weapon
-    let player: Player // the player who decides
+    
+    
+    
+    /// The weapon which is in the chest.
+    let gift: Weapon
+    
+    /// The answer made by the player.
+    var isAccepted: Bool?
+    
+    /// The character which will eventually get the weapon.
+    let character: Character
+    
+    /// The player who decides.
+    let player: Player
+    
+    
+    
     
         // MARK: Init
     init(for character: Character, player: Player) {

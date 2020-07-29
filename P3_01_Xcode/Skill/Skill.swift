@@ -8,7 +8,11 @@
 
 import Foundation
 
-enum Skill { // the differents existing skills a character can use. All characters can use attack and heal, specialskill depends on its type.
+enum Skill {
+    
+    
+    
+    // the differents existing skills a character can use. All characters can use attack and heal, specialskill depends on its type.
     case attack
     case heal
     case multiAttack

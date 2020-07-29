@@ -7,7 +7,9 @@
 //
 
 import Foundation
-enum LifeStep { // is the character dying ?
+
+enum LifeStep {
+    // is the character dying ?
     case fulLife
     case midLife
     case endLife

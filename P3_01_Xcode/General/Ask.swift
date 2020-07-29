@@ -7,6 +7,7 @@
 //
 
 import Foundation
+
 class Ask {
     
     
@@ -30,7 +31,7 @@ class Ask {
     /// Ask user to confirm choices by enter Y or N.
     /// ```
     /// usage :
-    /// let confirmation = Game.askForConfirmation("Are you sure ?")
+    /// let confirmation = Ask.confirmation("Are you sure ?")
     /// ```
     /// - parameter message : Message to display before asking user an answer.
     /// - returns: *true* if Y was entered, *false* if N was entered.
@@ -76,7 +77,7 @@ class Ask {
     /// Ask user to choose a number.
     /// ```
     /// usage :
-    /// let skill = Game.askNumber(range: 1...3, message: "Choose a skill
+    /// let skill = Ask.number(range: 1...3, message: "Choose a skill
     /// by enter a number between 1 and 3.", cancelProposition:
     /// "Enter 0 to cancel and choose another character.")
     /// ```
@@ -165,7 +166,7 @@ class Ask {
     /// Ask user to choose to enter a text.
     /// ```
     /// usage :
-    /// let name = askFreeAnswer("What's your name ?")
+    /// let name = Ask.freeAnswer("What's your name ?")
     /// ```
     /// - parameter message : Message to display before asking user an answer.
     /// - returns: The text entered by the user.

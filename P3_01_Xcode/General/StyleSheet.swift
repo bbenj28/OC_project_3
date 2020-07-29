@@ -7,11 +7,9 @@
 //
 
 import Foundation
+
 class StyleSheet {
     
-    
-    
-        // MARK: Titles stylesheet
     
     
     /// Display title.

@@ -7,13 +7,19 @@
 //
 
 import Foundation
+
 enum RoundStep {
+    
+    
+    
     // enumerates the differents steps in a round
     case beginning
     case firstCharacterIsSelected
     case skillIsSelected
     case targetCharacterIsSelected
     case confirmedChoices
+    
+    
     
     
     /// Display title regarding active step.

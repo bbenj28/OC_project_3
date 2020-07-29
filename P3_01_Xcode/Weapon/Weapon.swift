@@ -15,9 +15,15 @@ class Weapon {
         // MARK: Properties
     
     
-    let strength: Int
+    
+    /// Weapon's name.
     let name: String
+    
+    /// Weapon's type.
     let type: WeaponType
+    
+    /// Weapon's strength.
+    let strength: Int
     
     
     

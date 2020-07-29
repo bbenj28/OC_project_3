@@ -16,18 +16,28 @@ class Player {
     
     
     
-    // all characters
+    /// All characters of the game.
     static var characters: [Character] = [] // list of players characters
     
     // specific player's properties
-    let name: String // player's name choosen in the home view
-    var characters: [Character] { // characters of the player in Player.characters
+    
+    /// Player's name.
+    let name: String
+    
+    /// Index of the player in *Game.players*.
+    let index: Int
+    
+    /// Characters of the player in *Player.characters*.
+    var characters: [Character] {
         return [Player.characters[3 * index], Player.characters[3 * index + 1], Player.characters[3 * index + 2]]
     }
-    let index: Int // index of the player in Game.players
-    var isDefeated: Bool { // returns true if all characters are dead
+    
+    /// Check if all characters of the player are dead. The player is defeated if they are.
+    var isDefeated: Bool {
         return characters[0].isDead && characters[1].isDead && characters[2].isDead
     }
+    
+    /// Check player's team's situation regarding remaining HP of characters. Returns HP / HP max of player's characters.
     var HPSituation: Int { // returns HP / HPmax of characters
         var maxHP: Double = 0
         var HP: Double = 0

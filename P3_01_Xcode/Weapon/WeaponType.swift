@@ -7,7 +7,11 @@
 //
 
 import Foundation
+
 enum WeaponType {
+    
+    
+    
     // enumerates the weapon's types
     case sword // for warriors
     case powerStick // for wizards
