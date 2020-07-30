@@ -30,6 +30,10 @@ class Weapon {
         }
         // get the weapon's maximum strength
         let maxStrength: Int = type.maxStrength()
+        if minStrength > maxStrength {
+            print("Fatal Error : can not create weapon : minimum strength has to be inferior than its maximum.")
+            exit(0)
+        }
         let strength: Int
         if firstWeapon {
             // If this weapon is the character's first, strength equals minimum strength + 1

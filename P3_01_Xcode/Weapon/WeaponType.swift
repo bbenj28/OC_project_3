@@ -21,34 +21,22 @@ enum WeaponType {
     /// Ask the weapon's type's name.
     /// - returns: The weapon's type's name.
     func name() -> String {
-        switch self {
-        case .sword:
-            return BACProperties.swordName
-        case .powerStick:
-            return BACProperties.powerstickName
-        case .healthStick:
-            return BACProperties.healthstickName
-        case .knife:
-            return BACProperties.knifeName
+        guard let name = BACProperties.weaponsTypeName[self] else {
+            print("Fatal Error : Weapon's type's name returns nil.")
+            exit(0)
         }
+        return name
     }
 
     /// Ask the weapon's type's minimum strength.
     /// - parameter lifeStep : The character's life step.
     /// - returns: The weapon's type's minimum strength.
     func minStrength(_ lifeStep: LifeStep) -> Int {
-        let optionalMin: Int?
-        switch self {
-        case .sword:
-            optionalMin = BACProperties.swordMinStrength[lifeStep]
-        case .powerStick:
-            optionalMin = BACProperties.powerstickMinStrength[lifeStep]
-        case .healthStick:
-            optionalMin = BACProperties.healthstickMinStrength[lifeStep]
-        case .knife:
-            optionalMin = BACProperties.knifeMinStrength[lifeStep]
+        guard let optionalMin = BACProperties.weaponsTypeMinStrength[self] else {
+            print("Fatal Error : Weapon's type's minimum strength returns nil.")
+            exit(0)
         }
-        guard let minStrength = optionalMin else {
+        guard let minStrength = optionalMin[lifeStep] else {
             print("Fatal Error : minimum strength for choosen lifestep returns nil.")
             exit(0)
         }
@@ -58,15 +46,10 @@ enum WeaponType {
     /// Ask the weapon's type's maximum strength.
     /// - returns: The weapon's type's maximum strength.
     func maxStrength() -> Int {
-        switch self {
-        case .sword:
-            return BACProperties.swordMaxStrength
-        case .powerStick:
-            return BACProperties.powerstickMaxStrength
-        case .healthStick:
-            return BACProperties.healthstickMaxStrength
-        case .knife:
-            return BACProperties.knifeMaxStrength
+        guard let maxStrength = BACProperties.weaponsTypeMaxStrength[self] else {
+            print("Fatal Error : Weapon's type's name returns nil.")
+            exit(0)
         }
+        return maxStrength
     }
 }

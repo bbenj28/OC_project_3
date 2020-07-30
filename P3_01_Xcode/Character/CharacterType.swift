@@ -21,121 +21,81 @@ enum CharacterType {
     /// Ask for charactertype's name.
     /// - returns: Charactertype's name.
     func name() -> String {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorName
-        case .wizard:
-            return BACProperties.wizardName
-        case .druid:
-            return BACProperties.druidName
-        case .joker:
-            return BACProperties.jokerName
+        guard let name = BACProperties.charactersTypeName[self] else {
+            print("Fatal Error : Character's type's name returns nil.")
+            exit(0)
         }
+        return name
     }
 
     /// Ask for charactertype's initials.
     /// - returns: Charactertype's initials.
     func initials() -> String {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorInitials
-        case .wizard:
-            return BACProperties.wizardInitials
-        case .druid:
-            return BACProperties.druidInitials
-        case .joker:
-            return BACProperties.jokerInitials
+        guard let initials = BACProperties.charactersTypeInitials[self] else {
+            print("Fatal Error : Character's type's initials returns nil.")
+            exit(0)
         }
+        return initials
     }
 
     /// Ask for charactertype's emoticon.
     /// - returns: Charactertype's emoticon.
     func emoticon() -> String {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorEmoticon
-        case .wizard:
-            return BACProperties.wizardEmoticon
-        case .druid:
-            return BACProperties.druidEmoticon
-        case .joker:
-            return BACProperties.jokerEmoticon
+        guard let emoticon = BACProperties.charactersTypeEmoticon[self] else {
+            print("Fatal Error : Character's type's emoticon returns nil.")
+            exit(0)
         }
+        return emoticon
     }
 
     /// Ask for charactertype's description.
     /// - returns: Charactertype's description.
     private func description() -> String {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorDescription
-        case .wizard:
-            return BACProperties.wizardDescription
-        case .druid:
-            return BACProperties.druidDescription
-        case .joker:
-            return BACProperties.jokerDescription
+        guard let description = BACProperties.charactersTypeDescription[self] else {
+            print("Fatal Error : Character's type's description returns nil.")
+            exit(0)
         }
+        return description
     }
 
     /// Ask for charactertype's maximum health points.
     /// - returns: Charactertype's maximum health points.
     func maxHealthPoints() -> Int {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorMaxHealthPoints
-        case .wizard:
-            return BACProperties.wizardMaxHealthPoints
-        case .druid:
-            return BACProperties.druidMaxHealthPoints
-        case .joker:
-            return BACProperties.jokerMaxHealthPoints
+        guard let maxHP = BACProperties.charactersTypeMaxHealthPoints[self] else {
+            print("Fatal Error : Character's type's maximum HP returns nil.")
+            exit(0)
         }
+        return maxHP
     }
 
     /// Ask for charactertype's healthcare coefficient.
     /// - returns: Charactertype's healthcare coefficient.
     func healthCareCoefficient() -> Double {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorHealthCareCoefficient
-        case .wizard:
-            return BACProperties.wizardHealthCareCoefficient
-        case .druid:
-            return BACProperties.druidHealthCareCoefficient
-        case .joker:
-            return BACProperties.jokerHealthCareCoefficient
+        guard let HCCoefficient = BACProperties.charactersTypeHealthCareCoefficient[self] else {
+            print("Fatal Error : Character's type's Healthcare coefficient returns nil.")
+            exit(0)
         }
+        return HCCoefficient
     }
 
     /// Ask for charactertype's special skill.
     /// - returns: Charactertype's special skill.
     func specialSkill() -> Skill {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorSpecialSkill
-        case .wizard:
-            return BACProperties.wizardSpecialSkill
-        case .druid:
-            return BACProperties.druidSpecialSkill
-        case .joker:
-            return BACProperties.jokerSpecialSkill
+        guard let skill = BACProperties.charactersTypeSpecialSkill[self] else {
+            print("Fatal Error : Character's type's special skill returns nil.")
+            exit(0)
         }
+        return skill
     }
 
     /// Ask for charactertype's weapon's type.
     /// - returns: Charactertype's weapon's type.
     private func weaponType() -> WeaponType {
-        switch self {
-        case .warrior:
-            return BACProperties.warriorWeaponType
-        case .wizard:
-            return BACProperties.wizardWeaponType
-        case .druid:
-            return BACProperties.druidWeaponType
-        case .joker:
-            return BACProperties.jokerWeaponType
+        guard let weapon = BACProperties.charactersTypeWeaponType[self] else {
+            print("Fatal Error : Character's type's weapon's type returns nil.")
+            exit(0)
         }
+        return weapon
     }
 
     /// Ask for charactertype's index (number to enter to choose its type).

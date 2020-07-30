@@ -59,180 +59,93 @@ class BACProperties {
     /// ```
     static let diversionMaxRound = 4
 
-    // MARK: - Characters Types - Warrior
+    // MARK: - Characters Types
 
     /// Name of character's type.
-    static let warriorName = "Warrior"
+    static let charactersTypeName: [CharacterType: String] = [
+        .warrior: "Warrior",
+        .wizard: "Wizard",
+        .druid: "Druid",
+        .joker: "Joker"]
 
     /// Initials of character's type.
     /// ```
     /// example : [Jo] for Jokers.
     /// ```
-    static let warriorInitials = "[Wa]"
+    static let charactersTypeInitials: [CharacterType: String] = [
+        .warrior: "[Wa]",
+        .wizard: "[Wi]",
+        .druid: "[Dr]",
+        .joker: "[Jo]"]
 
     /// Emoticon of character's type.
     /// ```
     /// example : 🃏 for Jokers.
     /// ```
-    static let warriorEmoticon = "💂"
-
+    static let charactersTypeEmoticon: [CharacterType: String] = [
+        .warrior: "💂",
+        .wizard: "🧙",
+        .druid: "🧑‍⚕️",
+        .joker: "🃏"]
+    
     /// Description of character's type.
-    static let warriorDescription = "The strongest recruit you will see. Warriors are naturally born to kill. They are the most resistants soldiers and their strength will cause many damages."
+    static let charactersTypeDescription: [CharacterType: String] = [
+        .warrior: "The strongest recruit you will see. Warriors are naturally born to kill. They are the most resistants soldiers and their strength will cause many damages.",
+        .wizard: "Beware! Behind their frail appearance, the witchers are no less formidable. They aren't very resistants, but their PowerStick gives them great strength.",
+        .druid: "In communion with nature and their environment, druids are pleased to take care of others. Their ability to heal is second to none.",
+        .joker: "Not really resistant, not strong either and without healing power, jokers can nevertheless, through their humor, distract enemies and give you an advantage."]
 
     /// Maximum health points of character's type.
-    static let warriorMaxHealthPoints: Int = 300
+    static let charactersTypeMaxHealthPoints: [CharacterType: Int] = [
+        .warrior: 150,
+        .wizard: 100,
+        .druid: 100,
+        .joker: 100]
 
     /// Healthcare coefficient of character's type.
-    static let warriorHealthCareCoefficient: Double = 0.2
+    static let charactersTypeHealthCareCoefficient: [CharacterType: Double] = [
+        .warrior: 0.2,
+        .wizard: 0.2,
+        .druid: 2,
+        .joker: 0.5]
 
     /// Special skill of character's type.
-    static let warriorSpecialSkill: Skill = .multiAttack
+    static let charactersTypeSpecialSkill: [CharacterType: Skill] = [
+        .warrior: .multiAttack,
+        .wizard: .multiAttack,
+        .druid: .multiHeal,
+        .joker: .diversion]
 
     /// Weapon's type of character's type.
-    static let warriorWeaponType: WeaponType = .sword
-
-    // MARK: - Wizard
-
-    /// Name of character's type.
-    static let wizardName = "Wizard"
-
-    /// Initials of character's type.
-    /// ```
-    /// example : [Jo] for Jokers.
-    /// ```
-    static let wizardInitials = "[Wi]"
-
-    /// Emoticon of character's type.
-    /// ```
-    /// example : 🃏 for Jokers.
-    /// ```
-    static let wizardEmoticon = "🧙"
-
-    /// Description of character's type.
-    static let wizardDescription = "Beware! Behind their frail appearance, the witchers are no less formidable. They aren't very resistants, but their PowerStick gives them great strength."
-
-    /// Maximum health points of character's type.
-    static let wizardMaxHealthPoints: Int = 150
-
-    /// Healthcare coefficient of character's type.
-    static let wizardHealthCareCoefficient: Double = 0.3
-
-    /// Special skill of character's type.
-    static let wizardSpecialSkill: Skill = .multiAttack
-
-    /// Weapon's type of character's type.
-    static let wizardWeaponType: WeaponType = .powerStick
-
-    // MARK: - Druid
-
-    /// Name of character's type.
-    static let druidName = "Druid"
-
-    /// Initials of character's type.
-    /// ```
-    /// example : [Jo] for Jokers.
-    /// ```
-    static let druidInitials = "[Dr]"
-
-    /// Emoticon of character's type.
-    /// ```
-    /// example : 🃏 for Jokers.
-    /// ```
-    static let druidEmoticon = "🧑‍⚕️"
-
-    /// Description of character's type.
-    static let druidDescription = "In communion with nature and their environment, druids are pleased to take care of others. Their ability to heal is second to none."
-
-    /// Maximum health points of character's type.
-    static let druidMaxHealthPoints: Int = 150
-
-    /// Healthcare coefficient of character's type.
-    static let druidHealthCareCoefficient: Double = 2
-
-    /// Special skill of character's type.
-    static let druidSpecialSkill: Skill = .multiHeal
-
-    /// Weapon's type of character's type.
-    static let druidWeaponType: WeaponType = .healthStick
-
-    // MARK: - Joker
-
-    /// Name of character's type.
-    static let jokerName = "Joker"
-
-    /// Initials of character's type.
-    /// ```
-    /// example : [Jo] for Jokers.
-    /// ```
-    static let jokerInitials = "[Jo]"
-
-    /// Emoticon of character's type.
-    /// ```
-    /// example : 🃏 for Jokers.
-    /// ```
-    static let jokerEmoticon = "🃏"
-
-    /// Description of character's type.
-    static let jokerDescription = "Not really resistant, not strong either and without healing power, jokers can nevertheless, through their humor, distract enemies and give you an advantage."
-
-    /// Maximum health points of character's type.
-    static let jokerMaxHealthPoints: Int = 200
-
-    /// Healthcare coefficient of character's type.
-    static let jokerHealthCareCoefficient: Double = 0.5
-
-    /// Special skill of character's type.
-    static let jokerSpecialSkill: Skill = .diversion
-
-    /// Weapon's type of character's type.
-    static let jokerWeaponType: WeaponType = .knife
+    static let charactersTypeWeaponType: [CharacterType: WeaponType] = [
+        .warrior: .sword,
+        .wizard: .powerStick,
+        .druid: .healthStick,
+        .joker: .knife]
 
     // MARK: - Weapons
 
     /// Can life step of a character be used to determine the strength of its weapon to be created ? *true* if life step can be used, *false* otherwise.
     static let areLifeStepsUseFull: Bool = true
 
-    // MARK: - Sword (warrior's weapon)
-
     /// Name of weapon's type.
-    static let swordName = "Sword"
+    static let weaponsTypeName: [WeaponType: String] = [
+        .sword: "Sword",
+        .powerStick: "PowerStick",
+        .healthStick: "HealthStick",
+        .knife: "Knife"]
 
     /// Minimum strength of a weapon's type regarding the life step of the future owner.
-    static let swordMinStrength: [LifeStep: Int] = [.fulLife: 50, .midLife: 65, .endLife: 85]
-
+    static let weaponsTypeMinStrength: [WeaponType: [LifeStep: Int]] = [
+        .sword: [.fulLife: 50, .midLife: 65, .endLife: 85],
+        .powerStick: [.fulLife: 70, .midLife: 85, .endLife: 105],
+        .healthStick: [.fulLife: 20, .midLife: 35, .endLife: 55],
+        .knife: [.fulLife: 30, .midLife: 45, .endLife: 65]]
+    
     /// Maximum strength of a weapon's type.
-    static let swordMaxStrength: Int = 100
-
-    // MARK: - PowerStick (wizard's weapon)
-
-    /// Name of weapon's type.
-    static let powerstickName = "PowerStick"
-
-    /// Minimum strength of a weapon's type regarding the life step of the future owner.
-    static let powerstickMinStrength: [LifeStep: Int] = [.fulLife: 70, .midLife: 85, .endLife: 105]
-
-    /// Maximum strength of a weapon's type.
-    static let powerstickMaxStrength: Int = 120
-
-    // MARK: - HealthStick (druid's weapon)
-
-    /// Name of weapon's type.
-    static let healthstickName = "HealthStick"
-
-    /// Minimum strength of a weapon's type regarding the life step of the future owner.
-    static let healthstickMinStrength: [LifeStep: Int] = [.fulLife: 20, .midLife: 35, .endLife: 55]
-
-    /// Maximum strength of a weapon's type.
-    static let healthstickMaxStrength: Int = 70
-
-    // MARK: - Knife (joker's weapon)
-
-    /// Name of weapon's type.
-    static let knifeName = "Knife"
-
-    /// Minimum strength of a weapon's type regarding the life step of the future owner.
-    static let knifeMinStrength: [LifeStep: Int] = [.fulLife: 30, .midLife: 45, .endLife: 65]
-
-    /// Maximum strength of a weapon's type.
-    static let knifeMaxStrength: Int = 80
+    static let weaponsTypeMaxStrength: [WeaponType: Int] = [
+        .sword: 100,
+        .powerStick: 120,
+        .healthStick: 70,
+        .knife: 80]
 }
