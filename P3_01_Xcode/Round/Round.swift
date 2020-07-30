@@ -10,11 +10,7 @@ import Foundation
 
 class Round {
     
-    
-    
-        // MARK: Properties
-    
-    
+    // MARK: Properties
     
     /// Player who will choose the action to do during the round.
     let playingPlayer: Player
@@ -23,26 +19,23 @@ class Round {
     let watchingPlayer: Player
     
     /// Character choosed by the player to use a skill.
-    var choosenCharacter: Character?
+    private var choosenCharacter: Character?
     
     /// Character choosed by player to be the target of the skill.
     var choosenTargetCharacter: Character?
     
     /// Skill choosed by player to be used.
-    var choosenSkill: Skill?
+    private var choosenSkill: Skill?
     
     /// Active step of the round.
-    var activeStep: RoundStep = .beginning
+    private var activeStep: RoundStep = .beginning
     
     /// Returns the necessity of choosing a target regarding the choosed skill by the player.
-    var hasToChooseTarget: Bool {
+    private var hasToChooseTarget: Bool {
         return choosenSkill == .multiAttack || choosenSkill == .multiHeal ? false : true
     }
     
-    
-        // MARK: Init
-    
-    
+    // MARK: - Init
     
     init() {
         let playIndex: Int
@@ -59,11 +52,7 @@ class Round {
         watchingPlayer = Game.players[(playIndex - 1) * (playIndex - 1)]
     }
     
-    
-    
-        // MARK: Start
-    
-    
+    // MARK: - Start
     
     /// Manage round from character's choice to chest appearance.
     /// - returns: The generated chest if a chest has been generated. Otherwise, returns *nil*.
@@ -88,11 +77,7 @@ class Round {
         return nil
     }
     
-    
-    
-        // MARK: ActiveStep manager
-    
-    
+    // MARK: - ActiveStep manager
     
     /// Submit questions to player regarding the active round's step.
     private func activeStepManager() {
@@ -154,7 +139,7 @@ class Round {
     /// Ask character information.
     /// - parameter character : Character of which informations have to be displayed.
     /// - returns: Informations to display.
-    func askCharacterInformation(_ character: Character) -> String {
+    private func askCharacterInformation(_ character: Character) -> String {
         let info = character.displayInformations(full: false, evenDead: false)
         guard let infoToReturn = info else {
             print("Fatal Error : character's informations returns nil.")
@@ -163,11 +148,7 @@ class Round {
         return infoToReturn
     }
     
-    
-    
-        // MARK: Characters choices
-    
-    
+    // MARK: - Characters choices
     
     /// Ask player to choose a character, or to cancel last choice.
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
@@ -284,16 +265,12 @@ class Round {
         return totalDisplayed
     }
     
-    
-    
-        // MARK: Choices verification
-    
-    
+    // MARK: - Choices verification
     
     /// Verify if the choosen character exists.
     /// - warning: This method needs to be sure choosen character has been choosen. If choosenCharacterl returns nil, the application will returns a Fatal Error.
     /// - returns: The choosen character.
-    func isChoosenCharacterExisting() -> Character {
+    func existingChoosenCharacter() -> Character {
         guard let character = choosenCharacter else {
             print("Fatal Error : choosen character returns nil.")
             exit (0)
@@ -304,7 +281,7 @@ class Round {
     /// Verify if the choosen skill exists.
     /// - warning: This method needs to be sure choosen skill has been choosen. If choosenSkill returns nil, the application will returns a Fatal Error.
     /// - returns: The choosen skill.
-    func isChooseSkillExisting() -> Skill {
+    func existingChoosenSkill() -> Skill {
         guard let skill = choosenSkill else {
             print("Fatal Error : choosen skill returns nil.")
             exit (0)
@@ -318,65 +295,44 @@ class Round {
         return Ask.confirmation("Do you confirm your choices ?")
     }
     
-    
-    
-        // MARK: Skill choice
-    
-    
+    // MARK: - Skill choice
     
     /// Ask player to choose a character, or cancel last choice.
     /// - returns: If the player has made a choice, returns the character ; otherwise returns nil to cancel last choice.
     private func skillManager() -> Skill? {
         // get choosen character to display its skill
-        let character = isChoosenCharacterExisting()
+        let character = existingChoosenCharacter()
         // ask user to choose a skill
         displaySkills(of: character)
-        var skill: Skill? = nil
-        while skill == nil {
-            let number = Ask.number(
-                range: 1...character.skills.count,
-                message: "Choose a skill by enter a number between 1 and \(character.skills.count).",
-                cancelProposition: "Enter 0 to cancel and choose another character.")
-            if number == 0 {
-                return nil
-            } else {
-                skill = verifySkillAvailability(of: character, number: number)
-            }
+        let skillsAvailablesCount: Int
+        if character.specialSkillIsAvailable == .available {
+            skillsAvailablesCount = 3
+        } else {
+            skillsAvailablesCount = 2
         }
-        return skill
+        let number = Ask.number(
+            range: 1...skillsAvailablesCount,
+            message: "Choose a skill by enter a number between 1 and \(skillsAvailablesCount).",
+            cancelProposition: "Enter 0 to cancel and choose another character.")
+        if number == 0 {
+            return nil
+        } else {
+            return character.skills[number - 1]
+        }
     }
     
     /// Display skills of a character.
     /// - parameter character: Character of which the skills have to be displayed.
     private func displaySkills(of character: Character) {
-        let character = isChoosenCharacterExisting()
+        let character = existingChoosenCharacter()
         character.displaySkills()
     }
-    
-    /// Check if the choosen skill is available and returns it.
-    /// - parameter character: Character of which the skill belongs.
-    /// - parameter number: Index of the skill in character's skills.
-    /// - returns: The skill if available. Otherwise, returns nil.
-    private func verifySkillAvailability(of character: Character, number: Int) -> Skill? {
-        if number == 3 {
-            if character.specialSkillIsAvailable != .available {
-                print("A character can't use its special skill if it has been used last round.")
-                return nil
-            }
-        }
-        return character.skills[number - 1]
-    }
-    
-    
 
-    
-    
-        // MARK: End round
-
+    // MARK: - End round
     
     /// End the round and check if a chest is generated.
     /// - returns: Chest if it has been generated. Otherwise, returns nil.
-    func endRoundAndReturnChest() -> Chest? {
+    private func endRoundAndReturnChest() -> Chest? {
         //launch the player choose skill and display result
         StyleSheet.displayDashLine()
         StyleSheet.displayMiniTitle("RESULT")
@@ -394,7 +350,7 @@ class Round {
     /// Use the choosen skill.
     private func useSkill() {
         // order character to use its skill.
-        let character = isChoosenCharacterExisting()
+        let character = existingChoosenCharacter()
         character.executeOrder()
     }
     
@@ -447,7 +403,7 @@ class Round {
     /// - returns: Generated chest.
     private func chestGenerator() -> Chest {
         // get character
-        let character = isChoosenCharacterExisting()
+        let character = existingChoosenCharacter()
         return Chest(for: character, player: playingPlayer)
     }
 }

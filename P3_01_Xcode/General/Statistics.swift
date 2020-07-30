@@ -40,11 +40,11 @@ class Statistics {
             if let value = playedByPlayer[round.playingPlayer.name] {
                 playedByPlayer[round.playingPlayer.name] = value + 1
             }
-            if let value = usedCharactersType[round.isChoosenCharacterExisting().type] {
-                usedCharactersType[round.isChoosenCharacterExisting().type] = value + 1
+            if let value = usedCharactersType[round.existingChoosenCharacter().type] {
+                usedCharactersType[round.existingChoosenCharacter().type] = value + 1
             }
-            if let value = usedSkillsType[round.isChooseSkillExisting()] {
-                usedSkillsType[round.isChooseSkillExisting()] = value + 1
+            if let value = usedSkillsType[round.existingChoosenSkill()] {
+                usedSkillsType[round.existingChoosenSkill()] = value + 1
             }
         }
         // return counts
