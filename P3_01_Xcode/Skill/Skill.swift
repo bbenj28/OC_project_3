@@ -9,22 +9,16 @@
 import Foundation
 
 enum Skill {
-    
-    
-    
+
     // the differents existing skills a character can use. All characters can use attack and heal, specialskill depends on its type.
     case attack
     case heal
     case multiAttack
     case multiHeal
     case diversion
-    
-    
-    
-        // MARK: Informations to ask
-    
-    
-    
+
+    // MARK: - Informations to ask
+
     /// Ask for skill's name.
     /// - returns: Skill's name.
     func name() -> String {
@@ -41,7 +35,7 @@ enum Skill {
             return "🤡 Diversion"
         }
     }
-    
+
     /// Ask for skill's description.
     /// - returns: Skill's description.
     func description() -> String {
@@ -56,7 +50,7 @@ enum Skill {
             return ""
         }
     }
-    
+
     /// Ask for index of the player of whom one of the characters has to be choosen.
     /// - returns: Player's index.
     func targetCharacters() -> [Character] {
@@ -68,10 +62,9 @@ enum Skill {
             return round.playingPlayer.characters
         }
     }
-    
-    
-        // MARK: Use
-    
+
+    // MARK: - Use
+
     /// Use skill.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The characters which will be targets of the skill.
@@ -89,7 +82,7 @@ enum Skill {
             diversion(user: user, target: target[0])
         }
     }
-    
+
     /// Use attack.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The character which will be target of the skill.
@@ -105,7 +98,7 @@ enum Skill {
             print("🎖 \(target.name) died ! 💀")
         }
     }
-    
+
     /// Use heal.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The character which will be target of the skill.
@@ -118,7 +111,7 @@ enum Skill {
         target.healPoints += healPoints
         print("Received heal points : \(healPoints)")
     }
-    
+
     /// Use multiAttack.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The characters which will be targets of the skill.
@@ -141,7 +134,7 @@ enum Skill {
         // special skill is used, next round this character won't be able to use it again
         user.specialSkillIsUsed()
     }
-    
+
     /// Use multiHeal.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The characters which will be targets of the skill.
@@ -161,7 +154,7 @@ enum Skill {
         // special skill is used, next round this character won't be able to use it again
         user.specialSkillIsUsed()
     }
-    
+
     /// Use diversion.
     /// - parameter user: The character which use the skill.
     /// - parameter target: The character which will be target of the skill.
@@ -173,5 +166,4 @@ enum Skill {
         // special skill is used, next round this character won't be able to use it again
         user.specialSkillIsUsed()
     }
-    
 }
