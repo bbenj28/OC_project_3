@@ -10,29 +10,17 @@ import Foundation
 
 class Weapon {
     
-    
-    
-    // MARK: Properties
-    
-    
+    // MARK: - Properties
     
     /// Weapon's name.
     let name: String
     
-    /// Weapon's type.
-    let type: WeaponType
-    
     /// Weapon's strength.
     let strength: Int
     
-    
-    
-    // MARK: Init
-    
-    
+    // MARK: - Init
     
     init(type: WeaponType, firstWeapon: Bool, lifeStep: LifeStep) {
-        self.type = type
         // get the weapon's minimum strength according to the possibility of modifying it on the basis of the character's life expectancy
         let minStrength: Int
         if BACProperties.areLifeStepsUseFull {
