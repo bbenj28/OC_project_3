@@ -9,19 +9,14 @@
 import Foundation
 
 enum RoundStep {
-    
-    
-    
+
     // enumerates the differents steps in a round
     case beginning
     case firstCharacterIsSelected
     case skillIsSelected
     case targetCharacterIsSelected
     case confirmedChoices
-    
-    
-    
-    
+
     /// Display title regarding active step.
     func displayTitle() {
         switch self {
@@ -37,7 +32,7 @@ enum RoundStep {
             break
         }
     }
-    
+
     /// Valid choice made by player by changing active step.
     func moveForward(_ hasToChooseTarget: Bool) -> RoundStep {
         switch self {
@@ -55,7 +50,7 @@ enum RoundStep {
             return .confirmedChoices
         }
     }
-    
+
     /// Cancel last choice made by player by changing active step.
     func cancelLastChoice(_ hasToChooseTarget: Bool) -> RoundStep {
         switch self {
@@ -73,6 +68,4 @@ enum RoundStep {
             return .skillIsSelected
         }
     }
-    
-    
 }
