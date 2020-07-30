@@ -9,21 +9,15 @@
 import Foundation
 
 enum CharacterType {
-    
-    
-    
+
     // the differents types of a character
     case warrior
     case wizard
     case druid
     case joker
-    
-    
-    
-        // MARK: Informations
-    
-    
-    
+
+    // MARK: - Informations
+
     /// Ask for charactertype's name.
     /// - returns: Charactertype's name.
     func name() -> String {
@@ -38,7 +32,7 @@ enum CharacterType {
             return BACProperties.jokerName
         }
     }
-    
+
     /// Ask for charactertype's initials.
     /// - returns: Charactertype's initials.
     func initials() -> String {
@@ -53,7 +47,7 @@ enum CharacterType {
             return BACProperties.jokerInitials
         }
     }
-    
+
     /// Ask for charactertype's emoticon.
     /// - returns: Charactertype's emoticon.
     func emoticon() -> String {
@@ -68,10 +62,10 @@ enum CharacterType {
             return BACProperties.jokerEmoticon
         }
     }
-    
+
     /// Ask for charactertype's description.
     /// - returns: Charactertype's description.
-    func description() -> String {
+    private func description() -> String {
         switch self {
         case .warrior:
             return BACProperties.warriorDescription
@@ -83,7 +77,7 @@ enum CharacterType {
             return BACProperties.jokerDescription
         }
     }
-    
+
     /// Ask for charactertype's maximum health points.
     /// - returns: Charactertype's maximum health points.
     func maxHealthPoints() -> Int {
@@ -98,7 +92,7 @@ enum CharacterType {
             return BACProperties.jokerMaxHealthPoints
         }
     }
-    
+
     /// Ask for charactertype's healthcare coefficient.
     /// - returns: Charactertype's healthcare coefficient.
     func healthCareCoefficient() -> Double {
@@ -113,7 +107,7 @@ enum CharacterType {
             return BACProperties.jokerHealthCareCoefficient
         }
     }
-    
+
     /// Ask for charactertype's special skill.
     /// - returns: Charactertype's special skill.
     func specialSkill() -> Skill {
@@ -128,10 +122,10 @@ enum CharacterType {
             return BACProperties.jokerSpecialSkill
         }
     }
-    
+
     /// Ask for charactertype's weapon's type.
     /// - returns: Charactertype's weapon's type.
-    func weaponType() -> WeaponType {
+    private func weaponType() -> WeaponType {
         switch self {
         case .warrior:
             return BACProperties.warriorWeaponType
@@ -143,10 +137,10 @@ enum CharacterType {
             return BACProperties.jokerWeaponType
         }
     }
-    
+
     /// Ask for charactertype's index (number to enter to choose its type).
     /// - returns: Charactertype's index.
-    func index() -> Int {
+    private func index() -> Int {
         switch self {
         case .warrior:
             return 1
@@ -158,7 +152,7 @@ enum CharacterType {
             return 4
         }
     }
-    
+
     /// Display informations about strength, healthcare, and eventually special skill.
     func displayInformations() {
         print("\n\(index()). \(emoticon()) \(name())")
@@ -168,19 +162,21 @@ enum CharacterType {
         } else {
             print("\(description())")
             print("[maximum HP: \(maxHealthPoints())] [min. strength✧ : \(weaponType().minStrength(.fulLife))] [min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))]")
- 
+            
         }
     }
-    
-        // MARK: Weapon creation
-    
-    
-    
+
+    // MARK: - Weapon creation
+
     /// Create a weapon regading type.
     /// - parameter firstWeapon: Will this weapon be the character's first ?
     /// - parameter lifeStep: Active life step of the character.
     /// - returns: The generated weapon.
-    func createWeapon(firstWeapon: Bool, lifeStep: LifeStep) -> Weapon {
-        return Weapon(type: weaponType(), firstWeapon: firstWeapon, lifeStep: lifeStep)
+    func createWeapon(for character: Character?) -> Weapon {
+        if let receiver = character {
+            return Weapon(type: weaponType(), firstWeapon: false, lifeStep: receiver.activeStep)
+        } else {
+            return Weapon(type: weaponType(), firstWeapon: true, lifeStep: .fulLife)
+        }
     }
 }

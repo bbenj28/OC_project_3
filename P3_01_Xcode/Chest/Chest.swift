@@ -33,7 +33,7 @@ class Chest {
     
         // MARK: Init
     init(for character: Character, player: Player) {
-        self.gift = character.type.createWeapon(firstWeapon: false, lifeStep: character.activeStep)
+        self.gift = character.type.createWeapon(for: character)
         self.character = character
         self.player = player
     }
