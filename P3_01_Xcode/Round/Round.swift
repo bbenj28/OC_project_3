@@ -395,7 +395,7 @@ class Round {
     private func useSkill() {
         // order character to use its skill.
         let character = isChoosenCharacterExisting()
-        character.executeOrder66()
+        character.executeOrder()
     }
     
     /// Check if player's characters are diverted, and reduce their diversion's rounds count.
