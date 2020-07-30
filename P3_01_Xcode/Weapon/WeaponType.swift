@@ -9,20 +9,15 @@
 import Foundation
 
 enum WeaponType {
-    
-    
-    
+
     // enumerates the weapon's types
     case sword // for warriors
     case powerStick // for wizards
     case healthStick // for druids
     case knife // for jokers
-    
-    
-    
-        // MARK: Informations
-    
-    
+
+    // MARK: - Informations
+
     /// Ask the weapon's type's name.
     /// - returns: The weapon's type's name.
     func name() -> String {
@@ -37,7 +32,7 @@ enum WeaponType {
             return BACProperties.knifeName
         }
     }
-    
+
     /// Ask the weapon's type's minimum strength.
     /// - parameter lifeStep : The character's life step.
     /// - returns: The weapon's type's minimum strength.
@@ -59,7 +54,7 @@ enum WeaponType {
         }
         return minStrength
     }
-    
+
     /// Ask the weapon's type's maximum strength.
     /// - returns: The weapon's type's maximum strength.
     func maxStrength() -> Int {
@@ -74,5 +69,4 @@ enum WeaponType {
             return BACProperties.knifeMaxStrength
         }
     }
-    
 }
