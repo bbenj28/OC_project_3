@@ -160,7 +160,7 @@ enum Skill {
     /// - parameter target: The character which will be target of the skill.
     private func diversion(user: Character, target: Character) {
         // chooses a random number of rounds during which the target will be diverted
-        let randomRounds: Int = Int.random(in: 2...4)
+        let randomRounds: Int = Int.random(in: 1...4)
         target.diversionRounds = randomRounds
         print("\(target.name) is diverted for \(randomRounds) rounds.")
         // special skill is used, next round this character won't be able to use it again

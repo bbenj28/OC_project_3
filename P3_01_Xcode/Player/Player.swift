@@ -131,7 +131,7 @@ class Player {
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         var numberToReturn: Int? = nil
         var explanationAbout = "strength and healthcare"
-        if BACProperties.isSpecialSkillEnabled {
+        if BACProperties.specialSkillIsEnabled {
             explanationAbout = "special skill, \(explanationAbout)"
         }
         while numberToReturn == nil {
@@ -165,7 +165,7 @@ class Player {
         StyleSheet.displayDashLine()
         print(BACProperties.strengthExplanations)
         print(BACProperties.healthcareExplanations)
-        if BACProperties.isSpecialSkillEnabled {
+        if BACProperties.specialSkillIsEnabled {
             print(BACProperties.specialSkillExplanations)
         }
         StyleSheet.displayDashLine()

@@ -55,8 +55,7 @@ class Round {
     // MARK: - Start
     
     /// Manage round from character's choice to chest appearance.
-    /// - returns: The generated chest if a chest has been generated. Otherwise, returns *nil*.
-    func startAndReturnChest() -> Chest? {
+    func start() {
         // round's announcements
         StyleSheet.displayMiniTitle("\(playingPlayer.name), your turn !")
         StyleSheet.displayMiniTitle("SITUATION")
@@ -71,10 +70,8 @@ class Round {
             StyleSheet.displayMiniTitle("CHEST")
             chest.askForReplaceWeapon()
             StyleSheet.displayDashLine()
-            return chest
+            Statistics.chests.append(chest)
         }
-        // return nil if no chest has been appeared
-        return nil
     }
     
     // MARK: - ActiveStep manager
@@ -305,7 +302,7 @@ class Round {
         // ask user to choose a skill
         displaySkills(of: character)
         let skillsAvailablesCount: Int
-        if character.specialSkillIsAvailable == .available {
+        if character.specialSkillIsAvailable == .available && BACProperties.specialSkillIsEnabled {
             skillsAvailablesCount = 3
         } else {
             skillsAvailablesCount = 2

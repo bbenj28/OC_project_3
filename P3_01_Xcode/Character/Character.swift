@@ -79,7 +79,7 @@ class Character {
         self.name = name
         self.type = type
         self.weapon = type.createWeapon(for: nil)
-        if BACProperties.isSpecialSkillEnabled {
+        if BACProperties.specialSkillIsEnabled {
             self.skills = [.attack, .heal, type.specialSkill()] // all characters can use attack and heal, specialskill depends on its type
         } else {
             self.skills = [.attack, .heal]

@@ -16,10 +16,10 @@ class Game {
     static var players: [Player] = []
     
     /// The round which is actually in progress.
-    static var activeRound: Round?
+    static private var activeRound: Round?
     
     /// Check if a player is defeated and if the game can continue.
-    var gameCanContinue: Bool {
+    private var gameCanContinue: Bool {
         return Game.players[0].isDefeated || Game.players[1].isDefeated ? false : true
     }
     
@@ -113,9 +113,7 @@ class Game {
     private func handleFight() {
         StyleSheet.displaySubTitle("ROUND \(Statistics.rounds.count + 1)")
         let round = Game.returnActiveRound()
-        if let chest = round.startAndReturnChest() {
-            Statistics.chests.append(chest)
-        }
+        round.start()
         Statistics.rounds.append(round)
         if gameCanContinue {
             Game.activeRound = Round()
