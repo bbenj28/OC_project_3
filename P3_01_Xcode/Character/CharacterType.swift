@@ -118,10 +118,10 @@ enum CharacterType {
         print("\n\(index()). \(emoticon()) \(name())")
         if BACProperties.specialSkillIsEnabled {
             print("\(description()) \(specialSkill().description())")
-            print("[maximum HP: \(maxHealthPoints())] [min. strength✧ : \(weaponType().minStrength(.fulLife))] [min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))] [special skill✧ : \(specialSkill().name())]")
+            print("✧maximum HP: \(maxHealthPoints())✧ ✧min. strength : \(weaponType().minStrength(.fulLife))✧ ✧min. healthcare : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))✧ ✧special skill : \(specialSkill().name())✧")
         } else {
             print("\(description())")
-            print("[maximum HP: \(maxHealthPoints())] [min. strength✧ : \(weaponType().minStrength(.fulLife))] [min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))]")
+            print("✧maximum HP: \(maxHealthPoints())✧ ✧min. strength✧ : \(weaponType().minStrength(.fulLife))✧ ✧min. healthcare✧ : \(Int(healthCareCoefficient() * Double(weaponType().minStrength(.fulLife))))✧")
             
         }
     }

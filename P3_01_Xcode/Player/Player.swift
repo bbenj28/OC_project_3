@@ -54,9 +54,9 @@ class Player {
     /// Verify if the choosen name is already taken by another character.
     /// - parameter name: Name to verify.
     /// - returns: *false* if the name is available, *true* otherwise.
-    private func isTakenName(_ name: String) -> Bool {
-        if Player.characters.count > 0 {
-            for character in Player.characters {
+    static private func isTakenName(_ name: String) -> Bool {
+        if characters.count > 0 {
+            for character in characters {
                 if character.name.lowercased() == name.lowercased() {
                     return true
                 }
@@ -130,20 +130,12 @@ class Player {
         displayCharactersTypes()
         let types: [CharacterType] = [.warrior, .wizard, .druid, .joker]
         var numberToReturn: Int? = nil
-        var explanationAbout = "strength and healthcare"
-        if BACProperties.specialSkillIsEnabled {
-            explanationAbout = "special skill, \(explanationAbout)"
-        }
         while numberToReturn == nil {
             let number = Ask.number(
                 range: 1...4,
                 message: "\nChoose a character type by enter a number between 1 and 4.",
-                cancelProposition: "✧ Choose 0 to have some explanations about \(explanationAbout).")
-            if number == 0 {
-                displayStrengthAndHealthcareInformations()
-            } else {
-                numberToReturn = number
-            }
+                cancelProposition: nil)
+            numberToReturn = number
         }
         guard let number = numberToReturn else {
             print("Fatal Error : choosen number returns nil.")
@@ -158,17 +150,6 @@ class Player {
         for index in 0...3 {
             types[index].displayInformations()
         }
-    }
-    
-    /// Display informations about strength and healthcare if the user needs it.
-    private func displayStrengthAndHealthcareInformations() {
-        StyleSheet.displayDashLine()
-        print(BACProperties.strengthExplanations)
-        print(BACProperties.healthcareExplanations)
-        if BACProperties.specialSkillIsEnabled {
-            print(BACProperties.specialSkillExplanations)
-        }
-        StyleSheet.displayDashLine()
     }
     
     /// Let user choose a name for the character.
@@ -191,7 +172,7 @@ class Player {
     private func askName() -> String? {
         // ask name
         let name = Ask.freeAnswer("\nEnter its name :")
-        if isTakenName(name) {
+        if Player.isTakenName(name) {
             print("This name is already used by another character. Choose another.")
             return nil
         }
@@ -284,7 +265,7 @@ class Player {
         // random number
         let index = Int.random(in: 0...names.count - 1)
         // check if the name is already used by another character
-        if isTakenName(names[index]) {
+        if Player.isTakenName(names[index]) {
             return nil
         }
         // returns it

@@ -16,13 +16,7 @@ class BACProperties {
     //MARK: - Game
 
     /// Random players and characters creations. *true* for creating random players and characters.
-    static var randomCreation: Bool = false
-
-    /// Strength explanation.
-    static let strengthExplanations = "\n✧ Strength : when a character attacks another, this target receive injuries points. Injuries points are at least a half of the offenser's strength. The character's strength depends on its weapon's. The PowerSticks of the wizards have the highest strength potential. However, if the character is diverted by a joker, its strength is multiplied by a coefficient between 0 and 0.5, which change all the time. \n value = weapon's strength × diversion's coefficient."
-
-    /// Healthcare explanation.
-    static let healthcareExplanations = "\n✧ Healthcare's capability : when a character heals another, this target receives heal points. Heal points are at least a half of the healer's healthcare's capability. The character's healthcare's capability depends on its strength and its healthcare coefficient. This coefficient depends on the character's type. Druids have the highest healthcare coefficient. \n value = character's strength × healthcare coefficient\n"
+    static var randomCreation: Bool = true
 
     // MARK: - Chest
 
@@ -37,10 +31,7 @@ class BACProperties {
     // MARK: - Specialskills
 
     /// Enable special skill use by user if its value is *true*.
-    static let isSpecialSkillEnabled = true
-
-    /// Explanations to display about special skills.
-    static let specialSkillExplanations = "\n✧ Special skill : each character has a special skill. This skill depends on the character's type. If a character use its special skill, it can not use it the next round."
+    static let specialSkillIsEnabled = true
 
     /// Description of the special skill.
     static let multiAttackDescription = "Their specialskill allows them to attack several enemies with one action."
@@ -97,10 +88,10 @@ class BACProperties {
 
     /// Maximum health points of character's type.
     static let charactersTypeMaxHealthPoints: [CharacterType: Int] = [
-        .warrior: 150,
-        .wizard: 100,
-        .druid: 100,
-        .joker: 100]
+        .warrior: 100,
+        .wizard: 50,
+        .druid: 50,
+        .joker: 50]
 
     /// Healthcare coefficient of character's type.
     static let charactersTypeHealthCareCoefficient: [CharacterType: Double] = [

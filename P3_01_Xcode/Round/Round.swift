@@ -173,9 +173,21 @@ class Round {
                 } else {
                     index  = watchingPlayer.index
                 }
+                let rangeMin: Int
+                if characters[0].isDead {
+                    rangeMin = index * 3 + 2
+                } else {
+                    rangeMin = index * 3 + 1
+                }
+                let rangeMax: Int
+                if characters[2].isDead {
+                    rangeMax = index * 3 + 2
+                } else {
+                    rangeMax = index * 3 + 3
+                }
                 let number = Ask.number(
-                    range: index * 3 + 1...index * 3 + 3,
-                    message: "Please, choose a character by enter a number between \(index * 3 + 1) and \(index * 3 + 3)",
+                    range: rangeMin...rangeMax,
+                    message: "Please, choose a character by enter a number between \(rangeMin) and \(rangeMax)",
                     cancelProposition: cancel)
                 if number == 0 {
                     return nil
@@ -214,6 +226,7 @@ class Round {
     /// - returns: If the choosen character can be used, returns the character. Otherwise, returns *nil*.
     private func choosedCharacter(number: Int) -> Character? {
         if Player.characters[number - 1].isDead {
+            print("This character is dead, you can only choose one of these :")
             return nil
         }
         return Player.characters[number - 1]

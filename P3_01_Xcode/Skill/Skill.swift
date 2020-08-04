@@ -51,8 +51,8 @@ enum Skill {
         }
     }
 
-    /// Ask for index of the player of whom one of the characters has to be choosen.
-    /// - returns: Player's index.
+    /// Ask for characters of the player of whom one of the characters has to be choosen.
+    /// - returns: Player's characters.
     func targetCharacters() -> [Character] {
         let round = Game.returnActiveRound()
         switch self {
