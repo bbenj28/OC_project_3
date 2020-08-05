@@ -8,7 +8,7 @@
 
 import Foundation
 
-class StyleSheet {
+struct StyleSheet {
 
     /// Display title.
     /// - parameter title: Title to display.

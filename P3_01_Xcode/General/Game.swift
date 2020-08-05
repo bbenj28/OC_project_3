@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Game {
+struct Game {
     
     // MARK: - Properties
     

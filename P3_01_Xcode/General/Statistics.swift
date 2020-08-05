@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Statistics {
+struct Statistics {
     
     // MARK: - Properties
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Ask {
+struct Ask {
     
     // MARK: - Press enter
     

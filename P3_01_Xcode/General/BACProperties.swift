@@ -10,13 +10,13 @@ import Foundation
 
 // MARK: BACProperties
 
-class BACProperties {
+struct BACProperties {
     // for Balance And Customizable Properties
 
     //MARK: - Game
 
     /// Random players and characters creations. *true* for creating random players and characters.
-    static var randomCreation: Bool = true
+    static let randomCreation: Bool = false
 
     // MARK: - Chest
 
